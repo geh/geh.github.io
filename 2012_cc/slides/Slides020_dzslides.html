@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+  <title>Complejidad Computacional Semana 2: NP</title>
+<style>
+  html { background-color: black; }
+  body { background-color: white; border-radius: 12px}
+  /* A section is a slide. It's size is 800x600, and this will never change */
+  section {
+      font-family: Arial, serif;
+      font-size: 20pt;
+    }
+  address, blockquote, dl, fieldset, form, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, table, ul, dl { padding: 10px 20px 10px 20px; }
+  h1, h2, h3 {
+    text-align: center;
+    margin: 10pt 10pt 20pt 10pt;
+  }
+  ul, ol {
+    margin: 10px 10px 10px 50px;
+  }
+  section.titleslide h1 { margin-top: 200px; }
+  h1.title { margin-top: 150px; }
+  h1 { font-size: 180%; }
+  h2 { font-size: 120%; }
+  h3 { font-size: 100%; }
+  q { quotes: "“" "”" "‘" "’"; }
+  blockquote { font-style: italic }
+  /* Figures are displayed full-page, with the caption on
+     top of the image/video */
+  figure {
+    background-color: black;
+  }
+  figcaption {
+    margin: 70px;
+  }
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 40px;
+    text-align: right;
+    background-color: #F3F4F8;
+    border-top: 1px solid #CCC;
+  }
+
+  /* Transition effect */
+  /* Feel free to change the transition effect for original
+     animations. See here:
+     https://developer.mozilla.org/en/CSS/CSS_transitions
+     How to use CSS3 Transitions: */
+  section {
+      -moz-transition: left 400ms linear 0s;
+      -webkit-transition: left 400ms linear 0s;
+      -ms-transition: left 400ms linear 0s;
+      transition: left 400ms linear 0s;
+  }
+
+  /* Before */
+  section { left: -150%; }
+  /* Now */
+  section[aria-selected] { left: 0; }
+  /* After */
+  section[aria-selected] ~ section { left: +150%; }
+
+  /* Incremental elements */
+
+  /* By default, visible */
+  .incremental > * { opacity: 1; }
+
+  /* The current item */
+  .incremental > *[aria-selected] { color: red; opacity: 1; }
+
+  /* The items to-be-selected */
+  .incremental > *[aria-selected] ~ * { opacity: 0.2; }
+</style>
+</head>
+<body>
+<section>
+  <h1 class="title">Complejidad Computacional Semana 2: <strong>NP</strong></h1>
+  <h3 class="date"></h3>
+</section>
+<section class="slide level1" id="p-vs-exptime">
+<h1><strong>P</strong> vs <strong>EXPTIME</strong></h1>
+<ul>
+<li><strong>P</strong> = <span class="math">⋃ <sub><em>c</em> ≥ 1</sub></span> <strong>TIME</strong><span class="math">(<em>n</em><sup><em>c</em></sup>)</span></li>
+<li><strong>EXPTIME</strong> = <span class="math">⋃ <sub><em>c</em> ≥ 1</sub></span><strong>TIME</strong><span class="math">(2<sup><em>n</em><sup><em>c</em></sup></sup>)</span>.</li>
+<li>time hierarchy theorem → <strong>P</strong> <span class="math"> ⊂ </span> <strong>EXPTIME</strong></li>
+</ul>
+</section>
+<section class="slide level1" id="section">
+
+<ul>
+<li>PATH = <span class="math">{⌊(<em>G</em>, <em>s</em>, <em>t</em>)⌋ ∣ </span> G un grafo dirigido con camino <span class="math"><em>s</em> → <em>t</em>}</span>
+<ul>
+<li>algoritmo brute-force (<span class="math"><em>m</em><sup><em>m</em></sup></span> caminos posibles) → PATH <span class="math"> ∈ </span> <strong>2EXPTIME</strong></li>
+<li>algoritmo goal-oriented → PATH <span class="math"> ∈ </span> <strong>P</strong> (Sipser, thm. 7.14)</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="section-1">
+
+<ul>
+<li>RELPRIME = <span class="math">{⌊(<em>x</em>, <em>y</em>)⌋ ∣ </span> <span class="math"><em>x</em>, <em>y</em> ∈ ℕ </span> relativamente primos <span class="math">}</span>
+<ul>
+<li>enumerar todos los dividores de <span class="math"><em>x</em></span> y <span class="math"><em>y</em></span>, si otro que <span class="math">1</span> aparece en ambas listas, output <span class="math">0</span>, sino <span class="math">1</span><br /> → RELPRIME <span class="math"> ∈ </span> <strong>EXPTIME</strong> si <span class="math">⌊(<em>x</em>, <em>y</em>)⌋</span> en binario!</li>
+<li>algoritmo de Euclides: <span class="math"> ∈ </span> <strong>P</strong> (Sipser, thm. 7.15)</li>
+</ul></li>
+</ul>
+<p>Algoritmo de Euclides:</p>
+<pre><code>E: input: x,y
+   hasta que y == 0:
+       a) x ← x mod y
+       b) intercambiar x y
+   output x
+
+R: input: x,y
+   si E(x,y) == 1 output accept
+   si no, output reject       </code></pre>
+</section>
+<section class="slide level1" id="section-2">
+
+<ul>
+<li>2COLOR = <span class="math">{⌊<em>G</em>⌋ ∣ </span> <span class="math"><em>G</em></span> es coloreable por <span class="math">2</span> colores <span class="math">}</span>
+<ul>
+<li><span class="math"> ∈ </span> <strong>P</strong></li>
+</ul></li>
+<li>3COLOR = <span class="math">{⌊<em>G</em>⌋ ∣ </span> <span class="math"><em>G</em></span> es coloreable por <span class="math">3</span> colores <span class="math">}</span>
+<ul>
+<li><span class="math"> ∈ </span> <strong>P</strong>? no se sabe</li>
+<li><span class="math"> ∈ </span> <strong>EXPTIME</strong> por cierto</li>
+<li><span class="math"> ∈ </span> <strong>TIME</strong>(<span class="math"><em>O</em>(1. 3289<sup><em>n</em></sup>)</span>) (Beigel y Eppstein, 2000)</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="section-3">
+
+<ul>
+<li>VERTEXCOVER =<br /><span class="math">{⌊(<em>G</em>, <em>k</em>)⌋ ∣ </span> se puede &quot;cubrir&quot; el grafo <span class="math"><em>G</em></span> con <span class="math"><em>k</em></span> nodos <span class="math">}</span></li>
+<li><span class="math"> ∈ </span> <strong>EXPTIME</strong></li>
+<li><span class="math"> ∈ </span> <strong>P</strong>? no se sabe</li>
+</ul>
+<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIElua3NjYXBlIChodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy8pIC0tPgo8c3ZnIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6Y2M9Imh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL25zIyIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIiB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnNvZGlwb2RpPSJodHRwOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIgeG1sbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUiIHdpZHRoPSIyMDAiIGhlaWdodD0iNjAiIGlkPSJzdmc0Nzg2IiBzb2RpcG9kaTp2ZXJzaW9uPSIwLjMyIiBpbmtzY2FwZTp2ZXJzaW9uPSIwLjQ2IiB2ZXJzaW9uPSIxLjAiIHNvZGlwb2RpOmRvY25hbWU9Im1pbmltdW0tdmVydGV4LWNvdmVyLnN2ZyIgaW5rc2NhcGU6b3V0cHV0X2V4dGVuc2lvbj0ib3JnLmlua3NjYXBlLm91dHB1dC5zdmcuaW5rc2NhcGUiPgogIDxkZWZzIGlkPSJkZWZzNDc4OCIvPgogIDxzb2RpcG9kaTpuYW1lZHZpZXcgaWQ9ImJhc2UiIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIgYm9yZGVyY29sb3I9IiM2NjY2NjYiIGJvcmRlcm9wYWNpdHk9IjEuMCIgZ3JpZHRvbGVyYW5jZT0iMTAwMDAiIGd1aWRldG9sZXJhbmNlPSIxMCIgb2JqZWN0dG9sZXJhbmNlPSIxMCIgaW5rc2NhcGU6cGFnZW9wYWNpdHk9IjAuMCIgaW5rc2NhcGU6cGFnZXNoYWRvdz0iMiIgaW5rc2NhcGU6em9vbT0iMS45Nzk4OTkiIGlua3NjYXBlOmN4PSIxMzkuNDMzOTQiIGlua3NjYXBlOmN5PSI4My4zMDA5NDMiIGlua3NjYXBlOmRvY3VtZW50LXVuaXRzPSJweCIgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0ibGF5ZXIxIiBzaG93Z3JpZD0iZmFsc2UiIGlua3NjYXBlOndpbmRvdy13aWR0aD0iOTY0IiBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSI4NDQiIGlua3NjYXBlOndpbmRvdy14PSIwIiBpbmtzY2FwZTp3aW5kb3cteT0iMCIvPgogIDxtZXRhZGF0YSBpZD0ibWV0YWRhdGE0NzkxIj4KICAgIDxyZGY6UkRGPgogICAgICA8Y2M6V29yayByZGY6YWJvdXQ9IiI+CiAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+CiAgICAgICAgPGRjOnR5cGUgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIvPgogICAgICA8L2NjOldvcms+CiAgICA8L3JkZjpSREY+CiAgPC9tZXRhZGF0YT4KICA8ZyBpbmtzY2FwZTpsYWJlbD0iTGF5ZXIgMSIgaW5rc2NhcGU6Z3JvdXBtb2RlPSJsYXllciIgaWQ9ImxheWVyMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTUxNy45Mjg1NywtNzA5LjIxOTMyKSI+CiAgICA8cGF0aCBpZD0icGF0aDM2MDAiIGQ9Ik0gNTMxLjkyODU3LDc0NC4yMTkzMiBMIDU1MS45Mjg1Nyw3MjkuMjE5MzIiIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIvPgogICAgPHBhdGggc29kaXBvZGk6bm9kZXR5cGVzPSJjYyIgaWQ9InBhdGgzNjAyIiBkPSJNIDU1MS45Mjg1Nyw3MjkuMjE5MzIgTCA1ODEuOTI4NTcsNzE5LjIxOTMyIiBzdHlsZT0iZmlsbDpub25lO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiLz4KICAgIDxwYXRoIGlkPSJwYXRoMzYwNCIgZD0iTSA1MzEuOTI4NTcsNzQ0LjIxOTMyIEwgNTUxLjkyODU3LDc1OS4yMTkzMiIgc3R5bGU9ImZpbGw6bm9uZTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIi8+CiAgICA8cGF0aCBpZD0icGF0aDM2MDYiIGQ9Ik0gNTUxLjkyODU3LDcyOS4yMTkzMiBMIDU1MS45Mjg1Nyw3NTkuMjE5MzIiIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIvPgogICAgPHBhdGggc29kaXBvZGk6bm9kZXR5cGVzPSJjYyIgaWQ9InBhdGgzNjA4IiBkPSJNIDU1MS45Mjg1Nyw3MjkuMjE5MzIgTCA1ODEuOTI4NTcsNzM5LjIxOTMyIiBzdHlsZT0iZmlsbDpub25lO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiLz4KICAgIDxwYXRoIHNvZGlwb2RpOm5vZGV0eXBlcz0iY2MiIGlkPSJwYXRoMzYxMCIgZD0iTSA1NTEuOTI4NTcsNzI5LjIxOTMyIEwgNTc2LjkyODU3LDc1OS4yMTkzMiIgc3R5bGU9ImZpbGw6bm9uZTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIi8+CiAgICA8cGF0aCBzdHlsZT0iZmlsbDpub25lO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiIGQ9Ik0gNjI2LjkyODU3LDc0NC4yMTkzMiBMIDY0Ni45Mjg1Nyw3MjkuMjE5MzIiIGlkPSJwYXRoMzYxMiIvPgogICAgPHBhdGggc3R5bGU9ImZpbGw6bm9uZTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIiBkPSJNIDYyNi45Mjg1Nyw3NDQuMjE5MzIgTCA2NDYuOTI4NTcsNzU5LjIxOTMyIiBpZD0icGF0aDM2MTQiLz4KICAgIDxwYXRoIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIgZD0iTSA2NDYuOTI4NTcsNzI5LjIxOTMyIEwgNjQ2LjkyODU3LDc1OS4yMTkzMiIgaWQ9InBhdGgzNjE2Ii8+CiAgICA8cGF0aCBpZD0icGF0aDM2MTgiIGQ9Ik0gNjQ2LjkyODU3LDcyOS4yMTkzMiBMIDY3Ni45Mjg1Nyw3MjkuMjE5MzIiIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIvPgogICAgPHBhdGggaWQ9InBhdGgzNjIwIiBkPSJNIDY0Ni45Mjg1Nyw3NTkuMjE5MzIgTCA2NzYuOTI4NTcsNzU5LjIxOTMyIiBzdHlsZT0iZmlsbDpub25lO2ZpbGwtcnVsZTpldmVub2RkO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLWRhc2hhcnJheTpub25lO3N0cm9rZS1vcGFjaXR5OjEiLz4KICAgIDxwYXRoIGlkPSJwYXRoMzYyMiIgZD0iTSA2NzYuOTI4NTcsNzI5LjIxOTMyIEwgNzA2LjkyODU3LDcyOS4yMTkzMiIgc3R5bGU9ImZpbGw6bm9uZTtmaWxsLXJ1bGU6ZXZlbm9kZDtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MjtzdHJva2UtbGluZWNhcDpidXR0O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2Utb3BhY2l0eToxIi8+CiAgICA8cGF0aCBpZD0icGF0aDM2MjQiIGQ9Ik0gNjc2LjkyODU3LDcyOS4yMTkzMiBMIDY3Ni45Mjg1Nyw3NTkuMjE5MzIiIHN0eWxlPSJmaWxsOm5vbmU7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6NDtzdHJva2UtZGFzaGFycmF5Om5vbmU7c3Ryb2tlLW9wYWNpdHk6MSIvPgogICAgPHBhdGggZD0iTSAyMTUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIwNSw0MzcuMzYyMTggQSA1LDUgMCAxIDEgMjE1LDQzNy4zNjIxOCB6IiBzb2RpcG9kaTpyeT0iNSIgc29kaXBvZGk6cng9IjUiIHNvZGlwb2RpOmN5PSI0MzcuMzYyMTgiIHNvZGlwb2RpOmN4PSIyMTAiIGlkPSJwYXRoMzYzOCIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNkNDAwMDA7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgc29kaXBvZGk6dHlwZT0iYXJjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNDEuOTI4NTcsMjkxLjg1NzE0KSIvPgogICAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzQxLjkyODU3LDMyMS44NTcxNCkiIHNvZGlwb2RpOnR5cGU9ImFyYyIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNkNDAwMDA7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgaWQ9InBhdGgzNjQwIiBzb2RpcG9kaTpjeD0iMjEwIiBzb2RpcG9kaTpjeT0iNDM3LjM2MjE4IiBzb2RpcG9kaTpyeD0iNSIgc29kaXBvZGk6cnk9IjUiIGQ9Ik0gMjE1LDQzNy4zNjIxOCBBIDUsNSAwIDEgMSAyMDUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIxNSw0MzcuMzYyMTggeiIvPgogICAgPHBhdGggZD0iTSAyMTUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIwNSw0MzcuMzYyMTggQSA1LDUgMCAxIDEgMjE1LDQzNy4zNjIxOCB6IiBzb2RpcG9kaTpyeT0iNSIgc29kaXBvZGk6cng9IjUiIHNvZGlwb2RpOmN5PSI0MzcuMzYyMTgiIHNvZGlwb2RpOmN4PSIyMTAiIGlkPSJwYXRoMzY0MiIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgc29kaXBvZGk6dHlwZT0iYXJjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjEuOTI4NTcsMzA2Ljg1NzE0KSIvPgogICAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzY2LjkyODU3LDMyMS44NTcxNCkiIHNvZGlwb2RpOnR5cGU9ImFyYyIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgaWQ9InBhdGgzNjQ0IiBzb2RpcG9kaTpjeD0iMjEwIiBzb2RpcG9kaTpjeT0iNDM3LjM2MjE4IiBzb2RpcG9kaTpyeD0iNSIgc29kaXBvZGk6cnk9IjUiIGQ9Ik0gMjE1LDQzNy4zNjIxOCBBIDUsNSAwIDEgMSAyMDUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIxNSw0MzcuMzYyMTggeiIvPgogICAgPHBhdGggZD0iTSAyMTUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIwNSw0MzcuMzYyMTggQSA1LDUgMCAxIDEgMjE1LDQzNy4zNjIxOCB6IiBzb2RpcG9kaTpyeT0iNSIgc29kaXBvZGk6cng9IjUiIHNvZGlwb2RpOmN5PSI0MzcuMzYyMTgiIHNvZGlwb2RpOmN4PSIyMTAiIGlkPSJwYXRoMzY0NiIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgc29kaXBvZGk6dHlwZT0iYXJjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzNzEuOTI4NTcsMzAxLjg1NzE0KSIvPgogICAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzcxLjkyODU3LDI4MS44NTcxNCkiIHNvZGlwb2RpOnR5cGU9ImFyYyIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgaWQ9InBhdGgzNjQ4IiBzb2RpcG9kaTpjeD0iMjEwIiBzb2RpcG9kaTpjeT0iNDM3LjM2MjE4IiBzb2RpcG9kaTpyeD0iNSIgc29kaXBvZGk6cnk9IjUiIGQ9Ik0gMjE1LDQzNy4zNjIxOCBBIDUsNSAwIDEgMSAyMDUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIxNSw0MzcuMzYyMTggeiIvPgogICAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDM2LjkyODU3LDI5MS44NTcxNCkiIHNvZGlwb2RpOnR5cGU9ImFyYyIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNkNDAwMDA7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgaWQ9InBhdGgzNjUwIiBzb2RpcG9kaTpjeD0iMjEwIiBzb2RpcG9kaTpjeT0iNDM3LjM2MjE4IiBzb2RpcG9kaTpyeD0iNSIgc29kaXBvZGk6cnk9IjUiIGQ9Ik0gMjE1LDQzNy4zNjIxOCBBIDUsNSAwIDEgMSAyMDUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIxNSw0MzcuMzYyMTggeiIvPgogICAgPHBhdGggZD0iTSAyMTUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIwNSw0MzcuMzYyMTggQSA1LDUgMCAxIDEgMjE1LDQzNy4zNjIxOCB6IiBzb2RpcG9kaTpyeT0iNSIgc29kaXBvZGk6cng9IjUiIHNvZGlwb2RpOmN5PSI0MzcuMzYyMTgiIHNvZGlwb2RpOmN4PSIyMTAiIGlkPSJwYXRoMzY1MiIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNkNDAwMDA7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgc29kaXBvZGk6dHlwZT0iYXJjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MzYuOTI4NTcsMzIxLjg1NzE0KSIvPgogICAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDE2LjkyODU3LDMwNi44NTcxNCkiIHNvZGlwb2RpOnR5cGU9ImFyYyIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgaWQ9InBhdGgzNjU0IiBzb2RpcG9kaTpjeD0iMjEwIiBzb2RpcG9kaTpjeT0iNDM3LjM2MjE4IiBzb2RpcG9kaTpyeD0iNSIgc29kaXBvZGk6cnk9IjUiIGQ9Ik0gMjE1LDQzNy4zNjIxOCBBIDUsNSAwIDEgMSAyMDUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIxNSw0MzcuMzYyMTggeiIvPgogICAgPHBhdGggZD0iTSAyMTUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIwNSw0MzcuMzYyMTggQSA1LDUgMCAxIDEgMjE1LDQzNy4zNjIxOCB6IiBzb2RpcG9kaTpyeT0iNSIgc29kaXBvZGk6cng9IjUiIHNvZGlwb2RpOmN5PSI0MzcuMzYyMTgiIHNvZGlwb2RpOmN4PSIyMTAiIGlkPSJwYXRoMzY1NiIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgc29kaXBvZGk6dHlwZT0iYXJjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0NjYuOTI4NTcsMzIxLjg1NzE0KSIvPgogICAgPHBhdGggdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDY2LjkyODU3LDI5MS44NTcxNCkiIHNvZGlwb2RpOnR5cGU9ImFyYyIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNkNDAwMDA7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgaWQ9InBhdGgzNjU4IiBzb2RpcG9kaTpjeD0iMjEwIiBzb2RpcG9kaTpjeT0iNDM3LjM2MjE4IiBzb2RpcG9kaTpyeD0iNSIgc29kaXBvZGk6cnk9IjUiIGQ9Ik0gMjE1LDQzNy4zNjIxOCBBIDUsNSAwIDEgMSAyMDUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIxNSw0MzcuMzYyMTggeiIvPgogICAgPHBhdGggZD0iTSAyMTUsNDM3LjM2MjE4IEEgNSw1IDAgMSAxIDIwNSw0MzcuMzYyMTggQSA1LDUgMCAxIDEgMjE1LDQzNy4zNjIxOCB6IiBzb2RpcG9kaTpyeT0iNSIgc29kaXBvZGk6cng9IjUiIHNvZGlwb2RpOmN5PSI0MzcuMzYyMTgiIHNvZGlwb2RpOmN4PSIyMTAiIGlkPSJwYXRoMzY2MCIgc3R5bGU9Im9wYWNpdHk6MTtmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLWxpbmVjYXA6YnV0dDtzdHJva2UtbGluZWpvaW46bWl0ZXI7bWFya2VyOm5vbmU7bWFya2VyLXN0YXJ0Om5vbmU7bWFya2VyLW1pZDpub25lO21hcmtlci1lbmQ6bm9uZTtzdHJva2UtbWl0ZXJsaW1pdDo0O3N0cm9rZS1kYXNoYXJyYXk6bm9uZTtzdHJva2UtZGFzaG9mZnNldDowO3N0cm9rZS1vcGFjaXR5OjE7dmlzaWJpbGl0eTp2aXNpYmxlO2Rpc3BsYXk6aW5saW5lO292ZXJmbG93OnZpc2libGU7ZW5hYmxlLWJhY2tncm91bmQ6YWNjdW11bGF0ZSIgc29kaXBvZGk6dHlwZT0iYXJjIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OTYuOTI4NTcsMjkxLjg1NzE0KSIvPgogIDwvZz4KPC9zdmc+" /> <!-- http://en.wikipedia.org/wiki/File:Minimum-vertex-cover.svg -->
+</section>
+<section class="slide level1" id="section-4">
+
+<p>LIN(0,1) = sistemas de inecuaciónes lineales con solución booleanas</p>
+<p>(0-1 integer programming)</p>
+<ul>
+<li>sea <span class="math"><em>E</em> = </span>:
+<ul>
+<li><span class="math"><em>x</em><sub>1</sub> + 2<em>x</em><sub>2</sub> + <em>x</em><sub>3</sub> + <em>x</em><sub>4</sub> ≥ 3</span><br /> <span class="math"><em>x</em><sub>1</sub> + <em>x</em><sub>4</sub> ≥ 0</span><br /> <span class="math">2<em>x</em><sub>1</sub> + <em>x</em><sub>2</sub> − <em>x</em><sub>3</sub> ≤ 1</span></li>
+<li>solución: <span class="math">(1, 1, 0, 0)</span></li>
+<li>E <span class="math"> ∈ </span> LIN(0,1)</li>
+</ul></li>
+</ul>
+<p>LIN(0,1) <span class="math"> ∈ </span> <strong>EXPTIME</strong> (enumerar soluciones y verificar).</p>
+<p>no se sabe si <span class="math"> ∈ </span> <strong>P</strong></p>
+</section>
+<section class="slide level1" id="section-5">
+
+<ul>
+<li>formulas de lógica proposicional:<br /> <span class="math"><em>φ</em> : : <em>x</em><sub><em>i</em></sub> ∣ ¬ <em>φ</em> ∣ <em>φ</em><sub>1</sub> ∧ <em>φ</em><sub>2</sub> ∣ <em>φ</em><sub>1</sub> ∨ <em>φ</em><sub>2</sub></span></li>
+<li>sea <span class="math"><em>x</em><sub>1</sub>, …, <em>x</em><sub><em>n</em></sub></span> la variables que aparecen en <span class="math"><em>φ</em></span>,<br /> escribimos <span class="math"><em>φ</em>(<em>z</em>)</span> el valor de <span class="math"><em>φ</em></span> cuando sus variables son asignadas a <span class="math"><em>z</em> ∈ {0, 1}<sup><em>n</em></sup></span></li>
+<li>si existe tal <span class="math"><em>z</em></span>, <span class="math"><em>φ</em></span> es <em>satisfacible</em></li>
+<li>SAT = <span class="math">{⌊<em>φ</em>⌋ ∣ </span> <span class="math"><em>φ</em></span> satisfacible <span class="math">}</span></li>
+<li><span class="math"> ∈ </span> <strong>EXPTIME</strong>, no se sabe si <span class="math"> ∈ </span> <strong>P</strong> &gt; si <span class="math">⌊<em>x</em>⌋ ∈ </span> SAT, 3COLOR, ..., <span class="math"><em>x</em></span> es un problema que tiene una <em>solución</em>, &gt; que es <em>pequeña</em> y <em>verificable rapidamente</em></li>
+</ul>
+<p>No es el caso de todos los lenguajes en <strong>EXPTIME</strong>.</p>
+</section>
+<section class="slide level1" id="np">
+<h1><strong>NP</strong></h1>
+<div class="thm">
+<p>Un lenguaje <span class="math"><em>L</em> ⊆ {0, 1}<sup> * </sup></span> está en <strong>NP</strong> ssi existe un polinomio <span class="math"><em>p</em>: ℕ  ↦ ℕ </span> y una MT M corriendo en tiempo polinomial tal que para todo <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>:</p>
+<span class="math">   <em>x</em> ∈ <em>L</em> ↔ ∃ <em>u</em> ∈ {0, 1}<sup><em>p</em>(∣<em>x</em>∣)</sup> </span> tal que <span class="math"> <em>M</em>(<em>x</em>, <em>u</em>) = 1</span>
+</div>
+
+<ul class="incremental">
+<li>M se llama la <em>verificadora</em> de <span class="math"><em>L</em></span>, y <span class="math"><em>u</em></span> un <em>certificado</em> de <span class="math"><em>x</em></span> (con respeto a <span class="math"><em>L</em></span> y M).</li>
+<li>La definición de <strong>NP</strong> es asimétrica!</li>
+</ul>
+</section>
+<section class="slide level1" id="lenguajes-en-np">
+<h1>Lenguajes en <strong>NP</strong></h1>
+<p>existencia de certificados cortos = pertenencia a <strong>NP</strong>:</p>
+<ul>
+<li>SAT, LIN(0,1), 3COLOR</li>
+<li>traveling salesman</li>
+<li>subset sum</li>
+<li>graph isomorphism</li>
+<li>numeros compositos</li>
+<li>...</li>
+</ul>
+</section>
+<section class="slide level1" id="p-subseteq-np-subseteq-exptime">
+<h1><strong>P</strong> <span class="math"> ⊆ </span> <strong>NP</strong> <span class="math"> ⊆ </span> <strong>EXPTIME</strong></h1>
+<div class="thm">
+<ul>
+<li><strong>P</strong> <span class="math"> ⊆ </span> <strong>NP</strong></li>
+<li><strong>NP</strong> <span class="math"> ⊆ </span> <strong>EXPTIME</strong>
+</div>
+</li>
+</ul>
+<br />
+<ul class="incremental">
+<li>No se sabe si <strong>P</strong> ≠ <strong>NP</strong>, ni si <strong>NP</strong> ≠ <strong>EXPTIME</strong>.</li>
+</ul>
+</section>
+<section class="slide level1" id="p-y-np">
+<h1><strong>P</strong> y <strong>NP</strong></h1>
+<ul>
+<li>en <strong>P</strong> están los problemas fáciles</li>
+<li>en <strong>NP</strong> están los problemas que tienen soluciones facilmente chequeables</li>
+<li><strong>NP</strong> representa los problemas de búsqueda con soluciones cortas</li>
+</ul>
+</section>
+<section class="slide level1" id="mmtt-nondeterminísticas">
+<h1>MMTT nondeterminísticas</h1>
+<ul class="incremental">
+<li>Una MTND tiene <span class="math"><em>δ</em><sub>0</sub></span> and <span class="math"><em>δ</em><sub>1</sub></span> y un estado especial <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span>.</li>
+<li>En cada paso, una MTND hace una elección arbitraria entre las dos funciones de transición.</li>
+<li>Para un input <span class="math"><em>x</em></span>, si existe <strong>una</strong> secuencia de esos pasos (elecciones nondeterminísticas) que hace que M alcanza <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span>, decimos que <span class="math"><em>M</em>(<em>x</em>) = 1</span>.</li>
+<li>Si <em>toda</em> secuencia de elecciones hace que M se detiene sin alcanzar <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span>, decimos que <span class="math"><em>M</em>(<em>x</em>) = 0</span>.</li>
+<li>M <em>corre en tiempo <span class="math"><em>T</em>(<em>n</em>)</span></em> si para todo input <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span> y toda secuencia de elecciones nondeterminísticas, M alcanza <span class="math"><em>q</em><sub><em>h</em><em>a</em><em>l</em><em>t</em></sub></span> o <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span> dentro de <span class="math"><em>T</em>(∣<em>x</em>∣)</span> pasos.</li>
+</ul>
+</section>
+<section class="slide level1" id="observación">
+<h1>Observación</h1>
+<p>Una MTND <em>no</em> representa cálculos fisicamente realisables.</p>
+</section>
+<section class="slide level1" id="definición-tradicional-de-np">
+<h1>Definición tradicional de <strong>NP</strong></h1>
+<div class="thm">
+<p>Sea <span class="math"><em>T</em>: ℕ  ↦ ℕ </span> y <span class="math"><em>L</em> ⊆ {0, 1}<sup> * </sup></span>. Decimos que <span class="math"><em>L</em> ∈ </span> <strong>NTIME</strong><span class="math">(<em>T</em>(<em>n</em>))</span> si existe una constante <span class="math"><em>c</em> &gt; 0</span> y una TMND M en tiempo <span class="math"><em>c</em>⋅<em>T</em>(<em>n</em>)</span> tal que para todo <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>: <br><span class="math"><em>x</em> ∈ <em>L</em> ↔ <em>M</em>(<em>x</em>) = 1</span><br></p>
+<span class="math"><em>N</em><em>P</em><sub><em>o</em><em>l</em><em>d</em></sub> = ⋃ <sub><em>c</em> ∈ ℕ </sub></span><strong>NTIME</strong><span class="math">(<em>n</em><sup><em>c</em></sup>)</span>
+</div>
+
+<br />
+</section>
+<section class="slide level1" id="equivalencia">
+<h1>Equivalencia</h1>
+<div class="thm">
+Las dos definiciones son equivalentes.
+</div>
+
+<ol type="1">
+<li><span class="math"><em>L</em> ∈ <em>N</em><em>P</em><sub><em>o</em><em>l</em><em>d</em></sub></span> → <span class="math"><em>L</em> ∈ <em>N</em><em>P</em></span>
+<ul>
+<li>si existe una MTND M que decide <span class="math"><em>L</em></span>, se puede construir una MTD <span class="math"><em>M</em>ʹ</span> que, con input <span class="math">(<em>x</em>, <em>u</em>)</span> y <span class="math"><em>u</em></span> de longitud adecuada, simula una computación de <span class="math"><em>M</em></span> con input <span class="math"><em>x</em></span> eligiendo <span class="math"><em>δ</em><sub><em>u</em>[<em>n</em>]</sub></span> en cada paso <span class="math"><em>n</em></span>.</li>
+</ul></li>
+<li><span class="math"><em>L</em> ∈ <em>N</em><em>P</em></span> → <span class="math"><em>L</em> ∈ <em>N</em><em>P</em><sub><em>o</em><em>l</em><em>d</em></sub></span>
+<ul>
+<li>se puede construir una MTND que, con input <span class="math"><em>x</em></span>, genera un certificado en <span class="math"><em>p</em>(∣<em>x</em>∣)</span> pasos de manera nondeterministica, y luego lo averigua con la verificadora de <span class="math"><em>L</em></span>.</li>
+</ul></li>
+</ol>
+</section>
+<section class="slide level1" id="filología-computacional">
+<h1>Filología computacional</h1>
+<blockquote>
+<p>Travelling Salesman está en <strong>NP</strong> porque una gira satisfaciendo <span class="math"><em>l</em> ≤ <em>k</em></span> puede ser eligida nondeterministicalmente en <span class="math"><em>n</em></span> pasos y luego la condicion <span class="math"><em>l</em> ≤ <em>k</em></span> verificada en un número polinomial de pasos [...].</p>
+</blockquote>
+<blockquote>
+<p>(John E. Savage, Models of Computation: Exploring the Power of Computing, 1997)</p>
+</blockquote>
+</section>
+<section class="slide level1" id="reducciones">
+<h1>Reducciones</h1>
+<div class="thm">
+Sea <span class="math"><em>A</em>, <em>B</em> ⊆ {0, 1}<sup> * </sup></span>. A es <em>(tiempo-)polinomialmente reducible</em> a <span class="math"><em>B</em></span>, denotado <span class="math"><em>A</em> ≤ <sub><em>p</em></sub><em>B</em></span>, si existe una función <span class="math"><em>f</em>: {0, 1}<sup> * </sup> ↦ {0, 1}<sup> * </sup></span> calculable en tiempo polinomial tal que para todo <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>, <span class="math"><em>x</em> ∈ <em>A</em></span> ssi <span class="math"><em>f</em>(<em>x</em>) ∈ <em>B</em></span>.
+</div>
+
+<br />
+<div class="thm">
+<p>Proposiciones:</p>
+<ul>
+<li>si <span class="math"><em>A</em> ≤ <sub><em>p</em></sub><em>B</em></span> y <span class="math"><em>B</em> ∈ </span> <strong>P</strong> entonces <span class="math"><em>A</em> ∈ </span> <strong>P</strong></li>
+<li><span class="math"> ≤ <sub><em>p</em></sub></span> es transitiva
+</div>
+</li>
+</ul>
+</section>
+<section class="slide level1" id="ejercicio">
+<h1>Ejercicio</h1>
+<ul>
+<li>Mostrar que 3COLOR <span class="math"> ≤ <sub><em>p</em></sub></span> SAT:</li>
+<li>Proveer una traducción G → <span class="math"><em>φ</em><sub><em>G</em></sub></span></li>
+<li>Demostrar que: G tiene un coloreo → <span class="math"><em>φ</em><sub><em>G</em></sub></span> tiene una asignación</li>
+<li>Demostrar que: <span class="math"><em>φ</em><sub><em>G</em></sub></span> tiene una asignación → G tiene un coloreo</li>
+</ul>
+</section>
+<section class="slide level1" id="np-hardness-completeness">
+<h1><strong>NP</strong> hardness, completeness</h1>
+<div class="thm">
+Decimos que B es <strong>NP</strong> difícil (hard) si para todo <span class="math"><em>A</em> ∈ </span> <strong>NP</strong>, <span class="math"><em>A</em> ≤ <sub><em>p</em></sub><em>B</em></span>. Decimos que <span class="math"><em>B</em></span> es <strong>NP</strong> completo (complete) si <span class="math"><em>B</em></span> es <strong>NP</strong> difícil y está en <strong>NP</strong>.
+</div>
+
+<br />
+<div class="thm">
+<p>Proposiciones:</p>
+<ul>
+<li>si L es <strong>NP</strong> difícil y L <span class="math"> ∈ </span> <strong>P</strong>, entonces <strong>P</strong> = <strong>NP</strong></li>
+<li>si L es <strong>NP</strong> completo, entonces L <span class="math"> ∈ </span> <strong>P</strong> ssi <strong>P</strong> = <strong>NP</strong>.
+</div>
+</li>
+</ul>
+</section>
+<section class="slide level1" id="un-lenguaje-np-completo">
+<h1>Un lenguaje <strong>NP</strong> completo</h1>
+<p>TMSAT = <span class="math">{⌊<em>M</em>, <em>x</em>, 1<sup><em>n</em></sup>, 1<sup><em>t</em></sup>⌋ ∣ ∃ <em>u</em> ∈ {0, 1}<sup><em>n</em></sup>. <em>M</em>(<em>x</em>, <em>u</em>) = 1</span> en t pasos<span class="math">}</span></p>
+<ul class="incremental">
+<li>TMSAT <span class="math"> ∈ </span> <strong>NP</strong>: la verificadora de N es una máquina universal de Turing que simula M con input (x,u) y verifica que su output es 1 despues de <span class="math"><em>t</em></span> pasos. Su corrida es polinomial en función de su input porque se puede simular máquinas con una desaceleración polinomial.</li>
+<li>Sea L <span class="math"> ∈ </span> <strong>NP</strong>. Existe verificadora M corriendo en tiempo polinomial <span class="math"><em>q</em>(<em>n</em>)</span>, y existe un polinomio <span class="math"><em>p</em>(<em>n</em>)</span> que determine el tamaño de los cartificados. Entonces a toda <span class="math">$x\inL$</span> le asociamos la string <span class="math">⌊<em>M</em>, <em>x</em>, 1<sup><em>p</em>(<em>n</em>)</sup>, 1<sup><em>q</em>(<em>n</em> + <em>p</em>(<em>n</em>))</sup>⌋</span>.</li>
+</ul>
+</section>
+<section class="slide level1" id="cnf-sat">
+<h1><strong>CNF-SAT</strong></h1>
+<ul>
+<li>un literal es una variable o una variable negada (<span class="math"><em>x</em><sub><em>i</em></sub></span>, <span class="math">¬ <em>x</em><sub><em>i</em></sub></span>)</li>
+<li>una cláusula es una disyuncción de literales tal que no aparece un literal y su contrario</li>
+<li>ej: <span class="math"><em>x</em><sub>1</sub> ∨ ¬ <em>x</em><sub>2</sub> ∨ ¬ <em>x</em><sub>3</sub></span></li>
+<li>una formula proposicional es en Forma Normal Conjunctiva si es una conjuncción de cláusulas</li>
+<li>ej: <span class="math">(<em>x</em><sub>1</sub> ∨ <em>x</em><sub>3</sub>) ∧ (<em>x</em><sub>1</sub> ∨ ¬ <em>x</em><sub>2</sub> ∨ ¬ <em>x</em><sub>3</sub> ∨ <em>x</em><sub>4</sub>) ∧ (¬ <em>x</em><sub>1</sub> ∨ ¬ <em>x</em><sub>4</sub>)</span></li>
+<li>definimos <strong>CNF-SAT</strong> = <span class="math">{⌊<em>φ</em>⌋ ∣ <em>φ</em></span> es en FNC y es satisfacible <span class="math">}</span></li>
+</ul>
+<div class="thm">
+<strong>SAT</strong> <span class="math"> ≤ <sub><em>p</em></sub></span> <strong>CNF-SAT</strong>
+</div>
+
+<ul>
+<li>Idea: introducir variables nuevas para evitar explosión exponencial</li>
+</ul>
+</section>
+<section class="slide level1" id="sat">
+<h1><strong>3SAT</strong></h1>
+<ul>
+<li>una formula es en 3FNC si es en FNC y cada cláusula tiene como máximo 3 literales</li>
+<li>ej: <span class="math">(<em>x</em><sub>1</sub> ∨ <em>x</em><sub>3</sub>) ∧ (¬ <em>x</em><sub>2</sub> ∨ ¬ <em>x</em><sub>3</sub> ∨ <em>x</em><sub>4</sub>) ∧ (¬ <em>x</em><sub>1</sub> ∨ ¬ <em>x</em><sub>4</sub>)</span></li>
+<li><strong>3SAT</strong> = <span class="math">{⌊<em>φ</em>⌋ ∣ <em>φ</em></span> es en 3FNC y es satisfacible <span class="math">}</span></li>
+</ul>
+<div class="thm">
+<strong>CNF-SAT</strong> <span class="math"> ≤ <sub><em>p</em></sub></span> <strong>3SAT</strong>
+</div>
+
+<ul>
+<li>Idea: introducir variables nuevas para evitar explosión exponencial</li>
+</ul>
+</section>
+<section class="slide level1" id="teorema-de-cook-levin">
+<h1>Teorema de Cook-Levin</h1>
+<ul>
+<li>Cook &quot;The Complexity of Theorem Proving Procedures&quot;, 1971</li>
+<li>Levin &quot;Универсальные задачи перебора&quot;, 1973</li>
+</ul>
+<div class="thm">
+SAT es NP-complete
+</div>
+
+</section>
+<section class="slide level1" id="poder-expresivo-booleano">
+<h1>Poder expresivo booleano</h1>
+<ul>
+<li>Igualdad: la formula <br><span class="math">(<em>x</em><sub>1</sub> ∨ ¬ <em>y</em><sub>1</sub>) ∧ (¬ <em>x</em><sub>1</sub> ∨ <em>y</em><sub>1</sub>) ∧ … ∧ (<em>x</em><sub><em>n</em></sub> ∨ ¬ <em>y</em><sub><em>n</em></sub>) ∧ (¬ <em>x</em><sub><em>n</em></sub> ∨ <em>y</em><sub><em>n</em></sub>)</span><br> es satisfacible por una asignación <span class="math"><em>z</em></span> ssi <span class="math"><em>x</em><sub><em>i</em></sub>(<em>z</em>) = <em>y</em><sub><em>i</em></sub>(<em>z</em>)</span> para todo <span class="math"><em>i</em></span>.</li>
+<li>Funciónes booleanas: dada <span class="math"><em>f</em>: {0, 1}<sup><em>k</em></sup> ↦ {0, 1}</span>:
+<ul>
+<li>para <span class="math"><em>v</em> ∈ {0, 1}<sup><em>k</em></sup></span>, definimos <span class="math"><em>C</em><sub><em>v</em></sub>(<em>x</em><sub><em>i</em></sub>, . . , <em>x</em><sub><em>k</em></sub>)</span> una cláusula tal que <span class="math"><em>C</em><sub><em>v</em></sub>(<em>v</em>) = 0</span> y <span class="math"><em>C</em><sub><em>v</em></sub>(<em>u</em>) = 1</span> para <span class="math"><em>u</em> ≠ <em>v</em></span> <!--  * ej: $v = (1,1,0,1)$ → $\neg x_1 \vee \neg x_2 \vee x_3 \vee \neg x_4$--></li>
+<li>definimos <span class="math"><em>φ</em> = ⋀ <sub>{<em>v</em> ∣ <em>f</em>(<em>v</em>) = 0}</sub><em>C</em><sub><em>v</em></sub>(<em>x</em><sub>1</sub>, <em>x</em><sub>2</sub>, …, <em>x</em><sub><em>k</em></sub>)</span></li>
+<li>entonces:
+<ul>
+<li><span class="math">∀ <em>z</em> ∈ {0, 1}<sup><em>k</em></sup>, <em>φ</em>(<em>z</em>) = <em>f</em>(<em>z</em>)</span></li>
+<li><span class="math">∣<em>φ</em>∣ ≤ <em>k</em>2<sup><em>k</em></sup></span></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="section-6">
+
+<p>Sea <span class="math"><em>L</em> ∈ </span> <strong>NP</strong>, queremos mostrar que <span class="math"><em>L</em> ≤ <sub><em>p</em></sub><em>S</em><em>A</em><em>T</em></span>.</p>
+<p>Por definición, <span class="math">∃ </span> M corriendo en tiempo polinomial y <span class="math"><em>p</em></span> polinomio tal que para todo <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>: <br><span class="math"><em>x</em> ∈ <em>L</em> ↔ ∃ <em>u</em> ∈ {0, 1}<sup><em>p</em>(∣<em>x</em>∣)</sup>. <em>M</em>(<em>x</em>, <em>u</em>) = 1</span><br></p>
+<p>Queremos una transformación en tiempo polinomial <span class="math"><em>x</em> ↦ <em>φ</em><sub><em>x</em></sub></span> tq: <br><span class="math">∃ <em>u</em> ∈ {0, 1}<sup><em>p</em>(∣<em>x</em>∣)</sup>. <em>M</em>(<em>x</em>, <em>u</em>) = 1 ↔ <em>φ</em><sub><em>x</em></sub> ∈ <em>S</em><em>A</em><em>T</em></span><br></p>
+</section>
+<section class="slide level1" id="section-7">
+
+<p>Reemplazamos la verificadora M por una version que:</p>
+<ol type="1">
+<li>tiene 2 cintas (con input en lectura sola)</li>
+<li>es indiferente:
+<ul>
+<li>las corridas de M toman el mismo tiempo para todo input de tamaño <span class="math"><em>n</em></span></li>
+<li>la ubicación de los cabezales de M en un paso <span class="math"><em>i</em></span> sólo dependen del tamaño del input y de <span class="math"><em>i</em></span></li>
+</ul></li>
+</ol>
+</section>
+<section class="slide level1" id="section-8">
+
+<p>Un <em>instantáneo</em> de M es un tuple <span class="math">(<em>a</em>, <em>b</em>, <em>q</em>) ∈ Γ <sup>2</sup> × <em>Q</em></span>.</p>
+<p>Un instantáneo puede ser representado con <span class="math"><em>c</em></span> bits, <span class="math"><em>c</em></span> dependiendo de <span class="math">Γ </span> y <span class="math"><em>Q</em></span> (y independiente del input).</p>
+<p>Una <em>traza</em> es una succesión de instantáneos.</p>
+<ul class="incremental">
+<li>¿Cuales son las condiciones que debe cumplir una traza para representar una corrida exitosa de M con input <span class="math">(<em>x</em>, <em>u</em>)</span>?</li>
+<li>Vamos a construir <span class="math"><em>φ</em><sub><em>x</em></sub></span> como un patrón de traza que es satisfacible si y sólo si existe un <span class="math"><em>u</em></span> tal que <span class="math"><em>M</em>(<em>x</em>, <em>u</em>) = 1</span></li>
+</ul>
+</section>
+<section class="slide level1" id="section-9">
+
+<p>A partir de la función de transición de M definimos:</p>
+<ul>
+<li><span class="math"><em>δ</em><sub><em>w</em><em>r</em><em>i</em><em>t</em><em>e</em></sub>: Γ <sup>2</sup> × <em>Q</em> ↦ Γ </span> <!-- obs: delta_write(z1) deberia devolver blank, no lo hace pero se arregla --></li>
+<li><span class="math"><em>δ</em><sub><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em></sub>: Γ <sup>2</sup> × <em>Q</em> ↦ <em>Q</em></span></li>
+</ul>
+<p>Como M es indiferente, se pueden definir las funciones <span class="math">ℕ  ↦ ℕ </span>:</p>
+<ul>
+<li><span class="math"><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</span> la posición del cabezal de input en el paso <span class="math"><em>i</em></span>.</li>
+<li><span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</span> el último paso antes de <span class="math"><em>i</em></span> tal que el cabezal de escritura está en el mismo lugar que en el paso <span class="math"><em>i</em></span>. Definimos <span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>) = 1</span> por defecto.</li>
+</ul>
+<p>Los valores de <span class="math"><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</span> and <span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</span> no dependen del input <span class="math"><em>y</em> = (<em>x</em>, <em>u</em>)</span>. Además esos valores pueden ser calculados en tiempo polinomial, corriendo M con un input trivial.</p>
+</section>
+<section class="slide level1" id="section-10">
+
+<p>Restricciones que debe cumplir una traza <span class="math">[<em>z</em><sub>1</sub>, <em>z</em><sub>2</sub>, . . . , <em>z</em><sub><em>T</em>(<em>n</em>)</sub>]</span> para representar una corrida exitosa de M con input <span class="math"><em>y</em></span>:</p>
+<ul>
+<li><span class="math"><em>z</em><sub>1</sub> = ( ⊳ ,  ⊳ , <em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub>)</span></li>
+<li><span class="math"><em>z</em><sub><em>T</em>(<em>n</em>)</sub> = (<em>a</em>, 1, <em>q</em><sub><em>h</em><em>a</em><em>l</em><em>t</em></sub>)</span>, <span class="math"><em>a</em> ∈ Γ </span></li>
+<li>para todo <span class="math"><em>z</em><sub><em>i</em></sub> = (<em>a</em><sub><em>i</em></sub>, <em>b</em><sub><em>i</em></sub>, <em>q</em><sub><em>i</em></sub>)</span> con <span class="math"><em>i</em> ∈ {2, …, <em>T</em>(<em>n</em>)}</span>:
+<ul>
+<li><span class="math"><em>a</em><sub><em>i</em></sub> = <em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub></span></li>
+<li><span class="math"><em>b</em><sub><em>i</em></sub> = <em>δ</em><sub><em>w</em><em>r</em><em>i</em><em>t</em><em>e</em></sub>(<em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>)</span></li>
+<li><span class="math"><em>q</em><sub><em>i</em></sub> = <em>δ</em><sub><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em></sub>(<em>z</em><sub><em>i</em> − 1</sub>)</span></li>
+</ul></li>
+<li>para cada <span class="math"><em>i</em> ∈ {2, …, <em>T</em>(<em>n</em>)}</span>, existe une función <span class="math"><em>f</em></span> tal que esas restricciones son cumplidas ssi <span class="math"><em>f</em>(<em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub>, <em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em> − 1</sub>, <em>z</em><sub><em>i</em></sub>) = 1</span></li>
+</ul>
+<p>Queremos: <span class="math"><em>φ</em><sub><em>x</em></sub> ∈ <em>S</em><em>A</em><em>T</em> ↔ ∃ <em>u</em> ∈ {0, 1}<sup><em>p</em>(∣<em>x</em>∣)</sup>. <em>y</em> = (<em>x</em>, <em>u</em>). <em>M</em>(<em>y</em>) = 1</span></p>
+</section>
+<section class="slide level1" id="section-11">
+
+<p>Variables de <span class="math"><em>φ</em><sub><em>x</em></sub></span>:</p>
+<ul>
+<li><span class="math"><em>Y</em><sub><em>i</em></sub></span> con <span class="math"><em>i</em> ∈ [1. . <em>n</em> + <em>p</em>(<em>n</em>)]</span></li>
+<li><span class="math"><em>Z</em><sub><em>i</em></sub></span> con <span class="math"><em>i</em> ∈ [1. . <em>c</em><em>T</em>(<em>n</em>)]</span></li>
+</ul>
+<p>Codificación de las restricciónes:</p>
+<ul>
+<li><span class="math"><em>y</em>[1. . <em>n</em>] = <em>x</em></span> → formula de tamaño <span class="math">2<em>n</em></span></li>
+<li><span class="math"><em>z</em><sub>1</sub></span> → formula de tamaño <span class="math">2<em>c</em></span></li>
+<li><span class="math"><em>z</em><sub><em>T</em>(<em>n</em>)</sub></span> → formula de tamaño <span class="math"> ≤ 2<em>c</em></span></li>
+</ul>
+</section>
+<section class="slide level1" id="section-12">
+
+<ul>
+<li>para cada <span class="math"><em>i</em> ∈ [2. . <em>T</em>(<em>n</em>)]</span>, <br><span class="math"><em>f</em>(<em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub>, <em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em> − 1</sub>, <em>z</em><sub><em>i</em></sub>) = 1</span><br> → formula <span class="math"><em>φ</em><sub><em>i</em></sub></span> de tamaño <span class="math">(3<em>c</em> + 1)2<sup>3<em>c</em> + 1</sup></span> tal que <br><span class="math"><em>φ</em><sub><em>i</em></sub>(<em>Y</em>ʹ, <em>Z</em>ʹ<sub>1</sub>, <em>Z</em>ʹ<sub>2</sub>, <em>Z</em>ʹ<sub>3</sub>) = 1 ↔ <em>f</em>(. . . ) = 1</span><br>, con:
+<ul>
+<li><span class="math"><em>Y</em>ʹ</span> son las variables que codifican <span class="math"><em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub></span></li>
+<li><span class="math"><em>Z</em>ʹ<sub>1</sub></span> son las variables que codifican <span class="math"><em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub></span></li>
+<li><span class="math"><em>Z</em>ʹ<sub>2</sub></span> → <span class="math"><em>z</em><sub><em>i</em> − 1</sub></span></li>
+<li><span class="math"><em>Z</em>ʹ<sub>3</sub></span> → <span class="math"><em>z</em><sub><em>i</em></sub></span></li>
+<li>para cada <span class="math"><em>i</em></span>, para conocer <span class="math"><em>Y</em>ʹ</span>, <span class="math"><em>Z</em>ʹ<sub>1</sub></span>, <span class="math"><em>Z</em>ʹ<sub>2</sub></span>, <span class="math"><em>Z</em>ʹ<sub>3</sub></span>, hay que conocer <span class="math"><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</span> y <span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</span>, y para eso hay que correr y observar <span class="math"><em>M</em>(0<sup><em>n</em> + <em>p</em>(<em>n</em>)</sup>)</span></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="section-13">
+
+<p>Tamaño de <span class="math"><em>φ</em><sub><em>x</em></sub></span>:</p>
+<p><span class="math">2<em>n</em> + 2<em>c</em> + 2<em>c</em> + (<em>T</em>(<em>n</em>) − 1)(3<em>c</em> + 1)2<sup>3<em>c</em> + 1</sup></span> <span class="math"> ≤ </span> <span class="math"><em>d</em>(<em>n</em> + <em>T</em>(<em>n</em>))</span>, <span class="math"><em>d</em> ∈ ℕ </span></p>
+<ul>
+<li>se puede construir <span class="math"><em>x</em> ↦ <em>φ</em><sub><em>x</em></sub></span> en tiempo polinomial:
+<ol type="1">
+<li>correr <span class="math"><em>M</em>(0<sup><em>n</em> + <em>p</em>(<em>n</em>)</sup>)</span></li>
+<li>generar <span class="math"><em>φ</em><sub><em>x</em></sub></span></li>
+</ol></li>
+<li><span class="math"><em>φ</em><sub><em>x</em></sub></span> es en FNC</li>
+</ul>
+</section>
+<section class="slide level1" id="section-14">
+
+<ul>
+<li>supongamos <span class="math"><em>x</em> ∈ <em>L</em></span><br /> → <span class="math">∃ <em>u</em> ∈ {0, 1}<sup><em>n</em></sup>. <em>M</em>(<em>x</em>, <em>u</em>) = 1</span><br />  → existe una traza que reprensenta la corrida exitosa de <span class="math"><em>M</em>(<em>x</em>, <em>u</em>)</span><br /> → usando <span class="math"><em>u</em></span> y la traza, se puede construir una asignacion <span class="math"><em>z</em></span> tal que <span class="math"><em>φ</em><sub><em>x</em></sub>(<em>z</em>) = 1</span><br /> → <span class="math"><em>φ</em><sub><em>x</em></sub> ∈ </span> CNF-SAT</li>
+<li>supongamos <span class="math"><em>φ</em><sub><em>x</em></sub> ∈ </span> CNF-SAT<br /> → existe <span class="math"><em>z</em></span>, <span class="math"><em>φ</em><sub><em>x</em></sub>(<em>z</em>) = 1</span><br /> → constuir <span class="math"><em>u</em></span> a partir de <span class="math"><em>z</em></span><br /> → x<span class="math"> ∈ <em>L</em></span></li>
+</ul>
+</section>
+<section class="slide level1" id="section-15">
+
+<ul>
+<li>L <span class="math"> ≤ <sub><em>p</em></sub></span> CNF-SAT</li>
+<li>Entonces CNF-SAT es <strong>NP</strong>-difícil</li>
+<li>Entonces es <strong>NP</strong>-completo</li>
+</ul>
+</section>
+<section class="slide level1" id="conclusiones">
+<h1>Conclusiones</h1>
+<p>No tenemos ninguna demostración que <strong>P</strong> ≠ <strong>NP</strong> (≠ <strong>EXPTIME</strong>) pero hoy en día se supone que <strong>NP</strong> es más dificil que <strong>P</strong> (y más fácil que <strong>EXPTIME</strong>).</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPUAAAEqCAYAAADNrhYrAAAPm3pUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjapZlrciS5DYT/8xQ+AkHweRw+wAjfwMf3B7ZG1m6s17th9ai7VF3FB5DITNQE+9c/b/gHP9pyDrm0XketkZ888kiTgx4/P/65+E38ns+pap9PSVHi8IPP3+HXgczffpG/BpP1x+dT//1A6XOgPgPHkj9/t/01kHL2xw2/PuvoLeYfA42v78/XkmsrufZW6qkpRdVkjGQqn8k0qvA++ey8q7JDzhSdgbfIqaw++osUQzffw9dK/fbEQDLk5/m3fvWD+a4PP25gF/qC9Udbiem352/5Oq+f89/BTvP7lq89vtHlzSo/zv2XxIS/k5lfiXnb+hHotKOErwt+80U9v1DztY17+r32LsgzV/BW3x/yvfnPQFwI7LI+CFZejd/CcXuvwasT0w00TtxAdHE8JBHUK1mOTLlB7B1s2SwrJ0uNz5Q2ifJzXVsaab9UZH/JTU2HHtKfdAMM5Wy6N3ytRd684823pTPzES5NwmDyAPA/XuGvXPRnr3u9BIQY9U9t1uHJTp4XluFp93cuIwlyv4JaXoB/vX7zE74xmrnMw9zZ4IzrM8Qq8smq40lfbpXrCp8fIEs7n/t9oMzchcWIkoJYKR2plENKTYRAdhI0JfakOS0yIKWkwyJTVq3kpntRz8A9Td61qaTPeTiJTBSt2sjN0EmycqaWc8sdDM2iJZdSammll1Fm1ZpDLbXWVp3cZoPqWmm1tdbbaLNrz710yKD3PvocaSjcV0YdbfQxxpzMORl51jC5fnJmpaUrr7LqaquvseYGPjvvsutuu++x50lHTz7l1NNOP+NMEwNKlq0Eq9as27B5wdrVm2+59bbb77jzO2vyVcK/f/2NrMlX1tLLlF/XvrPG2dY+n+HhhUE8Z2QsZSHjzTMAoJPnLHbJOXnmPGdxJKqiJBZZPDdH4pSactBsksqV79z9J3N/K2+h5j/NW/qrmQueuv8zcy9vwcqPvP1B1o4L5n4Z+1ShxzQq1XerrbVYgJzaMjSC9OxctI+sfTeiTsncU1euK2lpdyjaFGe2c1lp3xdy0yTXIL+6jkthkRzKO2iqlnTtk9O+ZR6ddemgmuAq7hZ/VUPIjBJcOcGMFyWUg0zOId1uKIQ07zN3naWd2dYmUzpKgVDTsEIi605V+u4179muqD4dZSeb5TQEtTQ5YVqdixCqzXRI3DISfHwI0nMIcu2nS9s6bUeLw1gsIJC817rSyjmL37sDkeu13qVlcH8vLbO6lXKdExz3lnLX1a8u1ruQYzmzSCGHdy6bWIQMWCbBvm1UkiqFFekuMp3T9wTj2y/fzfIeZ/UtVtq8lYUhd3Gmzj+UrxCrPOoJxKVmlV4Sm25Q/h5DdqfGcr8Mk8AbOWSFctemAtiqtNt0Aw9AkHJ8n2ExQrHuVmHncVMdKdma7YyEAyMol1oYkqliUyDKxRTdWpVM1W1tlUFodISpTLHbEtTnbpvDkDJNILevuo+OfTa6ulV93oPJSwVN4Ji96u3FdePhyJ0V4ct2m+f8KJM5YolBa3f1DmudN8gp7Bv1KSVfO2vManWz4JMxVcG2WUck755evpfMRWWvu5Dlsyg83UQFrVcU+ZLJOx3WFLdHfioBI4gxVOvdQPtgAUJK0/gea+7dCZwj8iiO48JDqwBY1PiwjBPXYs3oPX+GS6hWtv9klDJSapaaHtQlZJBKie2Q/OR5RGwIJSFfcveL27p9XiVG/JXugutQNv9i1jojPjKTgYL/8HP4sNPhAYRtcsIYzVKGatpbck+YiAmhnp7nxC91Rqcitp5mbZ4xCS6AgtVyH6BiUz+JctZbe4ce2b5R/7KbBtfJktBVULk9l70cLyBIa1FrxGIuyRBl2rYheuh1jgNpjTvgZqXmxE1OEAYfuRlLrHq1+kaoNypLFL7tMcMq5yYpaUJb6wxtdwNMMC1w49prkBO2dkDgGpAsMeN8O2AAioVxazz1wrWyq5XbBykabSEl6FFjl1xt1RMMD8PZSw5TC4CBWRyCN429SJABsZa8bGF1kgaAautTsEQUjYG7XhN4rWwsWljKn7rnaHuyThwkhN+oWxZM1hNU105DIUBbujVDtkaCJ6o3x3ItsabwX2DnrdZjY0DbnGP4t95aAaQyfFkz5wiDFvImhBfadf5N1Tgt1OxKdnbo7t3HZql1bMABWU7t0ITTYxaX5zKhle0CsHee3NQJxMjWnouugL0sGLKVuDLTRMCQM/51QySARGkSmDcba/CdHWpsA7PtSYMwFGbqFyl02b4WBA6450xOdqjUHHAzI1e6V+mz8M1mk5QUgubp2+Y9DCobK3s4BOxolRFcZAasmom+EZhMATddVDZJYGrY0juY62rMYbHDUpnh7j0APalYVIpYaIW6JH0DRiMhEWZrLoARpsBLrtNgb9g9ouMV844rQKTR3yqn5BV1VDZmM7iEXAy6mmM6s78CPmQN9gjxWlVZdpx4jEC3e2FIJYUNDp8WWeWNwHWFuu4c+U7y0jNysKlXOD7TvHgNXjwDHgfFbGn1opRpO9mJALtweKG7UOpEIHFZdA7Z3W+hLYE4aJruYNn5Q8M1LfaJ72hxQudVMT89IWej0qIOud2bq/CoCZUjxaxtQozHrQ2eZkO0G6Ub1TkaxqpQWiZnpvmchPMwTE3ZUjeXYmsi5molpMqo/4UYXrdyiA+ymuvFShyxO2GEeo4MOxXlPDBslpFeP1AZI8zXZm9kOeoiekCGjOAsJoqfypiQBaTUmtFtNXh9nVK8Q4D8YTIGk3Ph8vAw4V4Qtw/12kACxqnVdrGy3KemCY2B4oGNUcbkgxwCNpaAUPpa2QZUu0e9pHZ7xWseuiLCqtTogbPIC1VN+xFRCcNiEUwubwcJIQ4IC0voDXuM03UTkGCQDN8OY4/5wq+rynS/ivmggHEoCy46C4ZnjVdWw25gfvJFDxbEFqW3pxMgEb+6MLO4teFvvcNdE/cLD5jvHoN4Ph3AM9O2kCUi1HoxDWsd7LrnH2WJkFa+zsM1CtSKTXKGp0oVOr1lX4zfjE/+cJVEu44J5cD7gfvAraY2sPKdhmk6TbFqzB521O5pwxx7d+PoCvORS6h4KSwFK9O5g9FYQoU18Q5CmZQ4UQQELW5iVqmR6jzMKL6tfiIbbJwC4CejeUXdSE6jZm8Oy23lcpVmTnCEzcNEsn/AjGF0YcBA5AUhnzJ5k4nYYdEmzfq5EJgLR5NwsUQuGWQDn3uxmUbhTTfX7rRzNzmU3SUl2A8KF0pQiGM5e6SOtWADk+rvcvqAqEEFooYnplqhYQIEEUWDuiAyh0XGwlEul4oBHiRuC56TIr6CFYvBoGVEtHszoy/IA3GFQjocjfXhqnPNfSAtCl+5lULgNNXchQGR0sImZiCqz8sotowtr4n4PVydXRBqrwCQWZ5PIXx16sWQNFJ2so5nTtleloCdZJuYcb2DRt09GU7wURHe4S5YGQYfpbIvdZUs3h4aUyRXm5vBysCDBiEzNFjg+qAruAZFnmgkkB0sA+fZArYLQgCR+Fqfyk1Lpm9aNIxbEMIdR7hFmvnjISdHv0WSjNuRy4XrvbgPWjdW2/bo3jNJPQ4FfEimzEg9bEz9sKIxDfskRhuBTYcQ8ahQ7qhUFqsw4IoZo6PAzxNuulDZeVGtoPbcuHEk8FSly4YNGNcLhd3QXkDqxAn85wg1owDV/e+gPkeJ5opBQ2fYLTaD64vcDoICnLFYscf3q4V7EaA+DfNF//vQVF3K6IMXoIZiEoCgXFC+eb0Rg53xR9UlgXmoInwqWoRDRrl/NRb0kJgxOk7ACAQ2HYZvFWGiJW8vAxvYBtM36sJ0wx5N3ClYTgbBkTEwiznBrZnWaI6hNF1GULlDCUOHFBGqHyvWjx6uO/HB98Da8aNfQHqAqsUXRON08bkTDRiCL2z+aJHID3dZXHkDEtUxXN1JhHy4K9/PLXAF+pHI9HSqlO4yibPt/qyOntb93O1w5HpPCgMWdvpG6e7osqAwekJthA2c0lsCrldR4FMo3joGjRN79C4OPu6KpJYeqf6Lw6DoRvIe3Q0IhestCWpso+/hz03BOKoMwqhpf/7FG56keCfgXcd0sARK77ZFr46cyitNjGy+LaJ/xZtDbPLrPChH8oEd19l9RowD2ru5E2NAjCAaDqUWvNSU744DFdd7SGZHealaEawehgBlQpUwqdldEcPTTEHlUC2ZmGx52iOPM7EE4B9zShaofvPSoju5bj1cudlaAvz0qMyIAiGdJxE9zCjxoazoInJh+TlBRAuFSx0qjw03CUwezUbcgHnWFRMkr3wWXi2hEayIfWiDUhDKlYEzxQr4FxYVh0zT0CZuYQwoCUOzvDILjAJY0Txyqc4heKsTuotVp3w9JCpeStQEX3tMXJR9TKwh5EjzSCvobgcXgVcDCMmLFL5ZNVwVlFOhsOHP0uhTNvICbUFi2DTvFnEi0aeN7JR3PCjtR+K74vZA6ZEhoEBXgj/rwMQfeO9ubmjVH3INsuWyDggPBT2xGzTStEYUD5riK6MRARZ4ttOCix4+s+KqTkxtJRZI43XBHIjYTgLYOVgByvbHJ1yBDcmj4RBJLovqCdKLAWbq5tzpD2GmAb7pjTKQWgdqGWSrmPd4hZ4bDmGRHaTQ4Qjz4SK9jaHOMVrzlH32VnT9pHfozaey/dqe1Hv7yR0x0064WS1GyCtFPH2zB9ODKw694akiZU3TEg3Zrl+NQtr+COjoJPbRKhGM+ZVkf/ZlIA3wbh+w1aEVC6/mvmvvAt5MgUzX4S0JKaHxpk6lbIT+2UeQAdNFL8fnJWNlrhZOzfiT9xDxiPtC5Bhw4Kppefpz4fDQcp7ZiulvMKo/JCEbuPeIyvtTnrQDLS4kYBOJ6K5gJDWR/HMrumTJsJ6UuFGFKDiKfNV5GMYnM7Sopi0CI8vBm0sgnhj9XjfqlQYalHXsH2QHgqtY8934I/XkOgqPYVEfv5zX3tt6zyHdOMjd+HpMHSbkkk2U7XET3T+hU4OsKNPL+nBe+Y7ewVUC/dA+1OjPatEgEMTXdJUGpOFLOBXLhA0mlIgx0Nne8FOQGHSk8UZ3h8lpnvb9eeKKYb/0+qT3c6LRVi36NwgG4oDahW4XayMoffPHCeQpv7WSNgDnz7igM3xUAMnmDx0hkgXw1c2ViyaRhlEwW96EEsan7KVkNAfe6c4QzIa8VzgEgQu+c58S/+jPqlB0EApV0RYPG7SJtmEhbDGYxDLTirKWuTAKjGepkoORZVK0m9Q3iAiuwzHGfjoSXGElJM5dFraMHJMtvEhmO80fLfx4FKk4Iv8fv38DINav++xGg7gAAAAEc0JJVAgICAh8CGSIAAAgAElEQVR4nOydd1hUR9vG7y0sHelNEUFAui0aRWzRWGM3kUSMsZuYWGMUY15LjGKi0SSW2E2xxpoYS8RKsFdQQEBERRSQLp3d5/vDbzcibcvZPZT5XZdXzJ6Z57lXuM/MmTNFQEQEBoNRbxDyLYDBYHALMzWDUc9gpmYw6hlKm1omkyE+Ph7sEZzBqN0oberjx4/Dw8MDly5d0qYeBoOhIUqbOjs7GwCQlZWlNTEMBqN65s+fj8uXL1dbRqxsMLH4ZVGpVKqZKgaDoRY5OTn45ptvkJubizfffLPKckq31Hp6egCA0tJSzdUxGAyVKSkpAfBfA1sVSptaHoiZmsHgB7n35A1sVajcUpeVlWkgi8FgqIvWTM1aagaDHzg3Net+Mxj8wlpqBqOewUzNYNQz5N7jbPTb1NQUAJCXl6eBLAaDoS4FBQUAAENDw2rLKW3qRo0aAQByc3M1kMVgMNQlJycHwH9erAqlTW1mZgaAmZrB4Au59zgztZGREcRiMTM1g8ETcu/JG9iqUNrUAoEApqamii4Ag8HQLZybWh6MtdQMriEiXL1yFQkJCXxLqdUo2/1WepWWPBgzdfXk5OQgLTUNDo4OMDExqbRMcXExEhMT0axZswojmdnZ2UhLTVP8v55ED3Z2djAyMlJLT0JCAmRSGTxaeFRZJjY2Fvr6+nBxcVErh6akpaYi6L0R8GjhgWMnjvOioS6gbEutsqkfPnyovqoGQI/ubyErMwumpqbYd3A/3NzcKpTZvXMXFi9ajFmzP8cnUz4pd63nWz2QlVl+zbpQKIS3jzdmfT4LXbp2VUlPvz59IS2TIiYuFhKJpML1vLw89O/TD2ZmZrgZeUul2Fwh30yH7apTPTk5OYrH4OpQqfttZ2eH1NRU9o9fDbk5L++meXl5WPi/BZWWkZEMAEAyWZX1p3w6BVOnT8P4CePh7++PO1F3MG7MOBw6eEg1QTUYRv45+5nWftLT02FhYVHj5BOVWmp7e3sUFxcjKysLlpaWGgmsz9ja2kJfXx8XL1zE2TNn0a17N5VjTPnsU+jr6yv+f9PGTQhdugzffL0Evfv0rnECAqP+8ezZM9jb29dYTuWWWh6cUT1TPvsUABC6bBknu8WMHTcWlpaWyMzMRHxcvMbxlKWgoACXL13CX3/+hbCTYUhLS6u0nEwmQ0xMjOK5LzExEUf++gsJ8eW1EhEib0fiyF9/4fKlS2wnHRV49uyZwoPVoXJLDQCpqanw9vZWT1kDQCqVYuiwodiyeTPi4+Lxx94/EPR+kEYxRSIRbG1tkZmZiefPn3OktGpycnKwZPES/PXnn+Xm+4tEIgR/OAr/W/C/cuWj70Zj0ICBmDBxAuzs7bB0yVLIZLJyz+rJycmY8vEnuBN1R1HP1dUVIV/O0/r3qetIpVKkpaWhW7duNZZVydSspVYOGckgEokwNyQE48aMxQ+rVmPgoIFqj2ADL7eykQ9SNm7cmCupVXLi+An8feQIhg4bii5du8LKygpxcXH4fuX3+GXbdrRt2wb933lHUV7+TB5+Phz37t1Dx4COaN++PR4+egTg5eYa48aMQ0J8PNq1b4eRwcHIzMjAls1b8Mnkj7X+feo6z58/h1QqVar7rVZLzUxdPfIxp27duyGgUwAuRFzA5o2bMHX6NLVjrvp+FQoLC9G8eXO08Gyhcv13h70LgaDi5zJpxcE6AOjV6210694Ntra2is/atW8HoVCA+fPm48yZs+VMLSc2NhYDBw3E96tXQfBKwr+P/I2E+Hh4enpi+6+/wMDAAAAwaMhgjPtoLG7d4mfkva4g9xzn3W95wNTUVDVkNUxCvpyHQe8MxKaNm/D+yA9gY2OjVL2dO3ZAJBIjPz8fZ06fxvVr1yGRSLA0dJlaOuLj4lQqb25hUennXv//2JWRXvkjgIODA75ZurScoQHg9KnTAIBRH45SGBoAzM3NsXLV9+jR/S2V9DU05J7TyjO1SCTC48eP1VPWAPH29sbgIUNwYP9+rP5+Fb5ZtlSpeksWL1H8XSgUIqBTAELmhcDbx0fxeWZmJubM/gJlpeX3jXsvaAT69utb7rNbUbfLjabLyc3NRWv/VlXqeP78OW7dvInU1DRkZmQg9f8nxpRJK9+rzsXVBUbGFR8zEu/fBwD4+PpWuPaqyRmV8/TpUwDgvvstkUjQpEkTJCYmqqesgfL57Fk4+vff+GPvHxg7fpxSdX7fuQMSiQRGxkZwcnKqdHZaUVER7sXeQ9lrI8hcDKSVlpZi0YJF2LtnD6RSKSQSCczMzCrkUpb8gnwAqHHiBKNy5J5TZtafSqYGXo5W3r17V3VVDRg7e3uMGz8Oa9esxfcrVqJ9+/Y11mnTtk2lLeurODo64nxEOFcyy7Hq+1XYtXMnOnTsiIWLFsLdwx0AEB0djQH9Kj5L14SlpRUeJj1Edk4211IbBImJiRAKhWjWrFmNZVU+9dLFxQVpaWl48eKFOtoaLJM+ngwrKyucOH4CsbGxfMupkWNHjwIAlixdojC0Jjg6OgAAbt+sOCD29GmKxvHrOw8ePICjo2ONN3pATVPLkzCUx9jYGNNmTAcRYf/+/XzLqRGSvRzCL/z/LXTkHNx/QK14AQEBAICdO3YiPz9f8XlCQgKmfPKpmiobDomJiXB1dVWqrMqmlgdmpladoKAguLm5QVpW+2dR9e3fDwAwfep0/LH3Dxw6eAijRgZj185dNe5mWRlDhg1FU+emSEhIQNB7QVi3dh0WLViIIQMHw9y8UY3LCRsyBQUFePbsmfZMLW+p2WBZ5UgkEuhXshoKAERiEUK/DYW5uTkAwKlp00rri8ViiEQizvSIxKIq44lFL3O9voJr5qyZCPrgfSQlJWHuF3Mwa8ZM5OXlYdee3TA3N4eeXvnyYr2XwzOvfy5HX18fv/72K95o9wai797Fyu9WYOeOnej/Tn/s+WMvzMzMqqzb0ElKSgIRKb80llTk6dOnBICmTp2qatUGQWFhIRUXF1dbRiaTUWlpaaXXioqKqLCwkDM9ysQrKCioUnN+fj7FxsRScnJyufIlJSUVyubm5lb5vV7l2dOndPfuXcrJyVF8VlhYSEVFRTXWbYgcOXKEANCvv/6qVHmVR7/t7e1hYWGB6OhoVas2CJR55yoQCKpcPqfMQIgqKBOvuhVfRkZGFWawVVVe2ddVdvb2sHvtfSt7V1018oFVd3flBixV7n4DgK+vL6KiotSpymAwVCQqKgoCgQC+lUzcqQy1TO3j44PU1FSdrBZiMBo6d+/eRbNmzarcHut11DY1ANYFZzC0jEwmQ3R0tNKtNKChqdnMMgZDuyQlJaGgoICZmsGoL8g95vPKQp6aUMvUtra2sLa2Zt1vBkPLyD2mdVMDgL+/P27dusV2oWQwtEhkZCT09PTg6empdB21Td2+fXtkZWUhPl53m+AxGA2Ny5cvw8/PT6X3+Gqbul27dgCAK1euqBuCwWBUw/Pnz5GYmKjwmrJobOqrV6+qG4LBYFTD1atXQUS6M7WTkxMcHByYqRkMLSH3ls5MDQBvvPEGbt68WW5faAaDwQ1Xr16FsbGxSiPfgIambteuHYqKinDnzp2aCzMYDJW4fPkyWrVqpfIyXI1banlyBoPBHUlJSUhPT0fbtm1VrquRqTt37gw9PT2cOXNGkzAMBuM15J7q0qWLynU1MrWJiQnatGmDs2fPskkoDAaHnDt3DkKhUKmzs15HI1MDQLdu3ZCWloZ79+5pGorBYPw/586dg4+PD6ysrFSuq7Gpu3btqhDBYDA0JykpCUlJSQpvqYrGpg4MDIRYLGamZjA44uzZswDAn6lNTU0Vz9UMBkNzzp07B4FAwJ+pgZcjdE+fPkWciicrMhiMipw7dw6enp5Kn5D6OpyYul+/lxu/HzlyhItwDEaDJTo6Gg8ePECfPn3UjsGJqQMDA9GoUSMc/f/zlxgMhnrIPdS/f3+1Y3Biaj09PfTs2RPh4eHIy8vjIiSD0SA5duwYTE1N0blzZ7VjcGJqAOjbty9KSkoQFhbGVUgGo0GRk5OD8PBw9OzZs8IxSKrAman79esHgUDAuuAMhpqcOnUKpaWlijEqdeHM1A4ODmjdujX+/vtvNmWUwVCDY8eOQSAQaPQ8DQAqn6VVHX369MHSpUtx69YttG7dmsvQjErIyMjAgwcPkJ6ejszMTGRlZSEzM1Px98LCQhQWFqKoqAgFBQUoLi5W1DUxMYGenh5MTU0hFothZmYGCwsLWFpalvvj6OgIFxcXdtaVliEiHD9+HP7+/nBwcNAoFqemHj58OJYuXYrdu3czU3NEbm4u7ty5g6ioKMTGxuLBgweKP9UNSurr68PIyAjAywPtXjdlVlYW8vLyUFZWBuDl85xMJqsynoODA1xdXeHi4gIXFxf4+vrC398f7u7unB2725CJiIhAcnIyJk6cqHEsAXHcV3Z3d4dUKsX9+/chEAi4DF3vycrKwsWLF3Hp0iXcvn0bUVFRirOJ5RgbG8PZ2RnOzs5wcnJC06ZN4ejoCGtra1hbW8PGxgZ2dnZKn0Aph4iQnp6O58+f4/nz50hPT0dqaipSUlLw8OFDJCUl4dGjR0hJSVHcCICXNwxvb2+0bNkSrVu3RmBgIPz8/JjRVWTatGn48ccfERsbixYtWtRcoRo4N/XcuXOxfPlyXLt2Ta0F3g2JR48e4ezZs4iIiEBERARiYmIUraWxsTF8fX3RsmVL+Pv7w9/fH97e3mqt2uGSsrIyPH78GLdv30ZkZCQiIyNx+/ZtJCYmKrSbmpqiY8eO6NSpEwIDA9GpUyfOj+itT8hkMjRu3Bg2NjaIjIzUPCDXB2RfvXqVANCcOXO4Dl3nKSoqopMnT9KsWbPI29ubACj+uLu700cffUSbN2+mmJgYkkqlfMtViby8PDp9+jQtWrSIevXqRaamporvZmxsTAMGDKB169ZRYmIi31JrHeHh4QSAFi9ezEk8zltqAGjevDmIiHXBAeTl5eHw4cPYt28fwsLCkJ+fDwBwdXVFr1690LNnTwQGBsLOzo5npdwilUpx+/ZtnDt3DidOnMD58+dRWFgIAPD09MTgwYMxYsQItGrVimel/CPvet+7dw8eHh6aB+Tk1vAaM2bMIAB08+ZNbYSv9eTn59OePXto6NChZGBgQADIyMiIBg0aRGvXrqX4+Hi+JeqcgoICOnHiBM2cOZO8vLwUrbinpyctWLCAoqOj+ZbICzKZjJycnMjHx4ezmFox9YULFwgAzZ49Wxvhay3h4eH00UcfkbGxMQEgfX19GjhwIO3cuZNevHjBt7xaRWRkJIWEhJCLi4vC4G3atKE1a9ZQVlYW3/J0xvnz5wkALVy4kLOYWjE1EZG3tzfZ2tpSSUmJtlLUCp4+fUrLly+nFi1aEAASCATUvXt32rJlS4P65VQXmUxGFy9epKlTp5KVlRUBIENDQwoODqYzZ86QTCbjW6JWGT16NAmFQkpKSuIsptZM/e233xIAOnz4sLZS8MrVq1cpKCiI9PT0CAA5ODhQSEgIJSQk8C2tzlJUVEQ7d+6kt956iwQCAQGgFi1a0M8//0wFBQV8y+Oc3NxcMjY2pu7du3MaV2umfvbsGenp6dGQIUO0lULnSKVSOnz4MHXt2lXRKvfp04cOHTpEpaWlfMurV8THx9OcOXMUrbetrS0tXLiQ0tLS+JbGGdu2bSMAtH37dk7jas3URETvvPMO6enp1fkfRFlZGW3fvp08PDwU3cOJEyc22MEdXZKfn0/r169XPN4YGhrSlClT6MmTJ3xL05hu3bqRqakp5+MtWjX1/v37CQCtXr1am2m0hlQqpd27d5OnpycBIHt7e1qyZAmlp6fzLa3BIZVK6c8//6Ru3bopzD1r1qw6+7NISEgggUBAY8aM4Ty2Vk1dVFREVlZW1LZtW22m0QqHDx8mf39/AkA2Nja0YsUKys/P51sWg4jOnTtHnTt3JgBkampKX331FWVnZ/MtSyUWL15MAOjUqVOcx9aqqYmIpk+fTgDo0qVL2k7FCeHh4dS2bVsCQI6OjrRhwwYqLi7mWxajEi5cuEA9evQgAGRubk6hoaF14mdVWlpKTk5O5OrqqpWZg1o3dVJSEolEInr//fe1nUojnj17RuPGjSOhUEgGBgY0b948ysnJ4VsWQwkOHz5M7u7uBIBatWpFZ8+e5VtStezevZsA0KpVq7QSX+umJiLq378/6enpUXJysi7SqURJSQl9++23ZGZmRgBoyJAhdP/+fb5lMVSkqKiIQkNDycTEhADQ8OHD6dGjR3zLqpROnTqRmZkZ5ebmaiW+Tkx99OhRzmfNcEFYWBi5ubkRAOrQoQNduXKFb0kMDcnIyKCpU6eSSCQiQ0NDWrBgQa3qkssXPH388cday6ETU8tkMvLw8CAHB4daMcMsLy+Ppk2bRiKRiAwMDGjp0qXsPXM94+zZs4oueYcOHSgqKopvSURENGbMGBIIBFp9HaoTUxMRfffddwSA9u3bp6uUlXL8+HFq2rQpAaAuXbrQvXv3eNXD0B4FBQU0e/ZsEovFpKenR1999RWvjUpGRgYZGRlR165dtZpHZ6aWf6GAgABdpSxHUVERzZgxgwQCAZmZmdH69evr/bxixkuuXbtGLVu2JAD05ptv8jZmsnTpUp00bDozNRHRzJkztfZurjpu3LihmEDyzjvv0LNnz3San8E/ZWVlFBoaShKJhAwNDXU+ISovL4+srKzI29tb642JTk2dnJxMEomE3n77bZ3lXL9+PRkaGpK+vj599913dW5HEQa3hIeHU7NmzQgABQcHa20E+nV++OEHAkBbtmzRei6dmpqIaNy4cQSArl69qtU8WVlZNHDgQAJAb7zxBsXExGg1H6PuUFBQQFOnTiWBQEBNmzbV+luP4uJicnJyoqZNm+rkmV7npr537x4JhUIaNmyYVnP4+voSABo7diwVFhZqLRej7vLLL7+QoaEhmZiY0J49e7SaBwCtXLlSazleReemJiIaPnw4CYVCunv3Luext27dSoaGhmRkZES///475/EZ9YvY2FjF9kqjRo3ifN22VColLy8vsra21tnuN7yY+tKlSwSA8xUqixYtIoFAQI0bN6aLFy9yGptRf3n+/Dn16tWLAFCPHj04XRzy559/EgCaN28eZzFrghdTExH169ePRCIRJ8+6JSUlNHbsWAJAHTt2ZKPbDJUpKyujWbNmEQDy9fXlZIqpVColf39/MjU11ekSUd5MHRUVRUKhkAYNGqRRnPT0dAoICFCMZtamKYGMuse2bdtIT0+PrKys6N9//9Uo1vbt2wkALVmyhCN1ysGbqYmIgoODCQBduHBBrfpPnjxRrHmeNWsWe13F4IQ///yTjI2NydTUlP755x+1YhQVFZGzszPZ2dnpfCdZXk394MEDkkgk1KVLF5XrJiYmkouLC4lEIlqzZo0W1DEaMleuXCE7OzuSSCS0f/9+lev/+OOPBIB++OEHLairHl5NTUT08ccfEwCV7oi3bt0iW1tbMjAwoL/++kuL6hgNmaSkJGrevDkJhULauHGj0vVyc3PJxsaGXF1deXkc5N3Ujx8/JgMDA2rXrp1S3ecLFy6Qubk5GRoa0rFjx3SgkNGQSUlJIR8fHxIIBLRixQql6nzzzTcEQKUbAZfwbmoiopCQEKW2Sr18+TKZm5uTkZERHT9+XEfqGA2d5ORkatGiBQkEghonkDx58oRMTEzIx8eHt+W8tcLUBQUF1LRpU7K1ta3yHeGtW7fIwsKCjI2Na/12NYz6x7Nnz8jX15cEAgGtX7++ynJBQUEkEAgoPDxch+rKUytMTUT022+/VXn+1vXr18nc3JxMTEzUHiln8EdRURGFnQyj2JhYvqVoRHp6uqIr/vPPP1e4fu7cOcVWSnxSa0wtk8moU6dOJJFIym1ccPfuXbKxsSEDAwMKCwvjJFd2djbF3YujvLy8KssUFRVRdHR0pdMGs7Ky6F7sPcWfxMRETrYPListo5s3b9Kxo8fozOkz9WLDeiKiqMgocnV2oVEjg/mWojGpqanUokULEgqFtGPHDsXnZWVl1Lp1azIyMuJ9b7RaY2qil8viBAKB4k6XkpJCzZo1I7FYzOnC8rat25Crswu19PWv8ljZ7Vu3kauzC61ds7bK+q/+cXNpTgPfGUDn1Hg0KC0tpfXr1lObVhXjDh44iC7W8d5J5O1IcnV2oeAPRnISr6ysjJM46hIfH0+Ojo4kkUjo5MmTRPTfRJM5c+bwqo2ISKjxAdccEhgYiBEjRmDfvn04dOgQBgwYgIcPH2Lr1q0YNmwYZ3lyc3IBvDwQfuH/FlRaRkYyAADJZFXWn/LpFEydPg3jJ4yHv78/7kTdwbgx43Do4CGltZSWlmLShIn4bvm3KCosxNBhw/DlV/PxxZwv0LVbN0RFRuGjDz9CUVGRql+zXjJuzFh4eXgiMTGRNw1ubm44efIkTExMMHz4cFy4cAFz5syBg4MDvvzyS950KeD7rvI66enpiu42APruu+84z+Hu6kYd2r1JXQO7kKuzC505faZCma1btpCrswut+fGnSuu7OrtQUVFRuc83bthIrs4u9Ebrtkqv9vlu+bfk6uxCHd/sWOk2O/di79GY0WPq9PRXLlvq998LIldnF62s8FOVK1eukJGRERkaGhIAtSapaINa1VIDgLW1Nby9vVFUVAQ/Pz98/vnnWss15bNPAQChy5ZBKpVqHG/suLGwtLREZmYm4uPiayyfmZmJLZu3AABWrf4erq6uFcp4tPDA1u1bIZFIKo2RnZWFs2fO4s/DfyI8PBwvXryoUEYmkyEmJga5uS97GPn5+Qg7eRKnwk4hKzOrXNmszCycOH4Cp8JOVRpLKpUiJiYGeXl5AICSkhKEh4fj7yNHEHcvrsbvXBmpz57h5D//4O8jR3D3zh0QUYUy+fn5eJj0UNFjeZryFA+THuLRw0eQvdabUiYeF7Rr1w4zZ85EYWEhzMzM0KNHD63kURm+7yqv89NPPxEAsrKyIqFQqPGk+spwd3Wjdm3eoLKyMur9di9ydXahXTt3lSujTktNRNSvd19ydXahU2E178P2y/ZfyNXZhQYNGKjydygoKKB5c0MUWuR/PN1b0HfLvy03kUc+ULXsm6X0159/Uktff0V5H09vOnzo5RnimzZuIi8PT8W11v6tKjzPy2P9sGo1HT92nNq3bVcu//ix4yr0UqpqqfNf5NPM6TOoeTPXcjH69e5L8XFx5couXLCwwniD/M+Vy1dUjscFeXl55OzsrOhVDh06tFZsZlmrWuqIiAjMnDkT3t7eOHfuHIyNjTF+/HgUFxdznktGMohEIswNCQEA/LBqNQoKCjSKWVJSgocPHwIAGjduXGP5a1evAQA6d+6sUh4iwsTxE7B71254eXvhu5XfYduv2zF3XgiMjI2xft16LPtmabnyAHDy5ElMnzodgZ0DsWLlCgwZNhSFhYUImTMXs2fNRujSZRg2fDhWrFyBbt27IScnB9OnTkdJSUmFWEePHsWUjz+Bl5cXVv2wGou+Xgw7e3ucPnUaixcuqvE7yGQyTJwwAYcOHkLvPr2x7+B+7D90ABMnT0JcXBw+DP5Q0bMAgMFDBmPuvBA4NW0K4GWvaO68EIR8OQ+eXp4qx+OCRYsW4eHDh1ixYgVGjRqFAwcOYPny5ZzmUAuebyoKHj9+TLa2tmRtbU1JSUlE9N9e4VwvXXN3daM2rdoo/j/4g5GK1keOOi116LJQcnV2obff6qmUjiEDB5OrswvtV3Fk/8hfR8jV2YV69exVQUN0dDQ1b+ZK7q5u9DTlKRH911K6OrvQTz/8WK78qJHBitF7eYtN9HIt8FvdupOrswtdemXDiVdjrfi2/HhHdHQ0uTq7kLurGz1//rxCnVdb6mNHj5GrswuNGV1xo4wFX/2PXJ1daPOmzRWuVfVMrW48dbl16xbp6elRu3btqKysjEpKSigwMJCEQiEdPXqUszzqUCta6pKSErz77rvIyMjArl274OzsDACYMWMG3nzzTSxatAjXr1/XWv6QL+dBKBRi08ZNSE9PV7rezh078Osvv2L9uvV4b/i72PjzBkgkEiwNXaZUffkzq5GRsUp6j/x1BAAwfsJ46Ovrl7vm5eWFToGdIJVKcebM6XLXWrVqhU+nflbus7feegsAMHjIEAwcNFDxuVAoRGBgIAAgOTm5ggb/lv6YNbv8eIeXlxe8vb0hlUpx88bNar/D30defocPR39Y4Vqfvn0AAFcuX642hjbjVUdRURGCg4MhEAiwefNmiEQi6OnpYe/evbCzs0NwcDAePHjASS51EPOW+RW+/PJLXLp0CV999RV69uyp+FwkEmHXrl1o1aoV3nvvPdy6dQumpqac5/f29sbgIUNwYP9+rP5+Fb5ZtrTmSgCWLF6i+LtQKERApwCEzAuBt48PgJcDYXNmf4Gy0rJy9d4LGoG+/frCwNAQAFCoYrc/JiYGAODv71/pdV9fX/wb/i8eJJb/xTIyNqpQ1sraGgBgXMk1C0tLAEBebl6FayYmJpXmbuHliejoaDx79qyabwDFoNqB/QcQdjKs3LWcnGwAwPP059XG0Ga86pg1axbu3LmDVatWlfsZODg44JdffkHfvn0RHByMs2fPQk9Pj5OcqsC7qY8ePYqVK1eiX79+WLhwYYXrLi4uWLVqFcaNG4fp06djy5YtWtHx+exZOPr33/hj7x8YO36cUnV+37kDEokERsZGcHJyqvCLXlRUhHux91D22sj68+cvf7ns7Gxx9w5UvqvLR57NLcwrvd6oUSNF/poQCKq79vIiQfnRY/lNt6bn17z/76Xci42t9Bffy8sLnbt2UTov1/Gq4siRI1i/fj369u2LadOmVbj+9ttvY8mSJQgJCcGCBQuwdKlyDQSX8GrqR48eITg4GE5OTtixYweEwsqfBsaOHYtjx6DfH60AACAASURBVI5h69at6N27N9577z3OtdjZ22Pc+HFYu2Ytvl+xEu3bt6+xTpu2bSp0f1/F0dER5yPCq7zesmVLnD51GuHh4Zj5+SyltRobGSE7KwtZWVmws7OrcF3+CCFvaXVJZkYmAMDMzKzacibGxkgF8P3q7+Hj66txXq7jVUZqairGjRsHS0tLbN68WXHTe505c+YgIiICy5cvR48ePXT+qou3Z2qpVIoPP3w5Ivnbb7/B3LzyVkfOTz/9BGtra3z22WdITU3ViqZJH0+GlZUVThw/gdjYWK3keJX+A96BQCBA5O1I/Bv+r9L13NzdAQBXr1yt9PqVK1cAvLxpaIuszKwK74eJCNevvRzRd/dwr7Z+czc3AMC9e/dUyiv4/xu/tKx870fdeKrw6aefIi0tDT/88AMcHR2r1igQYMuWLbC1tcXo0aORkZGhNU2VwZupv/vuO5w7dw4zZsxAly41d4vs7e2xadPLgaz333+fk8kir2NsbIxpM6aDiLB//37O47+Oi4sLBg8ZDACYNnWawoxyiAinT53GW926I/WVZ1T5wM+WzVsqDOwdPHAQd6LuwN7BHl046G5WRUxMDObNDSn3c9i7Zy+ePn0Ka2trvNH2jWrry7/DhvUbUFhYWOF6SUkJSktLK3xuZWUFAHj06CEn8ZRlzZo12LdvH95//32MHDmyxvK2trbYtm0bUlJSMGHCBLXzqgMv3e/o6GgsXLgQvr6++Prrr5WuN3jwYMyZMwehoaGYM2cOVqxYwbm2oKAg/Lr9FyQkJHAeuzIWLFqIpKSHuHnjBt5/Lwh+/n5wd/fAixcvEBMTg8ePHsHU1BRGxv+NkA8bNgx7du3GrVu3MGTgYAx7dzgsLSwQdecODh04CD09PYR+uxxisfZ+vObm5ti/bz/u3rmLPn37IDU1Fbt37wYAzJ0XApFYVG39dwa8g7179uLSxYsY2H8Ahr87HLZ2dsjNyUFUVBTCToYh9NvlCrPKadu2Df4+cgRLv1mK+wn3kZKSgo/GjlE7njLIGx9fX19s2rRJ6Xp9+vTBmDFjsHXrVuzZswcjRoxQObda6PodmlQqpU6dOpFYLKYbN26oVb9Xr14kEAjojz/+UEuDj6c3dWzfocrrN65fpzYtW5Ors0u5d7ev1vdo7s7ZzhZFRUW0bu066tKpc7mZUO3avEH/m/8VpaSkVKiTl5dHIXPmkncLL0X55s1cadiQYXTt6rVyZeXvjyt7hyt/v7tk8dcVrq1ds5ZcnV3ot19/U3z26jvnU2GnqGP7Dor8bVu3oT27Kx5fU1X+goICWrxoMfl5+5b73v4+fvTpJ1MoNTW1QqzCwkKaOH6ComwLNw+KuxendryaSE5OJjs7O2rUqBHFqTErLTc3V7EByKvv7rWJzk0tP/3vq6++UjtGamoqNWnShExNTdU6DKCwsLDGBRIymaxK0xYVFWntfK709HSKj4uj1NRUpaYcFhcXU3xcHN29e5cyMzKrLJebm1vl98nOzq50OaNMJqPs7OxyOl6fSFJWWkb3Yu9RfFwclZVWvSSyuvxlpWV0//59ioqMosePHyu1V11WZibFxMRUuv2uOvEqo7i4mDp27EgCgYAOH654c1eW06dPk0AgoA8++EDtGKqgU1MnJiaSsbExeXt7a7zq6Ny5cyQWi6lt27bsADwdwvXa6NrMnDlzCABNnTpV41ijR48mABrdHJRFp6YeOnQoCQQCOnPmDCfxVq5cSQBoxIgRtWIifUOgoZj6t99+I4FAQAEBAZwcP5uamkpWVlbk6urKyS451aEzUx8/fpwA0IQJEziN+8knnyhO6GBon/q0NVFVhIWFkZ6eHnl4eHD6HCzfHWX+/PmcxawMnZi6qKiImjdvTlZWVpSZWfVznzqUlZVR//79CQD99FPFxRcMbiktLaVLly5R0oMkvqVohXv37pGlpSXZ2NhQQkIC5/G7dOlCEolErUE3ZdGJqVesWKHVI0hycnLI19eXRCKRTp5ZGPWT9PR0cnV1JX19fTp//rxWcty4cYOEQiENHjxYK/GJdGDqp0+fkqmpqdY3N5ffYc3NzSkqKkpreRj1k+LiYsUZ1Rs2bNBqLvmg2YkTJ7QSX+umnjJlCgGggwcPajsVnT59mvT19cnBwUErXSdG/aSsrIzefffdKved55qHDx+SoaEhtW7dWisntWrV1PJTLbt27arNNOU4ceIE6evrU5MmTejBgwc6y8uom0ilUho5ciQBoGnTpuks75dffkkAaM+eipN1NEWrph49ejQJBAK6evWqNtNUYP/+/SQWi8nNzY2ePn2q09yMuoNMJqMxY8YQAAoKCtLp+eZ5eXlkY2ND7u7czUyUozVTx8TEkEgkogEDBmgrRbVs376dhEIh+fv7cz7izqgfTJs2jQBQ//79OXkXrSrLli0jAPTLL79wGldrph45ciQJhUKKjIzUVooaCQ0NJQDUuXNnys3N5U0Ho/axaNEiAkDt27ev9vglbfLixQuys7Oj5s2bc9paa8XUcXFxJBKJtDpsryzyH96bb75JWVlZfMth1ALmzZtHAKht27Y6W2RRFd9++y0BoN9//52zmFox9eTJkwmAWquwtMH69etJIBCQl5dXpSueGA0DqVRKkyZNIgDUo0ePSheD6Jr8/HyytrYmf39/zqY6c27qlJQU0tfXp169enEdWiM2btxIQqGQWrRoQcnJyXzLYegYqVRKEyZMIADUq1cvrc+/VoWFCxcSAPr77785ice5qefPn08A6Pjx41yH1ph169aRQCAgT09P9rqrAVFaWkrjx48nANS7d+9aZWgiorS0NDI0NKTu3btzEo9TU+fl5ZGlpSX5+/tzGZZTtm3bRmKxmOzs7Ojy5ct8y2FomdzcXOrdu7fiWJzKjkqqDUycOJEAcPI7yampN2zYoJNpdpoSERFB1tbWpK+vz+kABaN2ERcXR25ubgSAFixYUKuX5965c4cEAgGNGjVK41icmrpt27ZkYWGh9DGufBIfH0/u7u4kEAhowYIFfMthcMyVK1fI3t6e9PT0aMuWLXzLUYqePXuSgYGBxvMqODP1lStXCADNmDGDq5BaJzk5mVq1akUAaNKkSbW2a8ZQjQMHDpCpqSkZGRnpZM0BV+zbt48A0KpVqzSKw5mpJ02aRAKBQK09w/gkNzeXBgwYoJiI8OjRI74lMdSkrKyM5s6dSwKBgBwdHevcmElpaSk5ODiQr6+vRnE4MXVubi6ZmJhQYGAgF+F4YcOGDSSRSMjMzIwOHDjAtxyGiqSkpFBgYKDilRXfk0rU5YsvviAAdOnSJbVjcGLqX375hQDQ1q1buQjHG6dPnyY7OzsSiUQUGhpaqwdWGP9x9epVcnZ2VmwSyMc8bq6Ijo4mADR58mS1Y3Bi6t69e5OxsXGtmKGjKenp6YrF8h07dqT4+Hi+JTGqoLi4mObMmUNisZgaNWpEf/75J9+SOKFjx45kZWWl9s1JY1M/e/aMRCIRBQUFaRqq1lBaWkrz588nsVhM5ubm7LVXLeT+/fuK7rafnx+vC4e4Rr43/pEjR9Sqr7Gp161bRwBo//79moaqdURFRVHLli0VM5GePHnCt6QGj1QqpdDQUDIwMCA9PT0KDQ3V6jZZfJCSkkJCoVDtd9Yam7pr165kZmZWbzfUf/HiBU2ePJkEAgHZ29vTzp07+ZbUYElMTKR+/foRAHJ2duZs//jaSGBgIJmamqo150MjUz958oSEQmG96npXxdGjR8nJyYkA0FtvvUXR0dF8S2owFBUV0ddff02GhoYkEAjoo48+ouzsbL5laRV5F1yd9+wamXrTpk1a22epNlJQUEALFiwgfX19EgqFNHHixHr/y8U3e/fupcaNGxMAateuHV2/fp1vSTrh4cOHJBAIaOzYsSrX1cjUgwcPJolE0uB2Fbl58ya1b9+eAJCTkxNt27at0gPmGOoTGxtLQ4cOJQBkZGREy5Ytq9OvqtShVatWZG9vr/KrVbVNXVxcTKamptStWzd1Q9RppFIprV27lqysrAgA+fr61ptXKnySkpJCkyZNIrFYTABoyJAhlJRUP08DqYmQkBACQDdv3lSpntqmPnPmDAGg5cuXqxuiXpCdnU3z588nExMTxX5oERERfMuqc+Tk5ND8+fPJ2NiYAFCXLl0a/L/j+fPnCQAtXbpUpXpqm1p+zCc7DeMlGRkZNGfOHDIyMlLsf/XLL7+wbnkNPHr0iKZOnaq4KTIz/0dpaSmZm5tTly5dVKqntqnbtm1Ljo6ObCrlazx48IAmTpxIBgYGBIBatWpFO3bsqHfvUjUlISGBJk+eTIaGhop/p127dul07+26wNChQ0kikag0W1MtU2dnZ5NQKKSRI+v3GcWakJqaSv/73//I2tqaAFCzZs0oNDS0QU9gKSsro+PHj9Pw4cNJJBIRAHr77bfpn3/+4VtareWnn34iABQWFqZ0HbVM/c8//xAAWrt2rTrVGxT5+fm0bt068vDwIAAkEomob9++tHv37no7Yed14uLiaN68edSkSRMCQBKJhIKDg+nWrVt8S6v13LhxgwDQ4sWLla6jlqnlux+qOirXkJHJZHTu3DkaPXq0YjDIwsKCJk6cSCdOnKh3r2uSk5Ppp59+osDAQBIIBIo52qtWraL09HS+5dUZysrKyNTUlHr37q10HbVM3atXL2rUqBEbBFKT3Nxc2rx5M3Xq1EnxC29hYUGjRo2iAwcO1IntoCrj/v379N1331HHjh0V38vc3Jw+/vhjunLlCt/y6iw9evQgMzMzpf0mICKCCshkMlhZWaFNmzY4deqUKlUZlZCcnIzDhw/j0KFDOHv2LMrKymBkZIQOHTqgU6dOCAgIQMeOHdGoUSO+pVYgPj4eFy5cQEREBCIiIhAdHQ0AsLe3x6BBgzBkyBB0794dEomEZ6V1m6+++gpLlixBVFQUfH19aywvVjVBQkICsrOz0aFDB7UEMsrTpEkTTJkyBVOmTEFWVhaOHDmCI0eO4OzZszh9+jQAQCgUwsfHBx07doS/vz/8/Pzg5+cHCwsLnWgkIiQlJSEyMhKRkZG4efMmLly4gNTUVIU+f39/zJ49G4MHD0aHDh0gFAp1oq0hIPfatWvXtGPq27dvAwBatmypalVGDVhYWGDUqFEYNWoUiAgxMTE4e/Yszp07h3PnzmHjxo3lyjs5OcHPzw9ubm5wdHSEo6MjmjRpAgcHBzRt2hRGRkZK537+/DlSUlLw+PFjpKSk4MmTJ0hOTkZMTAzu3LmD3NxcRVmhUAhfX18EBQWhW7du6NKlCywtLTn7d2CUR+61yMhIpcqrbOqoqCgAgJ+fn6pVGSogEAjg7e0Nb29vfPLJJwCAhw8fIjY2Fnfv3kVMTAyio6Nx8eJFHD16tMo4BgYGMDQ0hKGhIQwMDBSfv3jxAqWlpcjNzYVUKq1Sg7OzMwICAuDr6wtPT0/Ff2vj40B9pUmTJrCwsFDa1Co/Uw8ePBj//PMP8vLyIBKJ1BLJ4Jb8/Hw8fvwYT58+xZMnT5CSkoKUlBQUFhaisLAQRUVFKCgoQHFxsaKOsbExJBIJTExMoKenB3NzczRu3BiNGzeGg4MDnJycYGdnx56Hawldu3ZFTEwM0tLSaiyrVkvt5eXFDF2LMDY2hqenJzw9PfmWwtASfn5+OH/+PFJTU2FnZ1dtWZVGM/Lz85GUlKTUwzqDweAOHx8fAMDdu3drLKuSqR88eACZTAZ3d3f1lDEYDLVo0aIFAOD+/fs1llXZ1ADg4uKihiwGg6EuzZo1AwAkJSXVWFYlU8sDyhMwGAzd4OTkBJFIxL2pHz58CIC11AyGrtHT00OTJk2001IbGBjAwcFBXW0MBkNNmjVrxr2pk5OT0bhxYwgEAnV1MRgMNXFycsKzZ89QVlZWbTmVTJ2eng4bGxuNhDEYDPWwsbGBTCZDZmZmteVUMnVGRgasrKw0EsZgMNRD7r3nz59XW05pU5eUlCAnJwfW1taaKWMwGGohN3VGRka15ZQ2tbzJZy01g8EP8gaVs5ZafndgpmYw+IHz7ndeXh4AwMzMTANZDAZDXeTee/HiRbXllDa1fNmevr6+BrIYDIa6yL336hLaylB66WVJSQkAsPW1tYycnBykpabBwdEBJiYmlZYpLi5GYmIimjVrBkNDw3LXsrOzkZb63xpdPYke7OzsVNo1haEbmKkbCD26v4WszCyYmppi38H9cHNzq1Bm985dWLxoMWbN/hyfTPmk3LWeb/VAVmZWuc+EQiG8fbwx6/NZ6NK1q1b1M5RHbmq5F6uCdb/rOLk5L/cOy8vLw8L/Lai0jIxkAACSyaqsP+XTKZg6fRrGTxgPf39/3Im6g3FjxuHQwUNaUs5QFdZSNyBsbW2hr6+Pixcu4uyZs+jWvZvKMaZ89mm5G/amjZsQunQZvvl6CXr36V2h287QPXLvcdZSy7d8VXFLM4aOmPLZpwCA0GXLqtxIUBXGjhsLS0tLZGZmIj4uXuN4DM2Re6+mtRdKm1p+l6ip6WfoHqlUiqHDhsLdwx3xcfH4Y+8fGscUiUSwtbUFUPN7UYZuUPYRWGVT19T0M3SPjGQQiUSYGxICAPhh1WoUFBRoFLOkpESxfr5x48Yaa2RoDuemVvYhnaF75E9E3bp3Q0CnAKSlpWHzxk0axVz1/SoUFhaiefPmaOHZggOVDE2Re6+mcS2lB8pYS103CPlyHga9MxCbNm7C+yM/UHqp7M4dOyASiZGfn48zp0/j+rXrkEgkWBq6TMuKGcqibEutsqlZS1278fb2xuAhQ3Bg/36s/n4Vvlm2VKl6SxYvUfxdKBQioFMAQuaFwPv/t6Zl8A/nppYfxlbTAm0G/3w+exaO/v03/tj7B8aOH6dUnd937oBEIoGRsRGcnJyqnJ3G4A+598zNzastp/QztbJrORn8Y2dvj3Hjx0EqleL7FSshFNT8Y27Ttg3avtEWXl5ezNC1FGVXSiptagsLC4hEImbqOsKkjyfDysoKJ46fQGxsLN9yGBwg915NG5WoNPnEwsKCvbOsIxgbG2PajOkgIuzfv59vOQwO4LyllgdjLXXdISgoCG5ubpCWaT7DjME/8gaVs5YaeLmboTJHaTJ0h0QigX4V7y1FYhFCvw1VDKw4NW1aaX2xWMxOMa0DpKWlQU9Pr8azwVU6n3rUqFHYuXMnCgoK2GqtWkJRURGEQmG1ExKICFKpFGJxxZcdxcXFIKJyB9Izaift2rVDVlYWEhISqi2nUkvdrFkzyGQyPHr0SCNxDO4wMDCocYaRQCCo1NDAy3eezNB1g6SkJKXOsVPZ1PLgDAZDd+Tl5eH58+dKnWOnkqnlAeVH2jIYDN2gyomzKpna2dkZwH+nXzIYDN0g95zcg9WhkqmbNm0KfX19xMTEqKeMwWCohdxz7u7uNZZVydR6enrw8fHB7du31VPGYDDU4vbt2xCJRPD396+xrEqmBgB/f388ePAAubm5aoljMBiqExUVBTc3N6X2ilPZ1H5+fiAi3LlzRy1xDAZDNUpKShATE6NUKw2oYeqWLVsCACIjI1WtymAw1CA2NhalpaXw8/NTqrxaLTXATM1g6Ar5GJbWTG1raws3NzeEh4erWpXBYKjBv//+C4FAgICAAKXKq2xqAOjUqRPu3r3LdkFhMHRAREQE3N3dFVs214TapiYiXL58WZ3qDAZDSTIzMxEdHY1OnTopXUdtUwPAhQsX1KnOYDCU5OLFiyAi7Zva09MTFhYWuHjxojrVGQyGksgbTmWfpwE1TS0UCtGlSxdERERofBIEg8GomrCwMNjb28PT01PpOkpvEfw6/fr1w+HDhxEWFoaBAweqG4ahRbKyshAfH4/Hjx+juLgYL168UFyzsLCAvr4+PDw84Orqyk4zrYU8e/YMV69exUcffVTjoXivopGpAeDYsWPM1LUAqVSKGzdu4PTp0zh16hRu3ryp9CaRYrEYLi4u6NKlC3r27IkePXoofbIHQ3ucOHECRIQ+ffqoVE+l7Yxex8fHB3l5eWwnFB6JjIzEr7/+il27diElJQXAy33HWrZsiRYtWsDT0xOurq7Q19eHmZkZAEAmkyEnJwd5eXmIjY1FbGwsIiMjFcv7RCIRevTogQ8//BBDhw5lZ1PzRFBQEPbv34+0tDTFYRpKQRowc+ZMAkB37tzRJAxDRcrKyuiPP/6gDh06EAACQG5ubhQSEkInT56k/Px8teImJibS5s2badiwYWRgYEAAyMLCghYsWECZmZkcfwtGdZSWlpKFhQUFBASoXFcjU584cYIAUGhoqCZhGCqwf/9+at68OQEgIyMjmjx5Ml28eJHzPLm5ufTbb79Ru3btCACZmZnRokWLqKCggPNcjIqcPXuWANDChQtVrquRqcvKysjW1pZatmypSRiGEty/f5/69etHAMjKyooWL15M6enpOsl97NgxevPNNwkAubi40KFDh3SStyEzefJkAkCxsbEq19XI1K8mj46O1jQUowpWr15NBgYGpK+vTwsWLKAXL17wouPPP/8kZ2dnAkBDhw6lrKwsXnTUd0pLS8na2lrtxlJjU58+fZoA0KJFizQNxXiNgoICGj16NAEgd3d3unbtGt+SKDs7m0aMGEEAyMfHh2JiYviWVO/4559/CAB98803atXX2NRSqZQcHR3J19dX01CMV3j+/DkFBAQQABoxYgTl5OTwLakcP/30E+nr65OlpSVFRETwLadeMWHCBBIIBHT//n216mtsaiKijz/+mABQVFQUF+EaPI8ePSJPT08CQAsWLOBbTpWcPn2azMzMyNDQkP766y++5dQLioqKyNramlq3bq12DE5MfevWLQJAU6ZM4SJcg+b58+fk5eVF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" />
+</section>
+<!-- {{{{ dzslides core
+#
+#
+#     __  __  __       .  __   ___  __
+#    |  \  / /__` |    | |  \ |__  /__`
+#    |__/ /_ .__/ |___ | |__/ |___ .__/ core :€
+#
+#
+# The following block of code is not supposed to be edited.
+# But if you want to change the behavior of these slides,
+# feel free to hack it!
+#
+-->
+
+<div id="progress-bar"></div>
+
+<!-- Default Style -->
+<style>
+  * { margin: 0; padding: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+  details { display: none; }
+  html, .view body { background-color: black; counter-reset: slideidx; }
+  body, .view section { background-color: white; border-radius: 12px }
+  body {
+    width: 800px; height: 600px;
+    margin-left: -400px; margin-top: -300px;
+    position: absolute; top: 50%; left: 50%;
+    overflow: hidden;
+    display: none;
+  }
+  .view body {
+    position: static;
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    display: inline-block;
+    overflow: visible; overflow-x: hidden;
+    /* undo Dz.onresize */
+    transform: none !important;
+    -moz-transform: none !important;
+    -webkit-transform: none !important;
+    -o-transform: none !important;
+    -ms-transform: none !important;
+  }
+  .view head, .view head > title { display: block }
+  section {
+    position: absolute;
+    pointer-events: none;
+    width: 100%; height: 100%;
+  }
+  .view section {
+    pointer-events: auto;
+    position: static;
+    width: 800px; height: 600px;
+    margin: -150px -200px;
+    float: left;
+
+    transform: scale(.4);
+    -moz-transform: scale(.4);
+    -webkit-transform: scale(.4);
+    -o-transform: scale(.4);
+    -ms-transform: scale(.4);
+  }
+  .view section > * { pointer-events: none; }
+  section[aria-selected] { pointer-events: auto; }
+  html { overflow: hidden; }
+  html.view { overflow: visible; }
+  body.loaded { display: block; }
+  .incremental {visibility: hidden; }
+  .incremental[active] {visibility: visible; }
+  #progress-bar{
+    bottom: 0;
+    position: absolute;
+    -moz-transition: width 400ms linear 0s;
+    -webkit-transition: width 400ms linear 0s;
+    -ms-transition: width 400ms linear 0s;
+    transition: width 400ms linear 0s;
+  }
+  .view #progress-bar {
+    display: none;
+  }
+
+div.thm {
+    max-width: 27em;
+    margin: 1em;
+    padding: .5em;
+    border: thin solid;
+    border-bottom: .15em solid;
+    border-radius: 1em;
+    box-shadow: 0px 5px 10px 1px hsl(0, 0%, 60%);
+}
+</style>
+
+<script>
+  var Dz = {
+    remoteWindows: [],
+    idx: -1,
+    step: 0,
+    html: null,
+    slides: null,
+    progressBar : null,
+    params: {
+      autoplay: "1"
+    }
+  };
+
+  Dz.init = function() {
+    document.body.className = "loaded";
+    this.slides = Array.prototype.slice.call($$("body > section"));
+    this.progressBar = $("#progress-bar");
+    this.html = document.body.parentNode;
+    this.setupParams();
+    this.onhashchange();
+    this.setupTouchEvents();
+    this.onresize();
+    this.setupView();
+  }
+
+  Dz.setupParams = function() {
+    var p = window.location.search.substr(1).split('&');
+    p.forEach(function(e, i, a) {
+      var keyVal = e.split('=');
+      Dz.params[keyVal[0]] = decodeURIComponent(keyVal[1]);
+    });
+  // Specific params handling
+    if (!+this.params.autoplay)
+      $$.forEach($$("video"), function(v){ v.controls = true });
+  }
+
+  Dz.onkeydown = function(aEvent) {
+    // Don't intercept keyboard shortcuts
+    if (aEvent.altKey
+      || aEvent.ctrlKey
+      || aEvent.metaKey
+      || aEvent.shiftKey) {
+      return;
+    }
+    if ( aEvent.keyCode == 37 // left arrow
+      || aEvent.keyCode == 38 // up arrow
+      || aEvent.keyCode == 33 // page up
+    ) {
+      aEvent.preventDefault();
+      this.back();
+    }
+    if ( aEvent.keyCode == 39 // right arrow
+      || aEvent.keyCode == 40 // down arrow
+      || aEvent.keyCode == 34 // page down
+    ) {
+      aEvent.preventDefault();
+      this.forward();
+    }
+    if (aEvent.keyCode == 35) { // end
+      aEvent.preventDefault();
+      this.goEnd();
+    }
+    if (aEvent.keyCode == 36) { // home
+      aEvent.preventDefault();
+      this.goStart();
+    }
+    if (aEvent.keyCode == 32) { // space
+      aEvent.preventDefault();
+      this.toggleContent();
+    }
+    if (aEvent.keyCode == 70) { // f
+      aEvent.preventDefault();
+      this.goFullscreen();
+    }
+    if (aEvent.keyCode == 79) { // o
+      aEvent.preventDefault();
+      this.toggleView();
+    }
+  }
+
+  /* Touch Events */
+
+  Dz.setupTouchEvents = function() {
+    var orgX, newX;
+    var tracking = false;
+
+    var db = document.body;
+    db.addEventListener("touchstart", start.bind(this), false);
+    db.addEventListener("touchmove", move.bind(this), false);
+
+    function start(aEvent) {
+      aEvent.preventDefault();
+      tracking = true;
+      orgX = aEvent.changedTouches[0].pageX;
+    }
+
+    function move(aEvent) {
+      if (!tracking) return;
+      newX = aEvent.changedTouches[0].pageX;
+      if (orgX - newX > 100) {
+        tracking = false;
+        this.forward();
+      } else {
+        if (orgX - newX < -100) {
+          tracking = false;
+          this.back();
+        }
+      }
+    }
+  }
+
+  Dz.setupView = function() {
+    document.body.addEventListener("click", function ( e ) {
+      if (!Dz.html.classList.contains("view")) return;
+      if (!e.target || e.target.nodeName != "SECTION") return;
+
+      Dz.html.classList.remove("view");
+      Dz.setCursor(Dz.slides.indexOf(e.target) + 1);
+    }, false);
+  }
+
+  /* Adapt the size of the slides to the window */
+
+  Dz.onresize = function() {
+    var db = document.body;
+    var sx = db.clientWidth / window.innerWidth;
+    var sy = db.clientHeight / window.innerHeight;
+    var transform = "scale(" + (1/Math.max(sx, sy)) + ")";
+
+    db.style.MozTransform = transform;
+    db.style.WebkitTransform = transform;
+    db.style.OTransform = transform;
+    db.style.msTransform = transform;
+    db.style.transform = transform;
+  }
+
+
+  Dz.getDetails = function(aIdx) {
+    var s = $("section:nth-of-type(" + aIdx + ")");
+    var d = s.$("details");
+    return d ? d.innerHTML : "";
+  }
+
+  Dz.onmessage = function(aEvent) {
+    var argv = aEvent.data.split(" "), argc = argv.length;
+    argv.forEach(function(e, i, a) { a[i] = decodeURIComponent(e) });
+    var win = aEvent.source;
+    if (argv[0] === "REGISTER" && argc === 1) {
+      this.remoteWindows.push(win);
+      this.postMsg(win, "REGISTERED", document.title, this.slides.length);
+      this.postMsg(win, "CURSOR", this.idx + "." + this.step);
+      return;
+    }
+    if (argv[0] === "BACK" && argc === 1)
+      this.back();
+    if (argv[0] === "FORWARD" && argc === 1)
+      this.forward();
+    if (argv[0] === "START" && argc === 1)
+      this.goStart();
+    if (argv[0] === "END" && argc === 1)
+      this.goEnd();
+    if (argv[0] === "TOGGLE_CONTENT" && argc === 1)
+      this.toggleContent();
+    if (argv[0] === "SET_CURSOR" && argc === 2)
+      window.location.hash = "#" + argv[1];
+    if (argv[0] === "GET_CURSOR" && argc === 1)
+      this.postMsg(win, "CURSOR", this.idx + "." + this.step);
+    if (argv[0] === "GET_NOTES" && argc === 1)
+      this.postMsg(win, "NOTES", this.getDetails(this.idx));
+  }
+
+  Dz.toggleContent = function() {
+    // If a Video is present in this new slide, play it.
+    // If a Video is present in the previous slide, stop it.
+    var s = $("section[aria-selected]");
+    if (s) {
+      var video = s.$("video");
+      if (video) {
+        if (video.ended || video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
+    }
+  }
+
+  Dz.setCursor = function(aIdx, aStep) {
+    // If the user change the slide number in the URL bar, jump
+    // to this slide.
+    aStep = (aStep != 0 && typeof aStep !== "undefined") ? "." + aStep : ".0";
+    window.location.hash = "#" + aIdx + aStep;
+  }
+
+  Dz.onhashchange = function() {
+    var cursor = window.location.hash.split("#"),
+        newidx = 1,
+        newstep = 0;
+    if (cursor.length == 2) {
+      newidx = ~~cursor[1].split(".")[0];
+      newstep = ~~cursor[1].split(".")[1];
+      if (newstep > Dz.slides[newidx - 1].$$('.incremental > *').length) {
+        newstep = 0;
+        newidx++;
+      }
+    }
+    this.setProgress(newidx, newstep);
+    if (newidx != this.idx) {
+      this.setSlide(newidx);
+    }
+    if (newstep != this.step) {
+      this.setIncremental(newstep);
+    }
+    for (var i = 0; i < this.remoteWindows.length; i++) {
+      this.postMsg(this.remoteWindows[i], "CURSOR", this.idx + "." + this.step);
+    }
+  }
+
+  Dz.back = function() {
+    if (this.idx == 1 && this.step == 0) {
+      return;
+    }
+    if (this.step == 0) {
+      this.setCursor(this.idx - 1,
+                     this.slides[this.idx - 2].$$('.incremental > *').length);
+    } else {
+      this.setCursor(this.idx, this.step - 1);
+    }
+  }
+
+  Dz.forward = function() {
+    if (this.idx >= this.slides.length &&
+        this.step >= this.slides[this.idx - 1].$$('.incremental > *').length) {
+        return;
+    }
+    if (this.step >= this.slides[this.idx - 1].$$('.incremental > *').length) {
+      this.setCursor(this.idx + 1, 0);
+    } else {
+      this.setCursor(this.idx, this.step + 1);
+    }
+  }
+
+  Dz.goStart = function() {
+    this.setCursor(1, 0);
+  }
+
+  Dz.goEnd = function() {
+    var lastIdx = this.slides.length;
+    var lastStep = this.slides[lastIdx - 1].$$('.incremental > *').length;
+    this.setCursor(lastIdx, lastStep);
+  }
+
+  Dz.toggleView = function() {
+    this.html.classList.toggle("view");
+
+    if (this.html.classList.contains("view")) {
+      $("section[aria-selected]").scrollIntoView(true);
+    }
+  }
+
+  Dz.setSlide = function(aIdx) {
+    this.idx = aIdx;
+    var old = $("section[aria-selected]");
+    var next = $("section:nth-of-type("+ this.idx +")");
+    if (old) {
+      old.removeAttribute("aria-selected");
+      var video = old.$("video");
+      if (video) {
+        video.pause();
+      }
+    }
+    if (next) {
+      next.setAttribute("aria-selected", "true");
+      if (this.html.classList.contains("view")) {
+        next.scrollIntoView();
+      }
+      var video = next.$("video");
+      if (video && !!+this.params.autoplay) {
+        video.play();
+      }
+    } else {
+      // That should not happen
+      this.idx = -1;
+      // console.warn("Slide doesn't exist.");
+    }
+  }
+
+  Dz.setIncremental = function(aStep) {
+    this.step = aStep;
+    var old = this.slides[this.idx - 1].$('.incremental > *[aria-selected]');
+    if (old) {
+      old.removeAttribute('aria-selected');
+    }
+    var incrementals = $$('.incremental');
+    if (this.step <= 0) {
+      $$.forEach(incrementals, function(aNode) {
+        aNode.removeAttribute('active');
+      });
+      return;
+    }
+    var next = this.slides[this.idx - 1].$$('.incremental > *')[this.step - 1];
+    if (next) {
+      next.setAttribute('aria-selected', true);
+      next.parentNode.setAttribute('active', true);
+      var found = false;
+      $$.forEach(incrementals, function(aNode) {
+        if (aNode != next.parentNode)
+          if (found)
+            aNode.removeAttribute('active');
+          else
+            aNode.setAttribute('active', true);
+        else
+          found = true;
+      });
+    } else {
+      setCursor(this.idx, 0);
+    }
+    return next;
+  }
+
+  Dz.goFullscreen = function() {
+    var html = $('html'),
+        requestFullscreen = html.requestFullscreen || html.requestFullScreen || html.mozRequestFullScreen || html.webkitRequestFullScreen;
+    if (requestFullscreen) {
+      requestFullscreen.apply(html);
+    }
+  }
+  
+  Dz.setProgress = function(aIdx, aStep) {
+    var slide = $("section:nth-of-type("+ aIdx +")");
+    if (!slide)
+      return;
+    var steps = slide.$$('.incremental > *').length + 1,
+        slideSize = 100 / (this.slides.length - 1),
+        stepSize = slideSize / steps;
+    this.progressBar.style.width = ((aIdx - 1) * slideSize + aStep * stepSize) + '%';
+  }
+  
+  Dz.postMsg = function(aWin, aMsg) { // [arg0, [arg1...]]
+    aMsg = [aMsg];
+    for (var i = 2; i < arguments.length; i++)
+      aMsg.push(encodeURIComponent(arguments[i]));
+    aWin.postMessage(aMsg.join(" "), "*");
+  }
+  
+  function init() {
+    Dz.init();
+    window.onkeydown = Dz.onkeydown.bind(Dz);
+    window.onresize = Dz.onresize.bind(Dz);
+    window.onhashchange = Dz.onhashchange.bind(Dz);
+    window.onmessage = Dz.onmessage.bind(Dz);
+  }
+
+  window.onload = init;
+</script>
+
+
+<script> // Helpers
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function (oThis) {
+
+      // closest thing possible to the ECMAScript 5 internal IsCallable
+      // function 
+      if (typeof this !== "function")
+      throw new TypeError(
+        "Function.prototype.bind - what is trying to be fBound is not callable"
+      );
+
+      var aArgs = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP = function () {},
+          fBound = function () {
+            return fToBind.apply( this instanceof fNOP ? this : oThis || window,
+                   aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
+  }
+
+  var $ = (HTMLElement.prototype.$ = function(aQuery) {
+    return this.querySelector(aQuery);
+  }).bind(document);
+
+  var $$ = (HTMLElement.prototype.$$ = function(aQuery) {
+    return this.querySelectorAll(aQuery);
+  }).bind(document);
+
+  $$.forEach = function(nodeList, fun) {
+    Array.prototype.forEach.call(nodeList, fun);
+  }
+
+</script>
+<!-- vim: set fdm=marker: }}} -->
+</body>
+</html>

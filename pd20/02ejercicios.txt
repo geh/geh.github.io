@@ -1,0 +1,115 @@
+1. variables libres o ligadas
+
+    (λy.y(λx.x)z)
+    
+    z libre
+    y ligada a (λy.y(λx.x)z)
+    x ligada a (λx.x)
+    
+    (λy.x(λx.x)z)
+    
+    z libre
+    x libre
+    x ligada a (λx.x)    
+    
+    (λy.y(λy.y)yx)
+    
+    y ligada a (λy.y(λy.y)yx)
+    y ligada a (λy.y)
+    y ligada a (λy.y(λy.y)yx)
+    x libre
+    
+2.  subterminos
+
+(λy.y(λx.x)z)
+y(λx.x)z
+y(λx.x)
+z
+(λx.x)
+x
+
+
+
+(λy.x(λx.x)z)
+x(λx.x)z
+x(λx.x)
+z
+x
+(λx.x)
+x
+
+3. alfa-equivalentes
+
+(λxyz.x(λy.yz)w), (λtuv.t(λz.zv))w
+
+si, con:
+
+x -> t
+y -> u
+z -> v
+y -> z
+
+(λxyz.x(λy.yz)w), (λxyw.x(λy.yw)z)
+
+no porque w es libre en el 1e termino, y no se puede convertir en el z libre del 2ndo termino
+
+(λxyz.x(λy.yz)w), (λxtz.x(λu.tz))w
+
+no porque a la izq es una funcion, a la der es una aplicación
+
+(λxyz.x(λy.yz)w)(λx.xy),
+(λxyw.x(λy.yz)w)(λz.zy)
+
+no porque el subtermino de la izquierda no es alfa-equivalente, porque si intentamos sustituir el parametro formal z por w, la variable z de la funcion anidada se vuelve libre, y la variable w se vuelve ligada
+
+(λx.λy.xy)(λy.yz)
+(λy.(λy.yz)y)
+(λy.yz)
+
+(λx.λy.xy)(λz.yz)z
+(λx.λu.xu)(λz.yz)z
+(λz.yz)z
+yz
+
+(λx.(λy.x)yλz.z)(λy.yz)
+(λx.(λu.x)yλz.z)(λy.yz)
+(λu.(λy.yz))yλz.z
+(λy.yz)λz.z
+(λz.z)z
+z
+
+
+(λf.(λx.f(xx))(λx.f(xx)))
+(ya está)
+
+
+(λn.λm.n(λn.λxy.nx(xy))m)(λxy.xxy)(λxy.xy)
+(λxy.xxy)(λn.λxy.nx(xy))(λxy.xy)
+(λn.λxy.nx(xy))(λn.λxy.nx(xy))(λxy.xy)
+(λxy.(λn.λxy.nx(xy))x(xy))(λxy.xy)
+(λy.(λn.λxy.nx(xy))(λxy.xy)((λxy.xy)y))
+(λy.(λn.λxy.nx(xy))(λxy.xy)((λxy.xy)y))
+
+---
+(λn.λm.n(λn.λxy.nx(xy))m)(λxy.xxy)(λxy.xy)
+(λm.(λxy.xxy)(λn.λxy.nx(xy))m)(λxy.xy)
+(λxy.xxy)(λn.λxy.nx(xy))(λxy.xy)
+(λab.aab)(λn.λxy.nx(xy))(λxy.xy) # a conv
+(λb.(λn.λxy.nx(xy))(λn.λxy.nx(xy))b)(λxy.xy)
+(λb.(λn.λcd.nc(cd))(λn.λxy.nx(xy))b)(λxy.xy) # a conv
+(λb.(λcd.(λn.λxy.nx(xy))c(cd))b)(λxy.xy)
+(λcd.(λn.λxy.nx(xy))c(cd))(λxy.xy)
+(λcd.(λxy.cx(xy))(cd))(λxy.xy)
+(λcd.(λy.c(cd)((cd)y)))(λxy.xy)
+(λcd.(λy.c(cd)((cd)y)))(λab.ab) # a conv
+(λd.(λy.(λab.ab)((λab.ab)d)(((λab.ab)d)y)))
+(λd.(λy.(λab.ab)(λb.db)(((λab.ab)d)y)))
+(λd.(λy.(λab.ab)(λb.db)((λb.db)y)))
+(λd.(λy.(λab.ab)(λb.db)(dy)))
+(λd.(λy.(λab.ab)(λx.dx)(dy)))
+(λd.(λy.(λb.(λx.dx)b)(dy)))
+(λd.(λy.(λx.dx)(dy)))
+(λd.(λy.(d(dy))))
+λdy.d(dy)
+λxy.x(xy)
+

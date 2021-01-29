@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Binary Trees and Sorting algorithms</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="index.css" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">Binary Trees and Sorting algorithms</h1>
+</div>
+<h1 id="binary-trees">Binary Trees</h1>
+<ol style="list-style-type: decimal">
+<li><p>Rewrite Program P5.2 with the following changes (use <a href="wordFreq.in" class="uri">wordFreq.in</a>):</p>
+<ul>
+<li>the function <code>findOrInsert</code> shall handle properly the case of an empty binary tree</li>
+<li>the while loop shall not have a conditionnal</li>
+</ul></li>
+<li><p>Rewrite Program P5.3 with the same changes (use <a href="passage.in" class="uri">passage.in</a>).</p></li>
+<li><p>Rewrite Program P5.7 so as to make it work in PythonTutor:</p>
+<ul>
+<li>Replace input file by built-in array: <code>10 15 23 32 41 46 52 59 63 71 84</code></li>
+<li>Remove printing functions.</li>
+<li>Add functions <code>numNodes</code>, <code>height</code> and <code>numLeaves</code>, apply them on the created tree and show their output on the standard output of the program</li>
+</ul></li>
+</ol>
+<h1 id="sorting">Sorting</h1>
+<p>Start from the program at <a href="https://goo.gl/LLFVpC" class="uri">https://goo.gl/LLFVpC</a>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Implement and use the functions <code>selecction_sort</code> and <code>gnome_sort</code> inside of PythonTutor.</p></li>
+<li><p>Modify this program so that, when run on your computer, it generates a PGM file that represent the state of the array after each swapping step, in both sorting functions.</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Netpbm_format">Netpbm format</a> is a family of simple image formats. If we use the format PGM (Portable GrayMap), we can visualize arrays as lines of grey pixels.</p>
+<p>Here goes an example of <code>.pgm</code> file:</p>
+<pre><code>P2
+24 7
+15
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+0  3  3  3  3  0  0  7  7  7  7  0  0 11 11 11 11  0  0 15 15 15 15  0
+0  3  0  0  0  0  0  7  0  0  0  0  0 11  0  0  0  0  0 15  0  0 15  0
+0  3  3  3  0  0  0  7  7  7  0  0  0 11 11 11  0  0  0 15 15 15 15  0
+0  3  0  0  0  0  0  7  0  0  0  0  0 11  0  0  0  0  0 15  0  0  0  0
+0  3  0  0  0  0  0  7  7  7  7  0  0 11 11 11 11  0  0 15  0  0  0  0
+0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0</code></pre>
+<p>If we open it with some image viewer and zoom in:</p>
+<p><img src="http://hub.darcs.net/gh/prog1/raw-file/contenidos/pgm.png" alt="ejemplo PGM" /> </p>
+<p>Let us go through this file's format:</p>
+<ul>
+<li>first line &quot;P2&quot; is obligatory and indicates the file type</li>
+<li>second line indicates the number of <strong>columns</strong> and <strong>lines</strong></li>
+<li>third line indicates the maximum value that is going to be used</li>
+<li>then comes the very picture, pixel by pixel</li>
+</ul>
+<p>Each pixel is specified by a value between 0 and the maximum value indicated at line 3. Intermediate values correspond to different shades of grey, from the darkest to the lightest one.</p>
+<p>If <span class="math inline"><em>n</em></span> is the size of the arrays we are sorting, how many lines is going to have the image generated by our program? In which case (selection or gnome sort) do we know that quantity beforehand?</p>
+<ol style="list-style-type: lower-alpha">
+<li>Implement a the generation of images PGM inside of the previous program to visualize selection sort.</li>
+</ol>
+<p>To write one line to the PGM file, you can use the function:</p>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="dt">void</span> print_line_pgm(<span class="dt">const</span> <span class="dt">int</span> a[], <span class="dt">const</span> <span class="dt">int</span> size, FILE * f ){
+    <span class="dt">int</span> k;
+    <span class="cf">for</span>(k=<span class="dv">0</span>; k&lt;size; k++){   
+       fprintf(f,<span class="st">&quot;%2d &quot;</span>, a[k]);
+       <span class="cf">if</span> (k&lt;size<span class="dv">-1</span>) fprintf(f,<span class="st">&quot; &quot;</span>,a[k]);
+    }
+    fprintf(f,<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);
+}</code></pre></div>
+<p>Try by raising the value of SIZE to 30, 50, etc.</p>
+<p><img src="http://hub.darcs.net/gh/prog1/raw-file/contenidos/selectionsort.png" alt="selection sort" /> </p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Add the required code also visualize the execution of <code>gnome_sort</code>.</li>
+</ol></li>
+</ol>
+</body>
+</html>

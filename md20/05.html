@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Clase 5. Reducciones. Completitud en NP.</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/css/reset.css">
+  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Clase 5. Reducciones. Completitud en NP.</h1>
+</section>
+
+<section>
+<section id="reducciones-entre-lenguajes" class="title-slide slide level1">
+<h1>Reducciones entre lenguajes</h1>
+
+</section>
+<section id="reducción-de-karp" class="slide level2">
+<h2>Reducción de Karp</h2>
+<p>Sea <span class="math inline"><em>A</em>, <em>B</em></span> dos lenguajes.</p>
+<p>A es <em>reducible en tiempo polinomial</em> a <span class="math inline"><em>B</em></span> si existe una función <span class="math inline"><em>f</em></span> computable en tiempo polinomial tal que para todo <span class="math inline"><em>x</em></span>, <span class="math inline"><em>x</em> ∈ <em>A</em></span> ssi <span class="math inline"><em>f</em>(<em>x</em>) ∈ <em>B</em></span>.</p>
+<p>Notación: <span class="math inline"><em>A</em>≤<sub><em>p</em></sub><em>B</em></span>.</p>
+</section>
+<section id="observaciones" class="slide level2">
+<h2>Observaciones</h2>
+<ul>
+<li class="fragment">una reducción de A a B “mapea” las instancias de A a instancias de B, y las no-instancias de A a no-instancias de B</li>
+<li class="fragment">pero no siempre una instancia de B tiene una pre-imagen en A según esa reducción</li>
+</ul>
+</section>
+<section id="ejemplo-3color-leq_p-sat" class="slide level2">
+<h2>Ejemplo: 3COLOR <span class="math inline">≤<sub><em>p</em></sub></span> SAT</h2>
+<ul>
+<li class="fragment">3COLOR: lenguaje de los grafos que se pueden colorear con 3 colores sin que una arista conecte dos nodos del mismo color.</li>
+<li class="fragment">SAT: lenguaje de las formulas booleanas escritas como conjuntos de claúsulas relacionando 3 variables o menos, satisfactibles.</li>
+</ul>
+</section>
+<section id="ejemplo-3color-leq_p-sat-1" class="slide level2">
+<h2>Ejemplo: 3COLOR <span class="math inline">≤<sub><em>p</em></sub></span> SAT</h2>
+<p>Traducción <span class="math inline"><em>G</em> ↦ <em>φ</em><sub><em>G</em></sub></span> que transforma cualquier grafo <span class="math inline"><em>G</em></span> en una formula proposicional <span class="math inline"><em>φ</em><sub><em>G</em></sub></span>.</p>
+<ul>
+<li class="fragment">variables <span class="math inline"><em>c</em><sub><em>i</em><em>j</em></sub></span> que valen 1 si el nodo <span class="math inline"><em>i</em></span> está colorado con el color <span class="math inline"><em>j</em></span>, 0 sino</li>
+<li class="fragment">cláusulas que indican que todo nodo tiene que tener un color</li>
+<li class="fragment">cláusulas que indican que todo nodo no puede tener más de un color</li>
+<li class="fragment">cláusulas que indican que dos nodos conectados no pueden tener el mismo color</li>
+</ul>
+</section>
+<section id="ejemplo-3color-leq_p-sat-2" class="slide level2">
+<h2>Ejemplo: 3COLOR <span class="math inline">≤<sub><em>p</em></sub></span> SAT</h2>
+<p>Luego afirmamos que si G tiene un coloreo entonces <span class="math inline"><em>φ</em><sub><em>G</em></sub></span> tiene una asignación de valores que la satisface.</p>
+<p>Y, afirmamos que si <span class="math inline"><em>φ</em><sub><em>G</em></sub></span> tiene una asignación que la satisface, entonces G tiene un coloreo (con 3 colores).</p>
+</section>
+<section id="proposiciones" class="slide level2">
+<h2>Proposiciones</h2>
+<ul>
+<li class="fragment">si <span class="math inline"><em>A</em>≤<sub><em>p</em></sub><em>B</em></span> y <span class="math inline"><em>B</em>∈</span> <strong>P</strong> entonces <span class="math inline"><em>A</em>∈</span> <strong>P</strong></li>
+<li class="fragment"><span class="math inline">≤<sub><em>p</em></sub></span> es transitiva</li>
+</ul>
+</section></section>
+<section>
+<section id="lenguajes-completos-para-np" class="title-slide slide level1">
+<h1>Lenguajes completos para <strong>NP</strong></h1>
+
+</section>
+<section id="definiciones" class="slide level2">
+<h2>Definiciones</h2>
+<ul>
+<li class="fragment">El lenguaje <span class="math inline"><em>B</em></span> es <strong>NP</strong> difícil si para todo <span class="math inline"><em>A</em>∈</span> <strong>NP</strong>, <span class="math inline"><em>A</em>≤<sub><em>p</em></sub><em>B</em></span>.</li>
+<li class="fragment">El lenguaje <span class="math inline"><em>B</em></span> es <strong>NP</strong> completo si además de lo anterior, está en <strong>NP</strong>.</li>
+<li class="fragment">Teorema de Cook-Levin: SAT es NP-completo</li>
+<li class="fragment">O sea, SAT puede simular eficientemente cualquier lenguaje en <strong>NP</strong></li>
+</ul>
+</section>
+<section id="demostración-del-teorema-de-cook-levin" class="slide level2">
+<h2>Demostración del Teorema de Cook-Levin</h2>
+<p>Pasos:</p>
+<ol type="1">
+<li class="fragment">SAT <span class="math inline">≤<sub><em>p</em></sub></span> CircuitSAT</li>
+<li class="fragment">CircuitSAT es NP-completo</li>
+</ol>
+</section>
+<section id="paso-1-circuitsat" class="slide level2">
+<h2>Paso 1: CircuitSAT</h2>
+<p>Un <em>circuito booleano</em> es un objeto donde empezamos con <span class="math inline"><em>n</em></span> variables x1, x2, … xn, y podemos definir variables nuevas con el AND, OR, o NOT de variables existentes:</p>
+<pre><code>x{n+1} = x3 or xn
+x{n+2} = not(x{n+1})
+x{n+3} = x1 and x{n+2}
+... </code></pre>
+<p>CircuitSAT: circuitos tales que existe una asignación de valores para x1 … xn tal que la última variable vale 1.</p>
+</section>
+<section id="circuitsat-leq_p-sat-por-qué" class="slide level2">
+<h2>CircuitSAT <span class="math inline">≤<sub><em>p</em></sub></span> SAT , por qué?</h2>
+<p>Cada vez que calculamos un AND, OR o NOT, relacionamos una variable nueva con una o dos viejas. Cada relación se puede expresar con un conjunto de cláusulas, por ejemplo:</p>
+<pre><code>x{n+1} = x3 or xn</code></pre>
+<p>Se traduce a:</p>
+<pre><code>x{n+1} or not(x3)
+x{n+1} or not(xn)
+not(x{n+1}) or x3 or xn </code></pre>
+<p>Y así. Entonces <strong>CircuitSAT</strong> <span class="math inline">≤<sub><em>p</em></sub></span> <strong>SAT</strong>.</p>
+</section>
+<section id="paso-2.a." class="slide level2">
+<h2>Paso 2.a.</h2>
+<ul>
+<li class="fragment">Sea algun <span class="math inline"><em>L</em>∈</span> <strong>NP</strong>. Por definición, existe una MT M tal que <span class="math inline"><em>x</em> ∈ <em>L</em></span> ssi existe un certificado <span class="math inline"><em>u</em></span> que hace que M(x,u) acepte.</li>
+<li class="fragment">Sin pérdida de generalidad, M tiene una sola cinta</li>
+<li class="fragment">Creamos un circuito <span class="math inline"><em>φ</em></span> que “imite” M, o sea, tal que existe una asignación de valores de las variables de entrada que lo hace evaluar a 1 ssi existe una string <span class="math inline"><em>u</em></span> que hace que M acepte (x,u).</li>
+<li class="fragment">¿Pero cómo? ¡definiendo un montón de variables!</li>
+</ul>
+</section>
+<section id="parte-2.b." class="slide level2">
+<h2>Parte 2.b.</h2>
+<ul>
+<li class="fragment">una variable que valdrá 1 ssi el bit de posición 37 de la cinta de M está puesto a 1 en el paso 42 de la ejecución de M.</li>
+<li class="fragment">otra variable que valdra 1 ssi el bit en posición 14 está puesto a 1 en el paso 52 de la ejecución.</li>
+<li class="fragment">otra variable que valdrá 1 ssi el cabezal de M está en la posicion 74 de la cinta y el estado interno de M es el número 15, en el paso 33.</li>
+<li class="fragment">Y así…</li>
+</ul>
+</section>
+<section id="parte-2.c." class="slide level2">
+<h2>Parte 2.c.</h2>
+<ul>
+<li class="fragment">escribimos un montón de relaciones lógicas entre esas variables</li>
+<li class="fragment">describen el comportamiento de M</li>
+<li class="fragment">Si el bit 17 de la cinta es 0 en el paso 22, y el cabezal no está sobre el bit 17 en ese momento, entonces el bit 17 seguira siendo 0 en el paso 23.</li>
+<li class="fragment">Si M está en estado interno 5 en el paso 44, y lee un 1, y la función de transición de M indica que debe pasar al estado 7, entonces M estará en el estado interno 7 en el paso 45.</li>
+<li class="fragment">Y así…</li>
+</ul>
+</section>
+<section id="parte-2.d." class="slide level2">
+<h2>Parte 2.d.</h2>
+<ul>
+<li class="fragment">todo esto sigue siendo una cantidad <em>polinomial</em> de variables y relaciones</li>
+<li class="fragment">las entradas del circuito son las variables que representan <span class="math inline"><em>u</em></span> en la cinta de M</li>
+<li class="fragment">entonces, dado x, tenemos un circuito polinomialmente más grande que x, y es satisfactible ssi existe un certificado <span class="math inline"><em>u</em></span> que haga que M(x,u) acepte</li>
+<li class="fragment">entonces L <span class="math inline">≤<sub><em>p</em></sub></span> CircuitSAT</li>
+<li class="fragment">CircuitSAT es NP-completo. SAT también.</li>
+</ul>
+</section>
+<section id="comentario" class="slide level2">
+<h2>Comentario</h2>
+<ul>
+<li>Si llegamos a mostrar que algun lenguaje <strong>NP</strong>-difícil está en <strong>P</strong> entonces <strong>P</strong>=<strong>NP</strong></li>
+<li>Se sospecha que <strong>P</strong> ≠ <strong>NP</strong> (aunque no esté demostrado), entonces <strong>SAT</strong> es más difícil de resolver que cualquier problema en <strong>P</strong></li>
+</ul>
+<p><img src="pnpnphardnpcomplete.png" /></p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

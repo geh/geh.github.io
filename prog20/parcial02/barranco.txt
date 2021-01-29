@@ -1,0 +1,126 @@
+# Prog. 1 - Parcial 2 - Mateo Barranco
+
+#include <stdlib.h>
+#include <stdio.h>
+#define T 11
+ 
+int main(){
+ 
+ int a[T];
+ int i;
+ int m;
+ int n;
+ int suma = 0;
+ int mayores = 0;
+ int c[T];
+ int b;
+ for( i=0; i < T; i++){
+ 
+ a[i] = i + 1;
+ 
+}
+ 
+ printf("ingrese dos valores\n");
+ 
+ scanf("%d", &n);
+ scanf("%d", &m);
+ 
+ for(i = 0; i<T; i++){
+  if( i % 2 != 0){
+  a[i] = a[i] + n;
+  }
+ else{
+  a[i] = a[i] + m;
+ }
+}
+ 
+ for(i = 0; i<T; i++){
+  if ( a[i] <  20){
+   suma = suma + a[i];
+}
+else if ( a[i] >= 20){
+  mayores = mayores + 1;
+}
+}
+ printf("la suma de los valores menores o iguales a 20 es igual a:%d\n", suma);
+ printf("en el arreglo hay %d valores mayores o iguales que veinte\n", mayores);
+ 
+ for(i=0;i<T;i++){
+ if(0 <= a[i] && a[i] <= 25){
+  c[1] = a[i] + 'a';
+}
+ 
+ else{
+   c[i] = 'o';
+}
+}
+for(i=0;i<T;i++){
+   if(0 <= a[i] && a[i] <= 25){
+   printf("%c", c[i]);
+}
+   else {
+   printf("%c", c[i]);
+}
+}
+ 
+  for(b=T; b >= 0; b--){
+ printf("%c\n", c[b]);
+}
+ 
+ return 0;
+ }
+ 
+-------------------------------- 
+ 
+segunda parte:
+  #include <stdio.h>
+#define T 50
+ 
+int main(){
+ 
+  int mayor(int a; int b; int c;){
+ 
+  if ( a > b && a > c){
+     return a;
+}
+ 
+ 
+  else if (b > a && b > c){
+    return b;
+ 
+}
+ 
+ 
+  else if (c > a && c > b){
+   return c;
+ 
+}
+ 
+ int f1( char d, int a){
+  if(a >= 0){
+  return d;
+}
+ else{
+  return d+1;
+  }
+ 
+int f2(int x, int y){
+ printf("%d\n", x*y);
+  return x;
+}
+ 
+int sumar1(int m[],int z, int i=0){
+ for(i=0; i<T;i++){
+  m[i] = m[i]+ z
+} return z;
+ 
+  return 0;
+}
+  
+    
+   
+ 
+ 
+ 
+
+

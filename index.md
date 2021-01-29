@@ -1,37 +1,40 @@
-## Welcome to GitHub Pages
+¡Hola! Soy Investigador Asistente del [CONICET](https://es.wikipedia.org/wiki/CONICET) con lugar de trabajo en la
+[Universidad Nacional de Cordoba](https://es.wikipedia.org/wiki/Universidad_Nacional_de_C%C3%B3rdoba)
+y Profesor Adjunto de la [Universidad Blas Pascal](https://es.wikipedia.org/wiki/Universidad_Blas_Pascal).
 
-You can use the [editor on GitHub](https://github.com/geh/geh.github.io/edit/main/index.md) to maintain and preview the content for your website in Markdown files.
+# Apuntes de materias
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+* 2020: [Programacion Declarativa](https://geh.github.io/pd20) (Univ Blas Pascal) [(2019)](pd19) [(2018)](pd18) [(2017)](pd17) [(2016)](pd16) [(2015)](pd15)
+* 2020: [Matematicas Discretas III](https://geh.github.io/md20) (Univ Blas Pascal) [(2019)](md19) [(2018)](md18)
+* 2020: [Programacion 1](https://geh.github.io/prog20) (Univ Blas Pascal) [(2019)](prog19) [(2018)](prog18) [(2017)](prog17) [(2016)](prog16) [(2015)](http://hub.darcs.net/gh/prog1)
+* 2018: [Calculo Numerico/Metodos Numericos (taller)](mn) (Univ Blas Pascal)
+* 2018: [Complejidad Computacional](cc18) (Univ Nacional de Cordoba)
+* 2018: [El sistema de tipos de Haskell](rio18) (Univ Nacional de Rio Cuarto)
+* 2017: [Data Structures](2017_ds) (Univ Blas Pascal)
+* 2015: [Logica Modal Computacional](2015_logicas_modales) (Univ Nacional de San Juan)
+* 2014: [Inteligencia Artificial](2014_ia) (Univ Blas Pascal)
+* 2014: [Complejidad Computacional](2014_cc) (Univ Nacional de San Juan)
+* 2012: [Complejidad Computacional](2012_cc) (Univ Nacional de Cordoba)
 
-### Markdown
+# Investigacion
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+* [Publicaciones en DBLP](http://dblp.uni-trier.de/pers/hd/h/Hoffmann:Guillaume)
+* [Perfil en Google Scholar](https://scholar.google.com.ar/citations?user=d0O_hjsAAAAJ)
 
-```markdown
-Syntax highlighted code block
+# Propuestas de proyectos estudiantes
 
-# Header 1
-## Header 2
-### Header 3
+Ideas de proyectos para trabajos de fin de carrera y/o
+tesis de licenciatura. Contactarme por mas informacion:
 
-- Bulleted
-- List
+* [verificacion SMT para Darcs con SBV](http://darcs-sbv.tumblr.com/)
+* [otros proyectos sobre Darcs](http://darcs.net/Projects)
+* problema del [Castor Atareado (Busy Beaver)](https://en.wikipedia.org/wiki/Busy_beaver)
+  con maquinas de Turing estandar y
+  [no estandar](http://dl.acm.org/citation.cfm?id=740607)
+* desarrollo de herramientas para la enseñanza del lengaje C (usando Javascript, Android)
 
-1. Numbered
-2. List
+# Otras cosas
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/geh/geh.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+* [Darcs, un sistema de control de versiones](http://darcs.net)
+* [mi blog](http://guiom.tumblr.com/)
+* contacto: <guillaume.hoffmann@conicet.gov.ar>

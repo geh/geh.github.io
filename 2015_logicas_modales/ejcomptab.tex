@@ -1,0 +1,138 @@
+\documentclass[10pt]{article}
+
+\usepackage{fullpage}
+\usepackage{placeins}
+
+%\usepackage{lmodern}
+\usepackage{xspace, amssymb, amsmath, xspace, tikz, hyperref}
+%\usepackage[section]{placeins} %keeps figures inside the corresponding section
+\usepgflibrary{arrows}
+\tikzstyle{point}=[circle,draw]
+\usetikzlibrary{arrows,automata,shapes,decorations.markings,decorations.pathmorphing,backgrounds,fit,snakes}
+%\usepackage{stmaryrd}
+\vfuzz2pt % Don't report over-full v-boxes if over-edge is small
+\hfuzz2pt % Don't report over-full h-boxes if over-edge is small
+
+\input{macros}
+\input{prooftree}
+
+\begin{document}
+
+\title{Lógicas Modales Computacionales: ejercicios 3}
+\author{Guillaume Hoffmann}
+
+\maketitle
+
+\section{Complejidad}
+
+Demostrar que satisfacibilidad modal sobre modelos con relaci\'on total est\'a en NP.
+Para eso demostrar la propiedad de modelo de tama\~no polinomial, de modo similar
+al caso de Kalt1 del apunte de Areces.
+
+Demostrar que es completa para NP.
+
+\section{Tableaux}
+
+Consideramos el conjunto de reglas siguiente.
+
+\begin{center}
+  \fbox{  
+      \begin{minipage}{.96\textwidth}
+      \[
+        \begin{array}{cp{1cm}c}
+            \prooftree
+            w: ~ \varphi \wedge \psi
+            \justifies
+            w: ~ \varphi, w: ~ \psi
+            \using
+            (\wedge)
+          \endprooftree
+          & &
+          \prooftree
+            w: ~ \varphi \vee \psi
+            \justifies
+            \begin{tabular}{c@{\ }|@{\ }c}
+            $w: \varphi$ & $w:\psi$
+            \end{tabular} 
+            \using
+            (\vee)
+          \endprooftree
+        \\ \vspace{1mm} & \\
+           \prooftree
+            w: \lozenge \varphi
+            \justifies
+            \dot Rwv, v: ~\varphi
+            \using
+            (\lozenge)^1
+          \endprooftree
+         & &
+          \prooftree
+	    \begin{minipage}{3cm}
+            \begin{center}
+             $w : \square \varphi$ \\
+	     $\dot Rwv$\\
+	    \end{center}
+	    \end{minipage}
+            \justifies
+            v : \varphi
+          \using
+            (\square) 
+          \endprooftree
+        \\ \vspace{1mm} & \\
+           \prooftree
+            w: \E \varphi
+            \justifies
+            \begin{minipage}{2.5cm}
+            \begin{center}
+            $v: \varphi$
+            \end{center}
+            \end{minipage}
+            \using
+            (\E)^1
+          \endprooftree
+         & &
+          \prooftree
+	    \begin{minipage}{3cm}
+            \begin{center}
+             $w : \A \varphi$ \\
+	    \end{center}
+	    \end{minipage}
+            \justifies
+            v : \varphi
+          \using
+            (\A)^2 
+          \endprooftree
+        \\ \vspace{1mm} & \\
+          \prooftree
+            \begin{minipage}{2cm}\begin{center}
+            $w:p$\\
+            $w:\neg p$ \smallskip
+            \end{center}\end{minipage}
+            \justifies
+            \bot
+            \using
+            (\bot)
+          \endprooftree
+        \end{array}
+      \]
+
+       $^1$ $v$ es nuevo en la rama actual.\\
+       $^1$ $v$ ya existe en la rama actual.
+
+      \smallskip
+      \end{minipage}}
+      \end{center}
+
+
+\subsection{Ejercicios}
+
+{\bf Ejercicio 1.} demostrar que la formula siguiente no es satisfacible:
+
+$$ \A (\neg a \vee \lozenge c) \wedge a \wedge
+   \square ( \neg c \vee a )  \wedge \square\square(\neg c)$$
+
+{\bf Ejercicio 2.} demostrar que la formula siguiente es satisfacible y dar el model extraido a partir del tableau:
+
+$$\square ( (c \vee d) \wedge \lozenge e) \wedge \lozenge (\neg c) \wedge \lozenge (\neg d)$$
+
+\end{document}

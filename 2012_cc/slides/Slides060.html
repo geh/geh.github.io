@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Complejidad Computacional Práctica 2</title>
+</head>
+<body>
+<div id="header">
+<h1 class="title">Complejidad Computacional Práctica 2</h1>
+</div>
+<ol style="list-style-type: decimal">
+<li><p>Definir un lenguaje que corresponde <a href="http://blog.computationalcomplexity.org/2010/07/what-is-complexity-of-these-problems.html">al problema siguiente</a> y mostrar que está en <strong>NP</strong>: &quot;We are going to put numbers into boxes. If x,y,z are in a box then it CANNOT be the case that x+y=z. If you put the numbers 1,2,...,n into boxes, what is the smallest number of boxes you will need?&quot;</p></li>
+<li><p>Mostrar que <span class="math"><em>A</em> ≤ <sub><em>P</em></sub><em>B</em></span> y <span class="math"><em>B</em> ∈ </span> <strong>PSPACE</strong> implica <span class="math"><em>A</em> ∈ </span> <strong>PSPACE</strong>.</p></li>
+<li><p>Dar 2 razones para qué los factores lineales no importan en la definición de la clase de complejidad <strong>TIME</strong><span class="math">(<em>f</em>(<em>n</em>))</span> (para <span class="math"><em>f</em>: ℕ  ↦ ℕ </span>).</p></li>
+<li><p>Mostrar que <strong>P</strong>=<strong>coP</strong>.</p></li>
+<li><p>(Arora Barak 2.17) El problema EXACTLY ONE 3SAT consiste en tener una formula 3CNF <span class="math"><em>φ</em></span> y decidir si existe una asignación <span class="math"><em>u</em></span> tal que cada cláusula de <span class="math"><em>φ</em></span> tiene exactemente un literal verdadero. Mostrar que Exactly One 3SAT es <strong>NP</strong> completo. Hint: reemplazar cada ocurrencia de un literal <span class="math"><em>v</em><sub><em>i</em></sub></span> de una cláusula <span class="math"><em>C</em></span> por una variable nueva <span class="math"><em>z</em><sub><em>i</em>, <em>C</em></sub></span> con claúsulas y variables adicionales tales que si <span class="math"><em>v</em><sub><em>i</em></sub></span> es falsa, entonces <span class="math"><em>z</em><sub><em>i</em>, <em>C</em></sub></span> tiene que ser falsa.</p></li>
+<li><p>Dar una definición de <strong>NEXP</strong> con certificados tal que es equivalente a la definición con nondeterminismo visto en aula (demostrar la equivalencia).</p></li>
+<li><p>Sea <span class="math"><em>f</em>: {0, 1}<sup> * </sup> ↦ {0, 1}</span>. Decimos que una máquina de Turing <span class="math"><em>M</em></span> computa <span class="math"><em>f</em></span> con un caché hasta tamaño <span class="math"><em>m</em></span> si para todo input <span class="math"><em>x</em></span> de tamaño <span class="math"> ≤ <em>m</em></span> (con <span class="math"><em>M</em> ∈ ℕ </span>), la máquina computa <span class="math"><em>f</em>(<em>x</em>)</span> en un paso. Para todos los otros inputs, <span class="math"><em>M</em></span> corre en tiempo <span class="math"><em>s</em>: ℕ  ↦ ℕ </span>. ¿Qué decir del la cota temporal de <span class="math"><em>M</em></span>?</p></li>
+<li><p>(Arora Barak 2.13) Una reducción <span class="math"><em>f</em></span> desde un lenguaje en <strong>NP</strong> <span class="math"><em>L</em></span> a un lenguaje en <strong>NP</strong> <span class="math"><em>L</em>ʹ</span> es parsimoniosa si el número de certificados de <span class="math"><em>x</em></span> es igual al número de certificados de <span class="math"><em>f</em>(<em>x</em>)</span>. Mostrar que la reducción de nuestra demo del teorema de Cook Levin puede ser modificada en una reducción parsimoniosa (hint: hacer que el instantaneo final de la verificadora sea único).</p></li>
+</ol>
+</body>
+</html>

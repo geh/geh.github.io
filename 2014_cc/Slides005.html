@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Complejidad Computacional Unidad 1: Modelos de cálculo</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+   href="style.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Complejidad Computacional <br />Unidad 1: Modelos de cálculo</h1>
+  <p class="author">
+
+  </p>
+</div>
+<div id="objetivos-de-la-unidad" class="slide section level1">
+<h1>Objetivos de la unidad</h1>
+<p>Se van a cubrir los temas siguientes:</p>
+<ul>
+<li>definición y ejecución de una Máquina de Turing (MT)</li>
+<li>lenguajes decidibles e indecidibles</li>
+<li>tiempo de corrida de una MT</li>
+<li>substituciones de MT</li>
+<li>MT universal</li>
+<li>problema de la detención</li>
+<li>tesis de Church-Turing</li>
+</ul>
+</div>
+<div id="la-palabra-cálculo" class="slide section level1">
+<h1>La palabra &quot;cálculo&quot;</h1>
+<p>En latín:</p>
+<ul>
+<li><strong>calx</strong>: piedra caliza.</li>
+<li><strong>calcŭlus</strong>: piedrita, guijarro para hacer cálculos</li>
+</ul>
+<p>¿Que podemos hacer con piedritas?</p>
+<p>Se puede hacer operaciones simples: sumar, restar, comparar, etc.</p>
+<p>Y operaciones más complicadas combinando operaciones básicas: multiplicar, etc.</p>
+<p>Cálculo: series de <em>operaciones</em> que <em>se realizan</em> para obtener un resultado.</p>
+</div>
+<div id="la-palabra-compute-inglés" class="slide section level1">
+<h1>La palabra &quot;compute&quot; (inglés)</h1>
+<ul>
+<li>Del francés <em>computer</em></li>
+<li>del Latin <em>computare</em> (calcular, contar, sumar),</li>
+<li>de <em>com</em> (juntos) + <em>putare</em> (limpiar, clarificar, sacar cuentas)</li>
+<li>de <em>putus</em> (puro, limpio)</li>
+</ul>
+</div>
+<div id="computabilidad" class="slide section level1">
+<h1>Computabilidad</h1>
+<p>¿Cuáles son las cosas que se pueden calcular?</p>
+<p>&quot;<span class="math"><em>f</em></span> es computable si existe un procedimiento efectivo <span class="math"><em>p</em></span> tal que <span class="math"><em>p</em>(<em>x</em>) = <em>f</em>(<em>x</em>)</span> para toda <span class="math"><em>x</em></span>&quot;</p>
+<p>Un &quot;procedimiento efectivo&quot; es un cálculo que se puede hacer en el mundo real (con papel y lapizera).</p>
+<p>¿Pero cómo hacemos explicito lo que es un procedimiento efectivo?</p>
+</div>
+<div id="buscando-el-modelo" class="slide section level1">
+<h1>Buscando el modelo</h1>
+<p>¿Qué modelo podemos proponer para representar matemáticamente la noción de cálculos del mundo real?</p>
+<p>¿Qué problemas podemos resolver?</p>
+<p>¿Qué podemos conocer?</p>
+</div>
+<div id="qué-es-un-problema" class="slide section level1">
+<h1>¿Qué es un problema?</h1>
+<p>Como problemas, consideramos <em>funciones booleanas</em> sobre un <em>alfabeto binario</em>:</p>
+<p><span class="math"><em>f</em>: {0, 1} *  ↦ {0, 1}</span></p>
+<p>Queremos ser capaces de, dada cualquiera palabra <span class="math"><em>x</em> ∈ {0, 1} * </span>, calcular si <span class="math"><em>f</em>(<em>x</em>)</span> vale <span class="math">1</span> o <span class="math">0</span>.</p>
+<p>Es decir contestar por &quot;si&quot; o por &quot;no&quot; alguna pregunta <span class="math"><em>f</em></span> acerca de <span class="math"><em>x</em></span>.</p>
+<p>Una palabra booleana parece simple pero puede representar muchas cosas: números, grafos, fórmulas, etc.</p>
+<p>De esta forma podemos formular cualquier problema &quot;si/no&quot; acerca de objetos que se tienen una representación binaria.</p>
+</div>
+<div id="problemas-ejemplos" class="slide section level1">
+<h1>Problemas: ejemplos</h1>
+<p>&quot;¿<span class="math"><em>x</em></span> tiene una mayoria de <span class="math">1</span>?&quot;</p>
+<p>&quot;¿<span class="math"><em>x</em></span> es de la forma {0^n, 1^n}?&quot;</p>
+<p>&quot;¿<span class="math"><em>x</em></span> es representa una formula proposicional satisfacible?&quot;</p>
+<p>&quot;¿<span class="math"><em>x</em></span> representa un grafo que se puede colorar con 3 colores?&quot;</p>
+<p>&quot;¿<span class="math"><em>x</em></span> representa <span class="math"> &lt; <em>G</em>, <em>a</em>, <em>b</em> &gt; </span> con <span class="math"><em>G</em></span> un grafo y existe un camino entre los nodos <span class="math"><em>a</em></span> y <span class="math"><em>b</em></span>?&quot;</p>
+</div>
+<div id="definiciones-lenguages-y-funciones" class="slide section level1">
+<h1>Definiciones: lenguages y funciones</h1>
+<ul>
+<li>Palabra/string binaria: <span class="math"><em>x</em> ∈ {0, 1} * </span></li>
+<li>Lenguage: <span class="math"><em>L</em> ⊆ {0, 1} * </span> (conjunto de palabras)</li>
+<li>Función booleana: <span class="math"><em>f</em>: {0, 1} *  ↦ {0, 1}</span></li>
+<li><span class="math"><em>f</em></span> es la <em>función característica</em> del lenguaje <span class="math"><em>L</em><sub><em>f</em></sub></span> si: <br /><span class="math"><em>L</em><sub><em>f</em></sub> = { <em>x</em>  ∣  <em>f</em>(<em>x</em>) = 1, <em>x</em> ∈ {0, 1} * }</span></li>
+<li>Calcular <span class="math"><em>f</em></span> = dado un <span class="math"><em>x</em> ∈ {0, 1} * </span>, calcular <span class="math"><em>f</em>(<em>x</em>)</span></li>
+<li>Calcular <span class="math"><em>f</em></span> = Decidir el lenguaje <span class="math"><em>L</em><sub><em>f</em></sub></span></li>
+<li><span class="math"><em>f</em></span> es un <em>problema de decisión</em></li>
+</ul>
+</div>
+<div id="modelos-de-computación-simples" class="slide section level1">
+<h1>Modelos de computación simples</h1>
+<ul>
+<li><p>Circuitos Booleanos</p></li>
+<li><p>Automatas Finitos</p></li>
+</ul>
+<p>Ver <a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-080-great-ideas-in-theoretical-computer-science-spring-2008/lecture-notes/lec3.pdf">Great Ideas in Theoretical Computer Science, Lecture 3</a>, de Scott Aaronson (secciones 3 a 6).</p>
+</div>
+<div id="más-poder-para-los-automatas" class="slide section level1">
+<h1>Más poder para los automatas</h1>
+<p>Hay muchos lenguajes que parecen simples de decidir, pero los automatas no llegan, por ejemplo:</p>
+<ul>
+<li>capicúas</li>
+<li><span class="math">0<sup><em>n</em></sup>1<sup><em>n</em></sup></span></li>
+</ul>
+<p>Restricciones de los automatas:</p>
+<ul>
+<li>no pueden volver atrás</li>
+<li>no pueden escribir</li>
+<li>tienen que detenerse cuando llegan al final del input</li>
+</ul>
+<p>Relajando estas restricciones, vamos a considerar otro modelo de cálculo.</p>
+</div>
+<div id="máquina-de-turing" class="slide section level1">
+<h1>Máquina de Turing</h1>
+<p>Propuesta por Alan Turing en el 1936 bajo el nombre &quot;computing machine&quot;, en su artículo &quot;On Computable Numbers&quot;.</p>
+<p>Características:</p>
+<ul>
+<li>puede leer el input y volver atrás</li>
+<li>puede escribir</li>
+<li>tiene un conjunto finito de estados internos</li>
+<li>puede decidir en qué momento detenerse</li>
+</ul>
+</div>
+<div id="section" class="slide section level1">
+<h1></h1>
+<p>En casa paso de un cálculo, una máquina de Turing elije:</p>
+<ul>
+<li>cambiar su estado</li>
+<li>escribir en la cinta</li>
+<li>moverse en el input un paso adelande o atrás, o detenerse</li>
+</ul>
+<p>Lo hace en función de su estado actual y del símbolo que está leyendo.</p>
+</div>
+<div id="section-1" class="slide section level1">
+<h1></h1>
+<p>Una Máquina de Turing es una lista de reglas de la forma siguiente:</p>
+<ul>
+<li>Estado actual</li>
+<li>Simbolo(s) leido(s)</li>
+</ul>
+<p>Implica:</p>
+<ul>
+<li>Estado nuevo</li>
+<li>Simbolo(s) para escribir</li>
+<li>Movimiento(s) cabezal(es)</li>
+</ul>
+<p>Generalizamos a máquinas que tienen más de una cinta (1 para el input, otras para cálculos intermedios).</p>
+</div>
+<div id="máquinas-de-turing-definición-formal" class="slide section level1">
+<h1>Máquinas de Turing: definición formal</h1>
+<p>Tienen:</p>
+<ul>
+<li><span class="math"><em>k</em></span> cintas infinitas hacia la derecha (si <span class="math"><em>k</em> ≥ 2</span>, la primera tiene el input en lectura sola)</li>
+<li>un cabezal por cinta, indica qué celda estamos leyendo, se puede mover de un paso en cada direccion</li>
+<li>un conjunto finito de estados internos</li>
+<li>una funcion de transición que describe su comportamiento</li>
+</ul>
+<p>Separamos la cinta de input (en lectura sola) de las otras para poder medir la cantidad de memoria usada por la máquina.</p>
+</div>
+<div id="section-2" class="slide section level1">
+<h1></h1>
+<div class="thm">
+<p>Una MT es un tuple <span class="math">(<em>k</em>, Γ , <em>Q</em>, <em>δ</em>)</span> con:</p>
+<ul>
+<li>un alfabeto finito <span class="math">Γ  ⊇ {▫,  ⊳ , 0, 1}</span> <br />(<span class="math">▫</span>: &quot;blank&quot;, <span class="math"> ⊳ </span>: &quot;start&quot;)</li>
+<li>un conjunto finito de estados <br /><span class="math"><em>Q</em> ⊇ {<em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub>, <em>q</em><sub><em>a</em><em>c</em><em>c</em></sub>, <em>q</em><sub><em>r</em><em>e</em><em>j</em></sub>}</span></li>
+<li>una función de transición <br /><span class="math"><em>δ</em>: <em>Q</em> × Γ <sup><em>k</em></sup> ↦ <em>Q</em> × Γ <sup><em>k</em> − 1</sup> × {←,  = , →}<sup><em>k</em></sup></span> <br />No está definida en <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span> y <span class="math"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span>, no escribe <span class="math"> ⊳ </span> ni <span class="math">▫</span>, no mueve los cabezales a la izquierda de <span class="math"> ⊳ </span>.</li>
+</ul>
+</div>
+</div>
+<div id="configuraciones" class="slide section level1">
+<h1>Configuraciones</h1>
+<p>Llamamos <strong>configuración</strong> de una máquina el estado activo junto al contenido de sus cintas y la posición de sus cabezales.</p>
+<p>La <strong>configuración inicial</strong> con una entrada <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span> es:</p>
+<ul>
+<li><span class="math"> ⊳ <em>x</em> ▫ ▫ ▫ ⋅ ⋅</span></li>
+<li><span class="math"> ⊳ ▫ ▫ ▫ ⋅ ⋅</span></li>
+<li><span class="math"><em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub></span></li>
+<li>cabezales en la primera celda de cada cinta después del <span class="math"> ⊳ </span></li>
+</ul>
+</div>
+<div id="corrida-de-una-máquina-de-turing" class="slide section level1">
+<h1>Corrida de una máquina de Turing</h1>
+<p>Una máquina corre aplicando pasos de acuerdo a su función de transición, a partir de una configuración inicial.</p>
+<p>Dada <span class="math"><em>x</em> ∈ {0, 1} * </span>, una corrida de una máquina M con entrada <span class="math"><em>x</em></span> puede:</p>
+<ul>
+<li>alcanzar uno de los estados <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span> o <span class="math"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span>, en cuales casos escribimos <span class="math"><em>M</em>(<em>x</em>) = 1</span> si llega a <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span> o <span class="math"><em>M</em>(<em>x</em>) = 0</span> si llega a <span class="math"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span></li>
+<li>o nunca detenerse y escribimos <span class="math"><em>M</em>(<em>x</em>) = ∞</span></li>
+</ul>
+</div>
+<div id="mt-que-deciden-un-lenguaje" class="slide section level1">
+<h1>MT que deciden un lenguaje</h1>
+<div class="thm">
+<p>Una MT M <em>computa</em> una función <span class="math"><em>f</em>: {0, 1} *  ↦ {0, 1}</span> si para toda <span class="math"><em>x</em> ∈ {0, 1} * </span>, <span class="math"><em>M</em>(<em>x</em>) = <em>f</em>(<em>x</em>)</span>.</p>
+<p>Una MT <em>decide</em> el lenguaje <span class="math"><em>L</em><sub><em>f</em></sub></span> si computa su función característica <span class="math"><em>f</em></span>.</p>
+Un lenguaje es <em>decidible</em> si existe una MT que lo decide.
+</div>
+</div>
+<div id="ejercicio-decidir-si-una-palabra-es-capicúa." class="slide section level1">
+<h1>Ejercicio: decidir si una palabra es capicúa.</h1>
+<p>Enunciar las reglas de una Máquina de Turing que detecta palabras capicúas. Es posible definirla con 2 cintas o 1 sola, pero es más simple con 2.</p>
+</div>
+<div id="ejercicio-máquina-sin-estado" class="slide section level1">
+<h1>Ejercicio: máquina sin estado</h1>
+<p>Aún sin ningun estado interno y solo modificando la cinta de input, una Máquina de Turing puede decidir lenguajes que un automata no puede.</p>
+<p>En el artículo &quot;The uniform halting problem for generalized one state Turing machines&quot; de Hermann, ver el ejemplo para el lenguaje <span class="math"><em>A</em><em>a</em><sup><em>n</em></sup><em>b</em><sup><em>m</em></sup><em>B</em></span> con <span class="math"><em>n</em> &lt; <em>m</em></span>.</p>
+<p>Desarrollarlo con el ejemplo <code>AaabbbB</code>.</p>
+</div>
+<div id="otra-manera-de-verlo" class="slide section level1">
+<h1>Otra manera de verlo</h1>
+<p>Vimos las Máquinas de Turing como automatas con más capacidad.</p>
+<p>Otra manera de verlo, es que son una abstraccion de una persona llevando a cabo un cálculo usando una hoja de papel.</p>
+<p>Alan Turing procedió así:</p>
+<ul>
+<li>describir el comportamiento y los límites de un calculador humano
+<ul>
+<li>la hoja puede ser una cinta en 1 dimensión sin pérdida de generalidad</li>
+<li>un cálculo dado requiere una cantidad finita de estados internos para representar sus etapas</li>
+</ul></li>
+<li>introducir la &quot;computing machine&quot; cómo abstracción de un calculador humano</li>
+</ul>
+</div>
+<div id="definiciones-alternativas" class="slide section level1">
+<h1>Definiciones alternativas</h1>
+<p>En algunos lados, se define que una MT tiene una cinta de output, donde se escribe el resultado del cálculo, y que tiene un solo estado de detencion <span class="math"><em>q</em><sub><em>h</em><em>a</em><em>l</em><em>t</em></sub></span>.</p>
+<p>En el artículo de Turing (&quot;On Computable Numbers&quot;), las máquinas no se detienen y producen secuencias infinitas de dígitos de nombres reales.</p>
+</div>
+<div id="ejercicios" class="slide section level1">
+<h1>Ejercicios</h1>
+<p>Demostrar:</p>
+<ul>
+<li>Si <span class="math"><em>L</em></span> es decidible entonces su complemento <span class="math"><em>L̄</em></span> lo es.</li>
+<li>Todo lenguaje regular <span class="math"><em>L</em></span> es decidible.</li>
+<li>El conjunto de lenguajes decidibles es cerrado bajo unión, intersección y complemento.</li>
+</ul>
+</div>
+<div id="lenguajes-reconocibles" class="slide section level1">
+<h1>Lenguajes reconocibles</h1>
+<div class="thm">
+Una MT M <em>reconoce</em> un lenguaje L si para toda <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>, <span class="math"><em>x</em> ∈ <em>L</em></span> ssi <span class="math"><em>M</em>(<em>x</em>) = 1</span>.
+</div>
+</div>
+<div id="reconocer-vs-decidir" class="slide section level1">
+<h1>Reconocer vs decidir</h1>
+<p>Si M reconoce L, entonces:</p>
+<ul>
+<li>palabras de L llegan a <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span></li>
+<li>las otras o llegan a <span class="math"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span> o hacen que M no termine</li>
+</ul>
+<p>Si M decide L, entonces:</p>
+<ul>
+<li>palabras de L llegan a <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span></li>
+<li>las otras o llegan a <span class="math"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span></li>
+</ul>
+<p>Es decir M siempre se detiene, con cualquier entrada.</p>
+</div>
+<div id="tiempo-de-corrida-de-una-mt" class="slide section level1">
+<h1>Tiempo de corrida de una MT</h1>
+<div class="thm">
+Una MT calcula <span class="math"><em>f</em></span> o decide <span class="math"><em>L</em><sub><em>f</em></sub></span> en tiempo <span class="math"><em>T</em>(<em>n</em>)</span> si su corrida en cada entrada <span class="math"><em>x</em></span> necesita <em>cómo máximo</em> <span class="math"><em>T</em>(∣<em>x</em>∣)</span> pasos.
+</div>
+<p><strong>Notación O</strong>: dadas funciones <span class="math"><em>f</em>, <em>g</em>: N ↦ N</span>. Escribimos <span class="math"><em>f</em> ∈ <em>O</em>(<em>g</em>)</span> si existen una constante <span class="math"><em>c</em> &gt; R<sup> + </sup></span> y un rango <span class="math"><em>n</em> ∈ N</span> tales que para toda <span class="math"><em>m</em> &gt; <em>n</em></span>, <span class="math"><em>f</em>(<em>n</em>) ≥ <em>c</em>. <em>g</em>(<em>n</em>)</span>.</p>
+<p>Decimos que <span class="math"><em>f</em></span> es acotada por <span class="math"><em>g</em></span> (módulo un factor multiplicativo) a partir de un cierto rango (o en el infinito).</p>
+</div>
+<div id="observación-acerca-de-los-estados" class="slide section level1">
+<h1>Observación acerca de los estados</h1>
+<p>En lugar de pensar el conjunto de estados de una máquina como uno solo, podemos decir que una máquine tiene más de un estado activo.</p>
+<p>Es igual tener <span class="math"><em>n</em></span> estados activos, cada uno tomando valores en un conjunto <span class="math"><em>Q</em><sub><em>i</em></sub></span>, que un solo estado activo tomando valores en el conjunto <span class="math"><em>Q</em><sub>1</sub> × <em>Q</em><sub>2</sub> × … × <em>Q</em><sub><em>n</em></sub></span>.</p>
+<p>Eso permite &quot;almacenar&quot; información (solo valores dentro de un conjunto fijo).</p>
+</div>
+<div id="substitución-de-mt-alfabeto-y-número-de-cintas" class="slide section level1">
+<h1>Substitución de MT: alfabeto y número de cintas</h1>
+<div class="thm">
+<p>Para toda <span class="math"><em>f</em>: {0, 1}<sup> * </sup> ↦ {0, 1}</span> y <span class="math"><em>T</em>: N ↦ N</span> constructible en tiempo, si <span class="math"><em>f</em></span> es computable por una MT <span class="math"><em>M</em></span> con <span class="math"><em>k</em> ≥ 2</span> cintas y un alfabeto <span class="math">Γ </span> en tiempo <span class="math"><em>T</em>(<em>n</em>)</span>, entonces es computable por:</p>
+<ol style="list-style-type: decimal">
+<li>una MT <span class="math"><em>M</em>ʹ</span> con alfabeto <span class="math">{0, 1, ▫,  ⊳ }</span> en tiempo <span class="math">(2<em>l</em><em>o</em><em>g</em><sub>2</sub>(∣Γ ∣) + 1)(<em>T</em>(<em>n</em>))</span></li>
+<li>una MT <span class="math"><em>M</em>ʺ</span> con 1 cinta (que sirve de input y working) en tiempo <span class="math"><em>O</em>(<em>T</em>(<em>n</em>)<sup>2</sup>)</span></li>
+</ol>
+</div>
+</div>
+<div id="demostración-de-la-substitución-1" class="slide section level1">
+<h1>Demostración de la substitución 1</h1>
+<p>Se puede representar cualquier elemento de <span class="math">Γ </span> de forma binaria usando <span class="math"><em>l</em><em>o</em><em>g</em><sub>2</sub>( ∣ Γ  ∣ )</span> bits (redondeado para arriba).</p>
+<p>Para cada celda de <span class="math"><em>M</em></span>, hay <span class="math"><em>l</em><em>o</em><em>g</em><sub>2</sub>( ∣ Γ  ∣ )</span> celdas en <span class="math"><em>M</em>ʹ</span>.</p>
+<p>Para simular un paso de <span class="math"><em>M</em></span>, <span class="math"><em>M</em>ʹ</span> usa:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math"><em>l</em><em>o</em><em>g</em><sub>2</sub>( ∣ Γ  ∣ )</span> pasos para leer los bits que representan un símbolo de <span class="math">Γ </span> Mientra lee, usa sus estados para guardar los símbolos leídos.</li>
+<li>Según su función de transición (construida en función de la de <span class="math"><em>M</em></span>), calcula los símbolos que tiene que escribir y el nuevo estado de <span class="math"><em>M</em></span> y guarda esta información en sus estados.</li>
+<li>En <span class="math"><em>l</em><em>o</em><em>g</em><sub>2</sub>( ∣ Γ  ∣ )</span> pasos escribe los bits de los símbolos nuevos en las cintas</li>
+</ol>
+<p>Los estados de <span class="math"><em>M</em>ʹ</span> tienen que almacenar: el estado de <span class="math"><em>M</em></span>, <span class="math"><em>k</em></span> símbolos de <span class="math">Γ </span>, un contador de <span class="math">1</span> a <span class="math"><em>l</em><em>o</em><em>g</em><sub>2</sub>( ∣ Γ  ∣ )</span>.</p>
+</div>
+<div id="demostración-de-la-substitución-2" class="slide section level1">
+<h1>Demostración de la substitución 2</h1>
+<p>En <span class="math"><em>M</em>ʺ</span> las celdas <span class="math">1, <em>k</em> + 1, 2<em>k</em> + 1. . . </span> representan la primera cinta de <span class="math"><em>M</em></span>, las celdas <span class="math">2, <em>k</em> + 2, 2<em>k</em> + 2, . . . </span> la segunda, etc.</p>
+<p>Doblamos el tamaño del vocabulario de <span class="math"><em>M</em></span>, usando para cada símbolo <span class="math"><em>a</em></span>, su versión &quot;marcada&quot; <span class="math"><em>â</em></span> que representa la posición del cabezal.</p>
+<p>Ejecución de <span class="math"><em>M</em>ʺ</span> con entrada <span class="math"><em>x</em></span>:</p>
+<ol style="list-style-type: decimal">
+<li>copiar <span class="math"><em>x</em></span> a la derecha con representación &quot;intercalada&quot; (<span class="math"><em>O</em>(<em>n</em><sup>2</sup>)</span> pasos)</li>
+<li>simular <span class="math"><em>M</em></span> paso por paso:
+<ol style="list-style-type: decimal">
+<li>leer la cinta de la izquierda a la derecha, guardando en sus estados qué símbolos son leidos por <span class="math"><em>M</em></span></li>
+<li>decidir qué transición de <span class="math"><em>M</em></span> imitar</li>
+<li>volver al principio (después del input) de la cinta, modificándola como corresponde</li>
+</ol></li>
+</ol>
+<p><span class="math"><em>M</em></span> corre en <span class="math"><em>T</em>(<em>n</em>)</span> pasos, entonces solo modifica celdas a una distancia de <span class="math"><em>T</em>(<em>n</em>)</span> del principio de cada cinta. El recorrido hecho por <span class="math"><em>M</em>ʺ</span> para cada paso de <span class="math"><em>M</em></span> dura <span class="math">2<em>T</em>(<em>n</em>)</span> pasos. Entonces <span class="math"><em>M</em>ʺ</span> corre en tiempo <span class="math"><em>O</em>(<em>T</em>(<em>n</em>)<sup>2</sup>)</span>.</p>
+</div>
+<div id="ejercicio" class="slide section level1">
+<h1>Ejercicio</h1>
+<p>Substitución de MT con cinta infinita en las dos direcciones, por una cinta infinita en una sola dirección.</p>
+</div>
+<div id="más-resultados-similares" class="slide section level1">
+<h1>Más resultados similares</h1>
+<p>Más resultados de cambio de tipo de MT con desaceleración polinomial:</p>
+<ul>
+<li>pasar de cintas con <span class="math"><em>k</em></span> dimensiones a cintas con <span class="math">1</span> dimensión</li>
+<li>pasar de memoria en acceso random a memoria en acceso secuencial</li>
+<li>no permitir que los cabezales no se muevan</li>
+</ul>
+</div>
+<div id="resolver-problemas-con-dominios-otros-que-palabras-binarias" class="slide section level1">
+<h1>Resolver problemas con dominios otros que palabras binarias</h1>
+<p>Ver <a href="http://stellar.mit.edu/S/course/6/sp13/6.045/courseMaterial/topics/topic8/lectureNotes/6045-Lecture_7/6045-Lecture_7.pdf">slides 23 a 30</a>.</p>
+<p>Por el momento, no es necesario entrar en los detalles de codificacion/representacion.</p>
+<p>Idea: como entrada de una TM se puede representar</p>
+<ul>
+<li>grafos: lista de pares o matriz de adyacencia</li>
+<li>automatas: conjunto de estados, tabla de transiciones</li>
+<li>otras TM</li>
+</ul>
+<p>Dado un entero/grafo/automata/MT <span class="math"><em>x</em></span>, escribimos <span class="math"> &lt; <em>x</em> &gt; </span> su representación como palabra binaria.</p>
+</div>
+<div id="máquinas-de-turing-como-palabras" class="slide section level1">
+<h1>Máquinas de Turing como palabras</h1>
+<p>¿Qué información es requerida para describir una TM?</p>
+<ul>
+<li>su cantidad de cintas <span class="math"><em>k</em></span></li>
+<li>su conjunto de símbolos <span class="math">Γ </span></li>
+<li>su conjunto de estados <span class="math"><em>Q</em></span></li>
+<li>su fonción de transición <span class="math"><em>δ</em></span></li>
+</ul>
+<p>Por ejemplo dada una TM <span class="math"><em>M</em> =  &lt; 2, Γ , <em>Q</em>, <em>δ</em> &gt; </span>, podemos armar una palabra <span class="math"> &lt; <em>k</em>, Γ , <em>Q</em>, <em>δ</em> &gt; </span> con <span class="math"> &lt; <em>δ</em> &gt; </span> siendo el grafo de <span class="math"><em>δ</em></span> representado como una lista: <br /><span class="math"> &lt; <em>q</em><sub>0</sub>, <em>s</em><sub>0</sub>, <em>s</em><sub>0</sub>, <em>q</em><sub><em>n</em></sub>, <em>s</em><sub><em>w</em></sub>, <em>z</em><sub><em>i</em></sub>, <em>z</em><sub><em>w</em></sub> &gt; ,  &lt; . . .  &gt; ,  &lt; . . .  &gt; , . . . </span> (con <span class="math"><em>z</em><sub><em>i</em></sub>, <em>z</em><sub><em>w</em></sub> ∈ {←,  = , →}</span>).</p>
+</div>
+<div id="section-3" class="slide section level1">
+<h1></h1>
+<p>Consecuencia: podemos establecer una relación uno-a-uno <span class="math"><em>m</em></span> de los enteros naturales a las máquinas de Turing.</p>
+<p>Consideremos la representación binaria del entero natural <span class="math"><em>n</em></span>. Si representa una Máquina de Turing <span class="math"><em>M</em><sub><em>n</em></sub></span> decimos que <span class="math"><em>m</em>(<em>n</em>) = <em>M</em><sub><em>n</em></sub></span>, sino <span class="math"><em>m</em>(<em>n</em>) = <em>X</em></span> , con <span class="math"><em>X</em></span> una maquina de Turing arbitraria que entra en un bucle infinito con todo input.</p>
+</div>
+<div id="mala-noticia" class="slide section level1">
+<h1>Mala noticia</h1>
+<p>cardinalidad de todas las máquinas de Turing &lt; cardinalidad de todos los lenguajes</p>
+<p>¿Porqué?</p>
+<ol style="list-style-type: decimal">
+<li>Cardinalidad de las MT = Cardinalidad de los enteros</li>
+<li><p>Cardinalidad de todos los lenguajes = Cardinalidad de los reales</p></li>
+<li><p>se demuestra con un argumento de diagonalisación de Cantor.</p></li>
+</ol>
+<p>Las máquinas de Turing no alcanzan para decidir todos los lenguajes.</p>
+</div>
+<div id="maquina-de-turing-universal" class="slide section level1">
+<h1>Maquina de Turing Universal</h1>
+<p>Representando MT como palabras, podemos disenar MT que toman descripciones de otras MT como entrada y hacen cosas divertidas.</p>
+<p>En su articulo de 1936, justo después de presentar sus Máquinas, Alan Turing describe una máquina <strong>universal</strong>.</p>
+<p>Una máquina U es <em>universal</em> si para cualquiera máquina M y palabra <span class="math"><em>x</em> ∈ {0, 1} * </span>, <span class="math"><em>U</em>( &lt; <em>M</em>, <em>x</em> &gt; ) = <em>M</em>(<em>x</em>)</span>.</p>
+<div class="thm">
+Existe una máquina de Turing universal.
+</div>
+</div>
+<div id="consecuencia-de-la-existencia-de-una-mtu" class="slide section level1">
+<h1>Consecuencia de la existencia de una MTU</h1>
+<p>Si una máquina es universal, puede leer la descripcion de otra máquina y &quot;ejecutarla&quot; con una palabra de entrada.</p>
+<p>Sin máquina universal, tendríamos que construir (físicamente) una máquina por tarea.</p>
+<p>Con máquinas universales, tenemos software (máquinas simuladas) corriendo arriba de hardware (máquinas universales).</p>
+</div>
+<div id="ejercicio-construcción-de-una-mtu" class="slide section level1">
+<h1>Ejercicio: construcción de una MTU</h1>
+<div class="thm&gt; Existe una máquina U *universal* con dos cintas &lt;/div&gt; Construir una MTU U, capaz de simular cualquier MT $M$ con $k$ cintas. Requiere: lemma k cintas trabajo a 1 cinta trabajo. ¿Cúales son las fases principales de la ejecución de MTU? ¿Cómo simular un paso de M? ¿En cúanto tiempo corre $U(&lt;M,x&gt;)$ con respeto a $M(x)$? &lt;!-- # Unos lenguajes sobre $\{0,1\}^*$ * PAL = $\{ x \mid x$ es capicúa $\}$ * $\lfloor x \rfloor$ = representación de $x$ como string binaria * EVEN = $\{ \lfloor x \rfloor \mid x$ es par $\}$ * SMALLER = $\{ \lfloor (x,y) \rfloor \mid x \leq y \}$ * PRIMES = $\{ \lfloor x \rfloor \mid x$ es primo $\}$ * HAM = $\{ \lfloor G \rfloor \mid G$ es hamiltoniano $\}$ * SUBSETSUM = $\{ (X,x) \mid \exists S\subseteq X, \Sigma S = x \}$ (con X conjunto de enteros, x entero) * INDSET = &lt;br /&gt;$\{(G,k)\mid\exists S\subseteq V(G),|S|\geq k,\forall uv\in S,uv\notin E(G)\}$ (con $G$ un grafo, $V(G)$ los puntos de $G$, $E(G)$ los ejes de G) --&gt; # Problemas indecidibles Hemos observado que por una diferencia de cardinalidades, hay lenguajes (de hecho, la gran mayoría) que no son decidibles. Ahora que sabemos representar MT como palabras vamos a ver lenguajes indecidibles particulares que involucran MT. Las demostraciones de indecidibilidad van a involucrar MTU. # Indecibilidad de la aceptación por TM * $ Acc_{MT} = \{&lt;M,x&gt; \mid$ $M$ es una MT y acepta $x \}$ * $ Halt_{MT} = \{ &lt;M,x&gt; \mid$ $M$ es una MT y se detiene con entrada $x \}$ * $Empty_{MT} = \{ &lt;M,x&gt; \mid$ $M$ es una MT y $L(M)=\emptyset \}$ # Indecibilidad de $Acc_{MT}$ $Acc_{TM} =\{&lt;M,x&gt; \mid$ $M$ es una MT y acepta $x \}$ &gt; * Suponer que $Acc_{MT}$ es decidible &gt; * Es decir existe MT $H$ que decide $Acc_{MT}$ &gt; * ¿En qué casos tiene que aceptar? ¿Rechazar? &gt; * Diseñar $H&#39;$ a partir de $H$, que decide si una TM $M$ acepta su propia representacion $&lt;M&gt;$ &gt; * Diseñar $D$ (diagonal machine) que hace lo contrario de $H&#39;$ &gt; * Considerar que pasa con $D(&lt;D&gt;)$. &gt; * Contradicción. # ¿Qué pasó? Dibujar una tabla con las MT etiquetando cada línea, y las palabras representando las MT etiquetando cada columna. La diagonal central representa el resultado de $M(&lt;M&gt;)$ para toda $M$. $D$ está construida para ser distinta de esa diagonal, entonces $D$ no puede aparecer como etiqueta de una linea en esa tabla. Contradiccion dado que supusimos que la tabla incluía a todas las MT. # Indecibilidad de $Halt_{MT}$ $Halt_{MT} = \{ &lt;M,x&gt; \mid$ $M$ es una MT y se detiene con entrada $x \}$ $Halt_{MT}$ es el **problema de la detención** (Halting Problem). Decidir $Halt_{MT}$ significa poder detectar si una MT va a entrar en un bucle infinito sin ejecutarla. Por ejemplo podríamos demostrar o infirmar la Conyectura de Goldbach (todos los números $\geq 4$ son la suma de dos números primos): for i = 2 to infinity: if 2*i is not the sum of two primes: then HALT Si $Halt_{MT}$ fuera decidible podríamos detectar si este programa terminara. Suena demasiado lindo... # Ejercicio: Indecibilidad de $Halt_{MT}$ $ Halt_{MT} = \{ &lt;M,x&gt; \mid$ $M$ es una MT y se detiene con entrada $x \}$ La idea es mostrar que su pudieramos decidir $Halt_{MT}$, podriamos decidir $Acc_{TM}$. # Adecuación de las MT ¿Las MT representan todos los procedimientos efectivos? Como un procedimiento efectivo es una noción informal, no lo podemos demostrar. Pero algunas cosas indican que sí, es el caso. Se demostro que tres modelos de calculo: * funciones recursivas de Kurt Gödel y Jacques Herbrand * el calculo lambda de Alonzo Church * las máquinas de Alan Turing Eran equivalentes, ie calculaban las mismas funciones. La hypothesis que las máquinas de Turing representan todos los procedimientos efectivos se llama **Tesis de Church-Turing**. # Resultados importantes * las máquinas de Turing formalisan la idea intuitiva de lo que es un cálculo * tienen una descripción finita y son enumerables * la gran mayoría de los lenguajes y funciones son indecidibles * ciertos problemas interesantes, como el problema de la detención, son indecidibles * varios tipos de máquinas tienen una capacidad de computo equivalente * existe una máquina universal, que puede leer la descripción de cualquier otra máquina, e imitar su comportamiento # Lectura 1. Arora y Barak: Capítulo 1 hasta 1.5 incluido (Sin sección 1.2.1, remark 1.7, claim 1.8, section 1.5.2). 2. Sipser: Capítulo 0. Capítulo 4, sección 2: lenguajes indecidibles y problema de la detención. # Más lectura * Pippenger y Fischer," relations="" among="" complexity="" measures",="" 1979:="" simulación="" de="" mt="" con="" "cintas"="" k-dimensionales="" por="" mt="" con="" cintas="" unidimensionales="" *="" dick="" lipton="" [programming="" turing="" machines="" is="" hard](http:="" rjlipton.wordpress.com="" 2010="" 01="" 27="" programming-turing-machines-is-hard="" ):="" substitución="" de="" mt="" multicinta="" en="" tiempo="" $o(t(n)="" log(t(n)))$="" (en="" lugar="" de="" $o(t(n)^2)$)="" *="" [church-turing="" thesis="" en="" wikipedia](https:="" en.wikipedia.org="" wiki="" church%e2%80%93turing_thesis)="">
+Existe una máquina U <em>universal</em> con dos cintas
+</div>
+<p>Construir una MTU U, capaz de simular cualquier MT <span class="math"><em>M</em></span> con <span class="math"><em>k</em></span> cintas.</p>
+<p>Requiere: lemma k cintas trabajo a 1 cinta trabajo.</p>
+<p>¿Cúales son las fases principales de la ejecución de MTU?</p>
+<p>¿Cómo simular un paso de M?</p>
+<p>¿En cúanto tiempo corre <span class="math"><em>U</em>( &lt; <em>M</em>, <em>x</em> &gt; )</span> con respeto a <span class="math"><em>M</em>(<em>x</em>)</span>?</p>
+<!--
+# Unos lenguajes sobre $\{0,1\}^*$
+
+* PAL = $\{ x \mid x$ es capicúa $\}$
+* $\lfloor x \rfloor$ = representación de $x$ como string binaria
+* EVEN = $\{ \lfloor x \rfloor \mid x$ es par $\}$
+* SMALLER = $\{ \lfloor (x,y) \rfloor  \mid x \leq y \}$
+* PRIMES = $\{ \lfloor x \rfloor  \mid x$ es primo $\}$
+* HAM = $\{ \lfloor G \rfloor  \mid G$ es hamiltoniano $\}$
+* SUBSETSUM = $\{ (X,x) \mid \exists S\subseteq X, \Sigma S = x \}$
+  (con X conjunto de enteros, x entero)
+* INDSET =
+  <br />$\{(G,k)\mid\exists S\subseteq V(G),|S|\geq k,\forall uv\in S,uv\notin E(G)\}$
+  (con $G$ un grafo, $V(G)$ los puntos de $G$, $E(G)$ los ejes de G)
+-->
+
+</div>
+<div id="problemas-indecidibles" class="slide section level1">
+<h1>Problemas indecidibles</h1>
+<p>Hemos observado que por una diferencia de cardinalidades, hay lenguajes (de hecho, la gran mayoría) que no son decidibles.</p>
+<p>Ahora que sabemos representar MT como palabras vamos a ver lenguajes indecidibles particulares que involucran MT.</p>
+<p>Las demostraciones de indecidibilidad van a involucrar MTU.</p>
+</div>
+<div id="indecibilidad-de-la-aceptación-por-tm" class="slide section level1">
+<h1>Indecibilidad de la aceptación por TM</h1>
+<ul>
+<li>$ Acc_{MT} = {<M,x> $ <span class="math"><em>M</em></span> es una MT y acepta <span class="math"><em>x</em>}</span></li>
+<li>$ Halt_{MT} = { <M,x> $ <span class="math"><em>M</em></span> es una MT y se detiene con entrada <span class="math"><em>x</em>}</span></li>
+<li><span class="math"><em>E</em><em>m</em><em>p</em><em>t</em><em>y</em><sub><em>M</em><em>T</em></sub> = { &lt; <em>M</em>, <em>x</em> &gt;  ∣ </span> <span class="math"><em>M</em></span> es una MT y <span class="math"><em>L</em>(<em>M</em>) = ∅}</span></li>
+</ul>
+</div>
+<div id="indecibilidad-de-acc_mt" class="slide section level1">
+<h1>Indecibilidad de <span class="math"><em>A</em><em>c</em><em>c</em><sub><em>M</em><em>T</em></sub></span></h1>
+<p><span class="math"><em>A</em><em>c</em><em>c</em><sub><em>T</em><em>M</em></sub> = { &lt; <em>M</em>, <em>x</em> &gt;  ∣ </span> <span class="math"><em>M</em></span> es una MT y acepta <span class="math"><em>x</em>}</span></p>
+<ul class="incremental">
+<li>Suponer que <span class="math"><em>A</em><em>c</em><em>c</em><sub><em>M</em><em>T</em></sub></span> es decidible</li>
+<li>Es decir existe MT <span class="math"><em>H</em></span> que decide <span class="math"><em>A</em><em>c</em><em>c</em><sub><em>M</em><em>T</em></sub></span></li>
+<li>¿En qué casos tiene que aceptar? ¿Rechazar?</li>
+<li>Diseñar <span class="math"><em>H</em>ʹ</span> a partir de <span class="math"><em>H</em></span>, que decide si una TM <span class="math"><em>M</em></span> acepta su propia representacion <span class="math"> &lt; <em>M</em> &gt; </span></li>
+<li>Diseñar <span class="math"><em>D</em></span> (diagonal machine) que hace lo contrario de <span class="math"><em>H</em>ʹ</span></li>
+<li>Considerar que pasa con <span class="math"><em>D</em>( &lt; <em>D</em> &gt; )</span>.</li>
+<li>Contradicción.</li>
+</ul>
+</div>
+<div id="qué-pasó" class="slide section level1">
+<h1>¿Qué pasó?</h1>
+<p>Dibujar una tabla con las MT etiquetando cada línea, y las palabras representando las MT etiquetando cada columna.</p>
+<p>La diagonal central representa el resultado de <span class="math"><em>M</em>( &lt; <em>M</em> &gt; )</span> para toda <span class="math"><em>M</em></span>.</p>
+<p><span class="math"><em>D</em></span> está construida para ser distinta de esa diagonal, entonces <span class="math"><em>D</em></span> no puede aparecer como etiqueta de una linea en esa tabla.</p>
+<p>Contradiccion dado que supusimos que la tabla incluía a todas las MT.</p>
+</div>
+<div id="indecibilidad-de-halt_mt" class="slide section level1">
+<h1>Indecibilidad de <span class="math"><em>H</em><em>a</em><em>l</em><em>t</em><sub><em>M</em><em>T</em></sub></span></h1>
+<p><span class="math"><em>H</em><em>a</em><em>l</em><em>t</em><sub><em>M</em><em>T</em></sub> = { &lt; <em>M</em>, <em>x</em> &gt;  ∣ </span> <span class="math"><em>M</em></span> es una MT y se detiene con entrada <span class="math"><em>x</em>}</span></p>
+<p><span class="math"><em>H</em><em>a</em><em>l</em><em>t</em><sub><em>M</em><em>T</em></sub></span> es el <strong>problema de la detención</strong> (Halting Problem).</p>
+<p>Decidir <span class="math"><em>H</em><em>a</em><em>l</em><em>t</em><sub><em>M</em><em>T</em></sub></span> significa poder detectar si una MT va a entrar en un bucle infinito sin ejecutarla.</p>
+<p>Por ejemplo podríamos demostrar o infirmar la Conyectura de Goldbach (todos los números <span class="math"> ≥ 4</span> son la suma de dos números primos):</p>
+<pre><code>for i = 2 to infinity:
+    if 2*i is not the sum of two primes:
+        then HALT</code></pre>
+<p>Si <span class="math"><em>H</em><em>a</em><em>l</em><em>t</em><sub><em>M</em><em>T</em></sub></span> fuera decidible podríamos detectar si este programa terminara.</p>
+<p>Suena demasiado lindo...</p>
+</div>
+<div id="ejercicio-indecibilidad-de-halt_mt" class="slide section level1">
+<h1>Ejercicio: Indecibilidad de <span class="math"><em>H</em><em>a</em><em>l</em><em>t</em><sub><em>M</em><em>T</em></sub></span></h1>
+<p>$ Halt_{MT} = { <M,x> $ <span class="math"><em>M</em></span> es una MT y se detiene con entrada <span class="math"><em>x</em>}</span></p>
+<p>La idea es mostrar que su pudieramos decidir <span class="math"><em>H</em><em>a</em><em>l</em><em>t</em><sub><em>M</em><em>T</em></sub></span>, podriamos decidir <span class="math"><em>A</em><em>c</em><em>c</em><sub><em>T</em><em>M</em></sub></span>.</p>
+</div>
+<div id="adecuación-de-las-mt" class="slide section level1">
+<h1>Adecuación de las MT</h1>
+<p>¿Las MT representan todos los procedimientos efectivos?</p>
+<p>Como un procedimiento efectivo es una noción informal, no lo podemos demostrar.</p>
+<p>Pero algunas cosas indican que sí, es el caso.</p>
+<p>Se demostro que tres modelos de calculo:</p>
+<ul>
+<li>funciones recursivas de Kurt Gödel y Jacques Herbrand</li>
+<li>el calculo lambda de Alonzo Church</li>
+<li>las máquinas de Alan Turing</li>
+</ul>
+<p>Eran equivalentes, ie calculaban las mismas funciones.</p>
+<p>La hypothesis que las máquinas de Turing representan todos los procedimientos efectivos se llama <strong>Tesis de Church-Turing</strong>.</p>
+</div>
+<div id="resultados-importantes" class="slide section level1">
+<h1>Resultados importantes</h1>
+<ul>
+<li>las máquinas de Turing formalisan la idea intuitiva de lo que es un cálculo</li>
+<li>tienen una descripción finita y son enumerables</li>
+<li>la gran mayoría de los lenguajes y funciones son indecidibles</li>
+<li>ciertos problemas interesantes, como el problema de la detención, son indecidibles</li>
+<li>varios tipos de máquinas tienen una capacidad de computo equivalente</li>
+<li>existe una máquina universal, que puede leer la descripción de cualquier otra máquina, e imitar su comportamiento</li>
+</ul>
+</div>
+<div id="lectura" class="slide section level1">
+<h1>Lectura</h1>
+<ol style="list-style-type: decimal">
+<li><p>Arora y Barak: Capítulo 1 hasta 1.5 incluido (Sin sección 1.2.1, remark 1.7, claim 1.8, section 1.5.2).</p></li>
+<li><p>Sipser: Capítulo 0. Capítulo 4, sección 2: lenguajes indecidibles y problema de la detención.</p></li>
+</ol>
+</div>
+<div id="más-lectura" class="slide section level1">
+<h1>Más lectura</h1>
+<ul>
+<li>Pippenger y Fischer, &quot;Relations among complexity measures&quot;, 1979: simulación de MT con &quot;cintas&quot; k-dimensionales por MT con cintas unidimensionales</li>
+<li>Dick Lipton <a href="http://rjlipton.wordpress.com/2010/01/27/programming-turing-machines-is-hard/">Programming Turing Machines is Hard</a>: substitución de MT multicinta en tiempo <span class="math"><em>O</em>(<em>T</em>(<em>n</em>)<em>l</em><em>o</em><em>g</em>(<em>T</em>(<em>n</em>)))</span> (en lugar de <span class="math"><em>O</em>(<em>T</em>(<em>n</em>)<sup>2</sup>)</span>)</li>
+<li><a href="https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis">Church-Turing thesis en Wikipedia</a></li>
+</ul>
+</div>
+</body>
+</html>

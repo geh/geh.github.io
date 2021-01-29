@@ -1,0 +1,48 @@
+# Como manejar problemas **NP**-completos
+
+* Heuristicas: NP es acerca de todos los inputs posibles, mientras que en casos
+  concretos los inputs pueden tener rasgos explotables
+  (simplicidad, simetrías, variables interconectadas, etc.)
+* Fijar parametros (parametrized complexity)
+* Canjear exactitud por velocidad (usar números aleatorios para tener resultados
+  con una baja probabilidad de ser erróneos)
+
+# El problema de la factorización
+
+Existen problemas naturales
+que se sospecha estar en **NP** $\setminus$ **P** sin ser **NP** completos.
+
+Factorización:
+
+> Dado $n, m\in\mathbb{N}$ tal que $1 \leq m \leq n$, ¿ $n$ tiene un factor $d$
+> tal que $1 < d < m$?
+
+Se sospecha que FACTOR no está en **P**, ni es **NP** completo ni **coNP** completo.
+
+Observación: el problema ¿ $n\in\mathbb{N}$ es un número compuesto? es una versión
+relajada de FACTOR y está en **P** (equivalentemente, PRIMES está en **P**).
+
+---
+
+Otros problemas en **NP**, sospechados de estar en
+**NP** $\setminus$ (**P** $\cup$ **NPC**)
+
+  * isomorfirmo de grafos<br />
+    <img src="Graph_isomorphism_a.svg" height="200" />  <img src="Graph_isomorphism_b.svg" width="200"/>
+  * problema de la autopista con peaje (*turnpike problem*):
+    dadas $n(n-1)/2$ distancias entre pares de puntos,
+    ¿les corresponde alguna configuración de $n$ puntos en una línea?
+
+
+# Teorema de Ladner
+
+**Teorema:**
+Si **P**≠**NP**, existe un lenguaje en **NP** $\setminus$ **P** que no es **NP** completo.
+
+Idea: definir un problema tal que para ciertos inputs de tamaño $n$,
+el problema es resolver SAT (para que no este en **P**), y en otros
+inputs no hacer nada (para que no sea **NP** completo).
+
+[Prueba detallada adaptada de Arora y Barak](ladner.html)
+
+

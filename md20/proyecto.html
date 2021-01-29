@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>MD3-computabilidad: coloquio</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+line-height: 1.5;
+color: #24292e;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.5;
+word-wrap: break-word;
+}
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+}
+@media (max-width: 767px) {
+body {
+padding: 15px;
+}
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border-style: none;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+overflow: visible;
+}
+input {
+font: inherit;
+margin: 0;
+}
+input {
+overflow: visible;
+}
+[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font-family: inherit;
+font-size: inherit;
+line-height: inherit;
+}
+a {
+color: #0366d6;
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+strong {
+font-weight: 600;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #dfe2e5;
+}
+hr::before {
+display: table;
+content: "";
+}
+hr::after {
+display: table;
+clear: both;
+content: "";
+}
+table {
+border-spacing: 0;
+border-collapse: collapse;
+}
+td,
+th {
+padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 0;
+margin-bottom: 0;
+}
+h1 {
+font-size: 32px;
+font-weight: 600;
+}
+h2 {
+font-size: 24px;
+font-weight: 600;
+}
+h3 {
+font-size: 20px;
+font-weight: 600;
+}
+h4 {
+font-size: 16px;
+font-weight: 600;
+}
+h5 {
+font-size: 14px;
+font-weight: 600;
+}
+h6 {
+font-size: 12px;
+font-weight: 600;
+}
+p {
+margin-top: 0;
+margin-bottom: 10px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding-left: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 0.25em;
+padding: 0;
+margin: 24px 0;
+background-color: #e1e4e8;
+border: 0;
+}
+blockquote {
+padding: 0 1em;
+color: #6a737d;
+border-left: 0.25em solid #dfe2e5;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 24px;
+margin-bottom: 16px;
+font-weight: 600;
+line-height: 1.25;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2em;
+border-bottom: 1px solid #eaecef;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.5em;
+border-bottom: 1px solid #eaecef;
+}
+h3 {
+font-size: 1.25em;
+}
+h4 {
+font-size: 1em;
+}
+h5 {
+font-size: 0.875em;
+}
+h6 {
+font-size: 0.85em;
+color: #6a737d;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li {
+word-wrap: break-all;
+}
+li>p {
+margin-top: 16px;
+}
+li+li {
+margin-top: 0.25em;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: 600;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+}
+table th {
+font-weight: 600;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #dfe2e5;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #c6cbd1;
+}
+table tr:nth-child(2n) {
+background-color: #f6f8fa;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+img[align=right] {
+padding-left: 20px;
+}
+img[align=left] {
+padding-right: 20px;
+}
+code {
+padding: 0.2em 0.4em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(27,31,35,0.05);
+border-radius: 3px;
+}
+pre {
+word-wrap: normal;
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f6f8fa;
+border-radius: 3px;
+}
+pre code {
+display: inline;
+max-width: auto;
+padding: 0;
+margin: 0;
+overflow: visible;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+hr {
+border-bottom-color: #eee;
+}
+</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">MD3-computabilidad: coloquio</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#presentación-general">Presentación general</a></li>
+<li><a href="#maquinas-de-turing-binarias-cíclicas-mtbc">Maquinas de Turing Binarias Cíclicas (MTBC)</a></li>
+<li><a href="#objetivo-del-proyecto">1. Objetivo del proyecto</a></li>
+<li><a href="#salidas-a-imitar">2. Salidas a imitar</a></li>
+<li><a href="#ejemplos-para-verificar-la-implementación">Ejemplos para verificar la implementación</a></li>
+<li><a href="#modo-búsqueda">3. Modo búsqueda</a></li>
+<li><a href="#criterios-de-evaluación-y-de-regularidad">Criterios de evaluación y de regularidad</a></li>
+</ul>
+</nav>
+<h1 id="presentación-general">Presentación general</h1>
+<p>Este proyecto se puede hacer solo o en grupo de 2.</p>
+<p>Las instrucciones de entrega y de evaluación del proyecto están al final de este documento.</p>
+<h1 id="maquinas-de-turing-binarias-cíclicas-mtbc">Maquinas de Turing Binarias Cíclicas (MTBC)</h1>
+<p>Una Máquina de Turing binaria cíclica (MTBC) es una simplificación de la Máquina de Turing que vimos al principio del semestre. La diferencia es que su estado interno cambia cíclicamente: pasa de <code>a</code> al <code>b</code>, luego <code>c</code>, y así. Cuando llega a su último estado, vuelve al estado <code>a</code> y sigue.</p>
+<p>Entonces la tabla de transiciones de una MTBC es más simple que en una MT común.</p>
+<p>Para cada par <em>(estado activo,símbolo leido)</em>, la tabla indica qué acción efectuar. Las acciones son 5 posibles:</p>
+<ul>
+<li>finalizar la ejecución</li>
+<li>escribir 0 y mover el cabezal a la izquierda</li>
+<li>escribir 0 y mover el cabezal a la derecha</li>
+<li>escribir 1 y mover el cabezal a la izquierda</li>
+<li>escribir 1 y mover el cabezal a la derecha</li>
+</ul>
+<p>Por ejemplo, esto sería la tabla de transición de alguna MTBC:</p>
+<pre><code>  | 0| 1|
+a |1&gt;|1&lt;|
+b |1&lt;|1&gt;|
+c | F|1&gt;|</code></pre>
+<p>Tal tabla se puede representar por una cadena de caracteres. Usamos la codificación siguiente:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">instrucción</th>
+<th style="text-align: center;">representación ascii</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">finalizar la ejecución</td>
+<td style="text-align: center;">f</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">escribir 0 y mover el cabezal a la izquierda</td>
+<td style="text-align: center;">o</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">escribir 0 y mover el cabezal a la derecha</td>
+<td style="text-align: center;">O</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">escribir 1 y mover el cabezal a la izquierda</td>
+<td style="text-align: center;">i</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">escribir 1 y mover el cabezal a la derecha</td>
+<td style="text-align: center;">I</td>
+</tr>
+</tbody>
+</table>
+<p>La tabla anterior tiene como representacion en cadena de caracteres: <code>IiiIfI</code>.</p>
+<p>Y la siguiente:</p>
+<pre><code>  | 0| 1|
+a |0&gt;| F|
+b |0&lt;|1&gt;|
+c |1&gt;|1&lt;|</code></pre>
+<p>Tiene como representación: <code>OfoIIi</code></p>
+<h1 id="objetivo-del-proyecto">1. Objetivo del proyecto</h1>
+<p>Se trata de escribir un programa capaz de tomar la tabla de transición de una MTBC como parámetro en línea de comando, ejecutarla cierta hasta llegar a que se detenga o hasta que se hayan ejecutado cierta cantidad de pasos.</p>
+<p>Debés implementar la simulación de MTBC a partir de una situación inicial “cinta a cero”. En cada paso se debe imprimir la cinta, y la instrucción que se está por ejecutar (mostrando su código en la representación en cadena de caracteres).</p>
+<p>El programa tiene que decir si la simulación se terminó sin que la máquina haya llegado a una instruccion “fin”. En el caso contrario, el programa indica cuántos pasos se ejecutó la simulación.</p>
+<p>La simulación siempre empieza con las condiciones siguientes:</p>
+<ul>
+<li>la cinta de trabajo está completamente inicializada a cero</li>
+<li>el estado interno de la máquina es <code>a</code> (el primero)</li>
+</ul>
+<p>Observá que podés trabajar con un arreglo de tamaño fijo, dado que si conocés el limite <code>t</code> de cantidad de pasos para la ejecución de la máquina, no necesitás más que un arreglo de tamaño <code>2t+1</code>. Podés suponer que, por defecto, <code>t</code> vale 50.</p>
+<h1 id="salidas-a-imitar">2. Salidas a imitar</h1>
+<p>Unos ejemplos de como se puede ejecutar tu programa y qué salida tiene que tener:</p>
+<pre><code>$ ./a.out IiiofI
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000000011000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000000011000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000000011000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000 instruccion f
+fin de ejecucion en 6 pasos</code></pre>
+<pre><code>$ ./a.out IiioIf
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000000011000000000000000000000000000000000000000000000000 instruccion f
+fin de ejecucion en 3 pasos</code></pre>
+<pre><code>$ ./a.out IiioIi
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000000011000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000000011000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000000111000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000000000101000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000000101000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000001101000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000000001001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000001001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000011001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000000010001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000010001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000000110001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000000100001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000000100001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000001100001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000001000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000001000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000011000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000010000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000010000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000000110000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000000100000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000001100000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000001000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000001000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000011000000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000010000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000010000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000000110000000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000000100000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000000100000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000001100000000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000001000000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000001000000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000011000000000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000010000000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000010000000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000000110000000000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000000100000000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000000100000000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000001100000000000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000001000000000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000001000000000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000011000000000000001000000000000000000000000000000000000000000000000 instruccion o
+0000000000000000000000000000000000010000000000000001000000000000000000000000000000000000000000000000 instruccion i
+0000000000000000000000000000000000010000000000000001000000000000000000000000000000000000000000000000 instruccion I
+0000000000000000000000000000000000110000000000000001000000000000000000000000000000000000000000000000 instruccion o
+fin de ejecucion por limite de tiempo (50 pasos)</code></pre>
+<h1 id="ejemplos-para-verificar-la-implementación">Ejemplos para verificar la implementación</h1>
+<p>Podés usar los ejemplos siguientes para controlar que tu programa no tiene errores.</p>
+<pre><code>Iiif         6 pasos
+Iiof         supera el limite de 50 pasos
+IiioIf       3 pasos
+IiiofI       6 pasos
+IiioooIf     8 pasos
+IiiooiIf    12 pasos</code></pre>
+<h1 id="modo-búsqueda">3. Modo búsqueda</h1>
+<p>Implementá un modo “búsqueda aleatoria” de máquinas de <code>n</code> estados que tenga un tiempo de ejecución de más de <code>t</code> pasos. Por ejemplo la ejecución siguiente genera aleatoriamente máquinas de 5 estados, hasta encontrar alguna que se ejecuta en más de 10 pasos, terminando:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1">$ <span class="ex">./a.out</span> -n 5 -t 10</a></code></pre></div>
+<p>La salida de este modo es libre.</p>
+<p>Es posible que esa búsqueda no devuelva nunca una respuesta, porque no existe tal máquina.</p>
+<p>Una pregunta abierta interesante es: dado un entero <code>n</code>, ¿cuál es la cantidad máxima de pasos que puede hacer una MTBC de <code>n</code> estados antes de detenerse?</p>
+<p>Pensá en una estrategia para acercarte de la respuesta para un <code>n</code> dado. Todo vale. Con la entrega de tu programa, entregá candidatos de respuestas para la categorias 4, 5, 6 y 7 estados.</p>
+<h1 id="criterios-de-evaluación-y-de-regularidad">Criterios de evaluación y de regularidad</h1>
+<p>Mandar el código a <a href="mailto:guillaumh@gmail.com">guillaumh@gmail.com</a>, junto con una descripción del proyecto en unos párrafos.</p>
+<p>Indicar los nombres de los integrantes del grupo en el codigo fuente, y llamar el archivo con los apellidos de los integrantes.</p>
+<p>La elección del lenguaje de programación es libre. Se debe entregar el código fuente con instrucciones para compilarlo. Si el lenguaje es demasiado esotérico, provean ejecutable para Linux 64 bits.</p>
+<p><strong>Esta entrega tiene que hacerse antes del martes 3/12 a las 18hs</strong>. Si no se hace esta entrega o si esta no cumple con lo enunciado anteriormente, directamente se reprueba el coloquio.</p>
+<p>Luego, <strong>se presentará el coloquio el día jueves 5/12 a las 18hs</strong>. Se evaluará si tu proyecto cumple con los puntos 1, 2 y 3.</p>
+<p>Se tomará en cuenta (en el orden siguiente de prioridad):</p>
+<ul>
+<li>que el código sea autoría de quienes lo entreguen</li>
+<li>que sea mantenible, es decir, si se cambian los requisitos del enunciado, sea fácil de modificar</li>
+<li>que sea el más corto posible (en cantidad de sentencias y de variables usadas)</li>
+<li>que esté bien presentado (con indentación, elegir bien los nombres de variables)</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Examen final MDIII - Computabilidad y Autómatas</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Examen final MDIII - Computabilidad y Autómatas</h1>
+</header>
+<h2 id="lenguaje-decidible-10-puntos">1. Lenguaje decidible (10 puntos)</h2>
+<p>Considerar el lenguaje siguiente:</p>
+<p><span class="math inline"><em>L</em> = {0<sup><em>n</em></sup>1<sup><em>n</em></sup>0 ∣ <em>n</em> &gt; 0}</span></p>
+<p>Por ejemplo estas palabras pertenecen a <span class="math inline"><em>L</em></span>: <code>010</code>, <code>00110</code>, <code>0001110</code>.</p>
+<p>Describir una máquina de Turing que decida este lenguaje.</p>
+<h2 id="clase-de-complejidad-np-10-puntos">2. Clase de complejidad NP (10 puntos)</h2>
+<p>El “problema de la autopista con peajes” es el siguiente: tenemos una lista de <span class="math inline"><em>n</em>(<em>n</em> − 1)/2</span> enteros, con <span class="math inline"><em>n</em> &gt; 1</span>.</p>
+<p>Queremos saber si esta lista representa todas las distancias entre cada par de puntos distintos, dentro de un conjunto de <span class="math inline"><em>n</em></span> puntos colocados en una línea recta. Puede ser que sí o que no.</p>
+<p>Por ejemplo, esta lista : <code>{1,4,5,3,4,1}</code> sí representa 4 puntos colocados en una línea recta de la forma siguiente:</p>
+<pre><code>----*-*---*-*-------</code></pre>
+<p>Observamos que la información mínima para representar esta situación es la lista <code>{1,3,1}</code>, que son las <span class="math inline"><em>n</em> − 1</span> distancias sucesivas de estos puntos en línea.</p>
+<p>En cambio, la lista siguiente no tiene “solución” posible con 3 puntos en una línea recta: <code>{10,1,100}</code>.</p>
+<p>Llamamos <span class="math inline"><em>A</em><em>P</em></span> el lenguaje de las listas que tienen solución en el problema de la autopista con peajes.</p>
+<ol type="1">
+<li><p>¿Dado que no conocemos ningún algoritmo polinomial que decida <span class="math inline"><em>A</em><em>P</em></span>, qué afirmación <strong>no</strong> podemos hacer?</p></li>
+<li><p>Queremos explicar por qué <span class="math inline"><em>A</em><em>P</em>∈</span> <strong>NP</strong>. ¿Qué sería el certificado <span class="math inline"><em>c</em></span> correspondiente a alguna instancia <span class="math inline"><em>l</em> ∈ <em>A</em><em>P</em></span>?</p></li>
+<li><p>¿Qué sería el algoritmo que verifica que para cada par <span class="math inline">(<em>l</em>, <em>c</em>)</span>, que <span class="math inline"><em>l</em> ∈ <em>A</em><em>P</em></span> usando <span class="math inline"><em>c</em></span> como certificado?</p></li>
+</ol>
+<h2 id="lenguajes-regulares-10-puntos.">3. Lenguajes regulares (10 puntos).</h2>
+<p>Definir un autómata regular determinista que reconozca los lenguajes siguientes. Estos lenguajes son definidos sobre el alfabeto <span class="math inline">{0, 1}</span>:</p>
+<ol type="1">
+<li>El conjunto de todas las palabras que terminan en 11.</li>
+<li>El conjunto de todas las palabras que contengan la subcadena 101.</li>
+</ol>
+<h2 id="conversión-autómata-a-expresión-regular-10-puntos">4. Conversión autómata a expresión regular (10 puntos)</h2>
+<p>Considerar el autómata siguiente:</p>
+<pre><code>        | 0 | 1 |
+ -&gt; * p | r | q |
+      q | s | q |
+      r | r | s |
+      s | p | p |</code></pre>
+<ol type="1">
+<li>Dibujá el grafo de este AFD.</li>
+<li>Convertilo a una expresión regular equivalente, aplicando la técnica de eliminación de estados en el orden: s, r, q, p.</li>
+</ol>
+<h2 id="conversión-expresiones-regulares-a-afnd-epsilon-10-puntos">5. Conversión expresiones regulares a AFND-<span class="math inline"><em>ϵ</em></span> (10 puntos)</h2>
+<p>Dibujar el AFND-<span class="math inline"><em>ϵ</em></span> equivalente a la expresión regular dada:</p>
+<ol type="1">
+<li><span class="math inline">10<sup>*</sup>1</span></li>
+<li><span class="math inline">((10)<sup>*</sup> + 0)<sup>*</sup></span></li>
+</ol>
+</body>
+</html>

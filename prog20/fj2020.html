@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Final Programación 1 - Julio 2020 - UBP</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+line-height: 1.5;
+color: #24292e;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.5;
+word-wrap: break-word;
+}
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+}
+@media (max-width: 767px) {
+body {
+padding: 15px;
+}
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border-style: none;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+overflow: visible;
+}
+input {
+font: inherit;
+margin: 0;
+}
+input {
+overflow: visible;
+}
+[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font-family: inherit;
+font-size: inherit;
+line-height: inherit;
+}
+a {
+color: #0366d6;
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+strong {
+font-weight: 600;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #dfe2e5;
+}
+hr::before {
+display: table;
+content: "";
+}
+hr::after {
+display: table;
+clear: both;
+content: "";
+}
+table {
+border-spacing: 0;
+border-collapse: collapse;
+}
+td,
+th {
+padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 0;
+margin-bottom: 0;
+}
+h1 {
+font-size: 32px;
+font-weight: 600;
+}
+h2 {
+font-size: 24px;
+font-weight: 600;
+}
+h3 {
+font-size: 20px;
+font-weight: 600;
+}
+h4 {
+font-size: 16px;
+font-weight: 600;
+}
+h5 {
+font-size: 14px;
+font-weight: 600;
+}
+h6 {
+font-size: 12px;
+font-weight: 600;
+}
+p {
+margin-top: 0;
+margin-bottom: 10px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding-left: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 0.25em;
+padding: 0;
+margin: 24px 0;
+background-color: #e1e4e8;
+border: 0;
+}
+blockquote {
+padding: 0 1em;
+color: #6a737d;
+border-left: 0.25em solid #dfe2e5;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 24px;
+margin-bottom: 16px;
+font-weight: 600;
+line-height: 1.25;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2em;
+border-bottom: 1px solid #eaecef;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.5em;
+border-bottom: 1px solid #eaecef;
+}
+h3 {
+font-size: 1.25em;
+}
+h4 {
+font-size: 1em;
+}
+h5 {
+font-size: 0.875em;
+}
+h6 {
+font-size: 0.85em;
+color: #6a737d;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li {
+word-wrap: break-all;
+}
+li>p {
+margin-top: 16px;
+}
+li+li {
+margin-top: 0.25em;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: 600;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+}
+table th {
+font-weight: 600;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #dfe2e5;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #c6cbd1;
+}
+table tr:nth-child(2n) {
+background-color: #f6f8fa;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+img[align=right] {
+padding-left: 20px;
+}
+img[align=left] {
+padding-right: 20px;
+}
+code {
+padding: 0.2em 0.4em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(27,31,35,0.05);
+border-radius: 3px;
+}
+pre {
+word-wrap: normal;
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f6f8fa;
+border-radius: 3px;
+}
+pre code {
+display: inline;
+max-width: auto;
+padding: 0;
+margin: 0;
+overflow: visible;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+hr {
+border-bottom-color: #eee;
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Final Programación 1 - Julio 2020 - UBP</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#parte-1-bucles-y-condiciones-40-puntos">Parte 1: Bucles y condiciones (40 puntos)</a><ul>
+<li><a href="#bucles-10-puntos">1.1 Bucles (10 puntos)</a></li>
+<li><a href="#secuencias-10-puntos">1.2 secuencias (10 puntos)</a></li>
+<li><a href="#tiempo-de-viaje-20-puntos">1.3 Tiempo de viaje (20 puntos)</a></li>
+</ul></li>
+<li><a href="#parte-2-arreglos-35-puntos">Parte 2: Arreglos (35 puntos)</a></li>
+<li><a href="#parte-3-funciones-25-puntos">Parte 3: Funciones (25 puntos)</a></li>
+</ul>
+</nav>
+<p>Checklist:</p>
+<ul>
+<li>manden los ejercicios por mail a <a href="mailto:guillaumh@gmail.com" class="email">guillaumh@gmail.com</a> <strong>y</strong> también súbanlos a MiUBP</li>
+<li>los programas entregados deben compilar con <code>tcc -run</code></li>
+<li>el examen se evalua sobre 100 puntos, para aprobar se necesitan 50 puntos.</li>
+<li>la duración del examen es de 90 minutos (1 hora y media)</li>
+</ul>
+<h1 id="parte-1-bucles-y-condiciones-40-puntos">Parte 1: Bucles y condiciones (40 puntos)</h1>
+<h2 id="bucles-10-puntos">1.1 Bucles (10 puntos)</h2>
+<p>Escribí un programa <strong>intervalo.c</strong> que pida al usuario dos números enteros, y luego entregue la suma de todos los números que están entre ellos. Por ejemplo, si los números son 1 y 7, debe entregar como resultado 2 + 3 + 4 + 5 + 6 = 20.</p>
+<pre><code>Ingrese num: 1
+Ingrese num: 7
+La suma es 20</code></pre>
+<p>Si el primer número es mayor al segundo, se debe dar el mismo resultado (intervertir los valores en ese caso):</p>
+<pre><code>Ingrese num: 7
+Ingrese num: 1
+La suma es 20</code></pre>
+<h2 id="secuencias-10-puntos">1.2 secuencias (10 puntos)</h2>
+<p>Realizá lo siguiente en un archivo <strong>secuencias.c</strong>:</p>
+<p>Ingresar y sumar una serie de enteros entre 0 y 100. La carga finaliza cuando se ingresa un valor fuera de ese rango. Imprimir el promedio de los números ingresados, <em>salvo</em> si no se ingresó ningun número de ese rango.</p>
+<h2 id="tiempo-de-viaje-20-puntos">1.3 Tiempo de viaje (20 puntos)</h2>
+<p>Realizá esta parte en un programa llamado <strong>tiempo.c</strong>.</p>
+<p>Un viajero desea saber cuánto tiempo tomó un viaje que realizó. Tiene la duración en minutos de cada uno de los tramos del viaje.</p>
+<p>La idea es desarrolar un programa que permita ingresar los tiempos de viaje de los tramos en minutos, y entregue como resultado el tiempo total de viaje en formato horas:minutos.</p>
+<p>Si se ingresa un 0, el programa deja de pedir tiempos de viaje.</p>
+<p>Ejemplos:</p>
+<pre><code>Duracion tramo:
+15
+Duracion tramo:
+30
+Duracion tramo:
+87
+Duracion tramo:
+0
+Tiempo total de viaje: 2:12 horas</code></pre>
+<pre><code>Duracion tramo:
+51
+Duracion tramo:
+17
+Duracion tramo:
+0
+Tiempo total de viaje: 1:08 horas</code></pre>
+<ol type="1">
+<li><p>Implementá la parte del programa que pide los tiempos de viajes en minutos y los suma en una variable.</p></li>
+<li><p>Implementá la parte del programa que imprime esta suma en el formato horas:minutos.</p></li>
+<li><p>Implementá la modificación siguiente: además de todo lo anterior, si se ingresa -1, se reinicializa la suma a cero y el programa vuelve a pedir duraciones de tramo al usuario.</p></li>
+</ol>
+<h1 id="parte-2-arreglos-35-puntos">Parte 2: Arreglos (35 puntos)</h1>
+<p>Hacer este ejercicio en un archivo <strong>arreglo.c</strong>.</p>
+<ol type="1">
+<li>Definir una constante <code>T</code> valiendo 5. Declarar un arreglo de <code>T</code> enteros. Pedir el ingreso de estos <code>T</code> valores al usuario y cargarlos en el arreglo.</li>
+<li>Calcular e imprimir la suma de los elementos del arreglo que sean menores a 25 y mayores a 0.</li>
+<li>Recorrer el arreglo desde su segundo elemento hasta el ultimo, y para cada elemento imprimir lo siguiente:
+<ul>
+<li>Si el elemento es estrictamente mayor al elemento en posicion anterior, imprimir el caracter <code>+</code></li>
+<li>Si es estrictamente menor, imprimir el caracter <code>-</code></li>
+<li>Si es igual, imprimir <code>=</code></li>
+</ul></li>
+</ol>
+<p>Por ejemplo si el arreglo ingresado es <code>{3,3,4,5,1}</code>, se debe imprimir <code>=++-</code>.</p>
+<p>El programa debe seguir andando si cambiamos <code>T</code> a valores mayores, por ejemplo <code>20</code>, <code>50</code>, etc.</p>
+<h1 id="parte-3-funciones-25-puntos">Parte 3: Funciones (25 puntos)</h1>
+<p>Hacé este ejercicio en un archivo <strong>funciones.c</strong> que tenga la función <code>main</code> siguiente:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb5-1" title="1"><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="pp">#define T 50</span></a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="dt">int</span> main(){</a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb5-6" title="6">}</a></code></pre></div>
+<p>Se trata de solo definir las funciones, no llamarlas.</p>
+<ul>
+<li>El archivo tiene que ejecutarse sin error con <code>tcc -run funciones.c</code> (aunque no muestre nada, dado que el main está vacío).</li>
+<li>La constante <code>T</code> sirve para especificar el tamaño de todos los arreglos. Usala cuando es necesario.</li>
+<li>Si no está indicado que una función <strong>devuelve</strong> algun valor, es que no devuelve nada.</li>
+</ul>
+<ol type="1">
+<li>Definí una función <code>mayor</code>, la cual recibe como parámetros dos enteros y devuelva el mayor de ellos.</li>
+<li>Definí una función <code>f1</code> que recibe dos parametros enteros <code>x</code> e <code>y</code> , y solo si son distintos, imprime el valor de <code>x</code> multiplicado por <code>y</code>, luego devuelve <code>x</code>.</li>
+<li>Definí una función <code>f2</code> que toma un arreglo de enteros y que imprime todos sus elementos, separados por una espacio, y al final termina con un salto de línea.</li>
+<li>Definí una función <code>sumar1</code> que toma como parámetros un arreglo de enteros y un entero <code>b</code>. La función suma el entero <code>b</code> a cada uno de los elementos del arreglo, luego devuelve la suma de los elementos originales del arreglo.</li>
+<li>Implementá una función <code>sumar2</code>, que recibe un arreglo de enteros como parámetro, y realiza la suma de todos los elementos del arreglo dado como parámetro, y la devuelve.</li>
+</ol>
+</body>
+</html>

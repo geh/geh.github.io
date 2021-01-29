@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Clase 1: Intro. Máquinas de Turing.</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/css/reset.css">
+  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Clase 1: Intro. Máquinas de Turing.</h1>
+</section>
+
+<section>
+<section id="acerca-de-esta-mitad-de-materia" class="title-slide slide level1">
+<h1>Acerca de esta (mitad de) materia</h1>
+
+</section>
+<section id="objetivos" class="slide level2">
+<h2>Objetivos</h2>
+<ul>
+<li>saber lo que es una máquina de Turing</li>
+<li>saber lo que es un lenguaje decidible, indecidible</li>
+<li>entender la importancia de las máquinas de Turing para las ciencias de la computación</li>
+<li>conocer la diferencia entre los lenguajes en P y los en NP</li>
+<li>saber lo que es un autómata, y un lenguaje reconocible por un autómata</li>
+<li>saber lo que es un autómata nodeterminista, y como convertirlo a uno determinista</li>
+</ul>
+</section>
+<section id="evaluación" class="slide level2">
+<h2>Evaluación</h2>
+<ul>
+<li>el parcial 2 de Matemática Discretas III es sobre computabilidad y complejidad</li>
+<li>el parcial 3 se toma en 2 partes, la parte del prof. Hoffmann sobre autómatas</li>
+<li>manténganse al día con los teóricos y ejercicios, mi contacto es <a href="mailto:guillaumh@gmail.com" class="email">guillaumh@gmail.com</a></li>
+</ul>
+</section>
+<section id="recursos-libros-y-apuntes" class="slide level2">
+<h2>Recursos, libros y apuntes</h2>
+<ul>
+<li>primera parte:
+<ul>
+<li><a href="https://openlibra.com/es/book/download/computabilidad-complejidad-computacional-y-verificacion-de-programas">‘Computabilidad, Complejidad y Verificación de Programas’, Rosenfeld e Irazábal, 2013</a></li>
+</ul></li>
+<li>segunda parte:
+<ul>
+<li><a href="https://www.frlp.utn.edu.ar/materias/sintaxis/automatas-lenguajes-computacion.pdf">‘Introducción a la teoría de autómatas, lenguajes y computación’, Hopcroft, Motwani y Ullman, 2007</a></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="máquinas-de-turing" class="title-slide slide level1">
+<h1>Máquinas de Turing</h1>
+
+</section>
+<section id="apunte" class="slide level2">
+<h2>Apunte</h2>
+<ul>
+<li><a href="https://openlibra.com/es/book/download/computabilidad-complejidad-computacional-y-verificacion-de-programas">‘Computabilidad, Complejidad y Verificación de Programas’, Rosenfeld e Irazábal, 2013</a>
+<ul>
+<li>Clase 1. Máquinas de Turing</li>
+<li>ejercicios interesantes: 3, 4, 5, 7, 15</li>
+</ul></li>
+</ul>
+</section>
+<section id="nacimiento-de-la-idea" class="slide level2">
+<h2>Nacimiento de la idea</h2>
+<ul>
+<li>formalismo inventado por Alan Turing, publicado en 1937</li>
+<li>abstraccion de una persona llevando a cabo un cálculo usando una hoja de papel</li>
+<li>la hoja puede ser representada por cinta en 1 dimensión sin pérdida de generalidad</li>
+<li>un cálculo dado requiere una cantidad finita de estados internos para representar sus etapas</li>
+<li>Turing introduce la “computing machine” cómo abstracción de esto</li>
+</ul>
+</section>
+<section id="definición" class="slide level2">
+<h2>Definición</h2>
+<p>Una máquina de Turing tiene:</p>
+<ul>
+<li>un conjunto finito de estados internos</li>
+<li><span class="math inline"><em>k</em></span> cintas infinitas (si <span class="math inline"><em>k</em> ≥ 2</span>, la primera tiene el input en lectura sola)</li>
+<li>un cabezal por cinta, indica qué celda estamos leyendo, se puede mover de un paso en cada direccion</li>
+<li>una funcion de transición que describe su comportamiento (también llamada tabla de transición o reglas)</li>
+</ul>
+</section>
+<section id="ilustración" class="slide level2">
+<h2>Ilustración</h2>
+<p><img data-src="mt.png" /></p>
+</section>
+<section id="reglas-de-una-máquina-de-turing" class="slide level2">
+<h2>Reglas de una máquina de Turing</h2>
+<p>Cada regla tiene como entrada:</p>
+<ul>
+<li>El estado actual de la máquina</li>
+<li>El/los símbolo(s) leído(s)</li>
+</ul>
+<p>Y como salida:</p>
+<ul>
+<li>El/los símbolos(s) para escribir</li>
+<li>El/los movimiento(s) de los cabezal(es)</li>
+<li>El estado nuevo de la máquina</li>
+</ul>
+</section>
+<section id="ejercicios" class="slide level2">
+<h2>Ejercicios</h2>
+<p>En estos ejercicios trabajamos con Máquinas de Turing con 1 cinta, 2 símbolos (1 y 0), que siempre empiezan su ejecución con la cinta puesta a cero, infinita en las dos direcciones. O sea, máquinas sin input.</p>
+<p>La idea es describir la ejecución de cada máquina usando la notación “descripción instantánea”.</p>
+</section>
+<section id="descripción-instantánea" class="slide level2">
+<h2>Descripción instantánea</h2>
+<ul>
+<li>empezar por configuración inicial de la máquina y escribir las sucesivas configuraciones línea por línea</li>
+<li>escribir estado activo a la derecha de la posición del cabezal</li>
+<li>escribir el contenido de la cinta salvo los infinitos 0 a la izquierda y a la derecha</li>
+<li>excepción: cuando toda la cinta está en cero (como al principio), escribir un cero</li>
+<li>si se ejecuta la regla <code>FIN</code>, escribir <code>FIN</code></li>
+</ul>
+</section>
+<section id="ejemplo-descripción-instantánea" class="slide level2">
+<h2>Ejemplo descripción instantánea</h2>
+<pre><code>  | 0 | 1 |
+a |1&gt;b|1&lt;a|
+b |1&lt;a|FIN|</code></pre>
+<p>Ejecución:</p>
+<pre><code>0a
+10b
+1a1
+0a11
+11b1
+FIN</code></pre>
+</section>
+<section id="ejercicio-1-descripción-instantánea" class="slide level2">
+<h2>Ejercicio 1: descripción instantánea</h2>
+<pre><code>1.| 0 | 1 |
+a |1&gt;b|0&lt;a|
+b |FIN|0&lt;a|
+
+2.| 0 | 1 |
+a |0&gt;b|1&lt;a|
+b |1&lt;a|FIN|
+
+3.| 0 | 1 |
+a |1&gt;b|1&lt;a|
+b |0&lt;a|FIN|
+
+4.| 0 | 1 |
+a |1&gt;b|1&lt;a|
+b |1&gt;c|0&gt;c|
+c |1&lt;a|FIN|</code></pre>
+</section>
+<section id="ejercicio-2-descripción-instantánea" class="slide level2">
+<h2>Ejercicio 2: descripción instantánea</h2>
+<pre><code>5.| 0 | 1 |
+a |1&gt;b|0&lt;c|
+b |0&gt;c|1&gt;c|
+c |1&lt;a|FIN|
+
+6.| 0 | 1 | 2 |
+a |1&gt;b|1&lt;b|FIN|
+b |2&lt;a|2&gt;b|FIN|
+
+7.| 0 | 1 |
+a |1&gt;b|1&lt;c|
+b |1&gt;c|FIN|
+c |1&lt;a|0&lt;b|</code></pre>
+<!--
+~~~
+8.| 0 | 1 |
+a |0>b|FIN|
+b |0<c|1>a|
+c |1>b|1<c|
+~~~
+-->
+</section>
+<section id="ejercicio-3.-máquinas-extrañas" class="slide level2">
+<h2>Ejercicio 3. Máquinas Extrañas</h2>
+<p>Ejecutar las máquinas siguientes. ¿Qué problema tienen? ¿Pueden explicar qué pasa en cada caso?</p>
+<pre><code>1.| 0 | 1 |
+a |1&gt;b|1&gt;b|
+b |1&gt;a|FIN|
+
+2.| 0 | 1 |
+a |1&gt;a|0&lt;b|
+b |1&lt;a|FIN|
+
+3.| 0 | 1 |
+a |1&gt;b|0&gt;b|
+b |0&lt;a|FIN|</code></pre>
+<!--
+~~~
+4.| 0 | 1 | 2 |
+a |1>b|1<b|FIN|
+b |2<a|2>b|1<b|
+~~~
+-->
+<!--
+## Ejercicio 4. Ejecución.. infinita
+
+Estas máquinas tienen una ejecución infinita.
+Escribir la ejecución de cada una
+hasta que quede claro que no termina nunca.
+
+~~~
+1.| 0 | 1 |
+a |1>b|FIN|
+b |0>c|0>a|
+c |1<a|FIN|
+
+2.| 0 | 1 |
+a |1>b|1<a|
+b |1<a|1>c|
+c |FIN|1>a|
+
+3.| 0 | 1 | 2 |
+a |1>b|1<a|2>b|
+b |0<a|2>a|FIN|
+~~~
+-->
+</section></section>
+<section>
+<section id="máquinas-con-input-definición-formal" class="title-slide slide level1">
+<h1>Máquinas con input, definición formal</h1>
+
+</section>
+<section id="definición-formal" class="slide level2">
+<h2>Definición formal</h2>
+<p>Una MT es un tuple <span class="math inline">(<em>k</em>, <em>Γ</em>, <em>Q</em>, <em>δ</em>)</span> con:</p>
+<ul>
+<li>un alfabeto finito <span class="math inline"><em>Γ</em> ⊇ {▫, ⊳,0, 1}</span>
+<ul>
+<li>(<span class="math inline">▫</span>: “blank”, <span class="math inline">⊳</span>: “start”)</li>
+</ul></li>
+<li>un conjunto finito de estados
+<ul>
+<li><span class="math inline"><em>Q</em> ⊇ {<em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub>, <em>q</em><sub><em>a</em><em>c</em><em>c</em></sub>, <em>q</em><sub><em>r</em><em>e</em><em>j</em></sub>}</span></li>
+</ul></li>
+<li>una función de transición
+<ul>
+<li><span class="math inline"><em>δ</em> : <em>Q</em> × <em>Γ</em><sup><em>k</em></sup> ↦ <em>Q</em> × <em>Γ</em><sup><em>k</em> − 1</sup> × {←,=, → }<sup><em>k</em></sup></span></li>
+<li>No está definida en <span class="math inline"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span> y <span class="math inline"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span>, no escribe <span class="math inline">⊳</span> ni <span class="math inline">▫</span>, no mueve los cabezales a la izquierda de <span class="math inline">⊳</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="configuración" class="slide level2">
+<h2>Configuración</h2>
+<p>Configuración de una máquina = estado activo + contenido de sus cintas + posición de los cabezales.</p>
+<p>Configuración inicial con una entrada <span class="math inline"><em>x</em> ∈ {0, 1}<sup>*</sup></span>:</p>
+<ul>
+<li><span class="math inline"> ⊳ <em>x</em> ▫ ▫ ▫ ⋅ ⋅</span></li>
+<li><span class="math inline"> ⊳ ▫ ▫ ▫ ⋅ ⋅</span></li>
+<li><span class="math inline"><em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub></span></li>
+<li>cabezales en primera celda de cada cinta después del <span class="math inline">⊳</span></li>
+</ul>
+</section>
+<section id="ejecución-de-una-máquina" class="slide level2">
+<h2>Ejecución de una máquina</h2>
+<p>Empieza con la configuración inicial y aplica pasos de acuerdo a su función de transición,</p>
+<p>Dada <span class="math inline"><em>x</em> ∈ {0, 1}*</span>, una corrida de una máquina M con entrada <span class="math inline"><em>x</em></span> puede:</p>
+<ul>
+<li>alcanzar uno de los estados <span class="math inline"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span> o <span class="math inline"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span>, en cuales casos escribimos <span class="math inline"><em>M</em>(<em>x</em>) = 1</span> si llega a <span class="math inline"><em>q</em><sub><em>a</em><em>c</em><em>c</em></sub></span> o <span class="math inline"><em>M</em>(<em>x</em>) = 0</span> si llega a <span class="math inline"><em>q</em><sub><em>r</em><em>e</em><em>j</em></sub></span></li>
+<li>o nunca detenerse y escribimos <span class="math inline"><em>M</em>(<em>x</em>) = ∞</span></li>
+</ul>
+</section>
+<section id="definiciones-alternativas" class="slide level2">
+<h2>Definiciones alternativas</h2>
+<p>En algunos lados, se define que una MT tiene una cinta de output, donde se escribe el resultado del cálculo, y que tiene un solo estado de detencion <span class="math inline"><em>q</em><sub><em>h</em><em>a</em><em>l</em><em>t</em></sub></span>.</p>
+<p>En el artículo de Turing (“On Computable Numbers”), las máquinas no se detienen y producen secuencias infinitas de dígitos de nombres reales.</p>
+</section>
+<section id="ejercicio-4" class="slide level2">
+<h2>Ejercicio 4</h2>
+<ol type="1">
+<li><p>Describir una MT de 1 cinta que llega al estado <span class="math inline"><em>q</em><sub><em>a</em></sub></span> si su input es una palabra de la forma <code>11..1</code> (solo tiene símbolos <code>1</code>), sino llega a <span class="math inline"><em>q</em><sub><em>r</em></sub></span>.</p></li>
+<li><p>Describir una Máquina de Turing de 1 cinta que llega al estado <span class="math inline"><em>q</em><sub><em>a</em></sub></span> si su input es una palabra de la forma <code>010101..01</code> (empezando en <code>0</code> y terminando en <code>1</code>), sino llega a <span class="math inline"><em>q</em><sub><em>r</em></sub></span>.</p></li>
+</ol>
+</section>
+<section id="ejercicio-5" class="slide level2">
+<h2>Ejercicio 5</h2>
+<ol type="1">
+<li><p>Describir una MT de 2 cintas que llega al estado <span class="math inline"><em>q</em><sub><em>a</em></sub></span> si su input es una palabra de la forma <code>00..011..1</code> donde la cantidad de <code>1</code> es igual a la cantidad de <code>0</code>, sino llega a <span class="math inline"><em>q</em><sub><em>r</em></sub></span>.</p></li>
+<li><p>Describir una MT de 2 cintas que detecta palabras capicúas. ¿Se puede hacer con una sola cinta?</p></li>
+</ol>
+</section></section>
+<section>
+<section id="observaciones-finales" class="title-slide slide level1">
+<h1>Observaciones finales</h1>
+
+</section>
+<section id="cuidado-con.." class="slide level2">
+<h2>Cuidado con..</h2>
+<ul>
+<li>en orden en el cual se ejecutan los pasos de una regla:
+<ol type="1">
+<li>escribir símbolo(s)</li>
+<li>mover cabezal(es)</li>
+<li>cambiar estado interno</li>
+</ol></li>
+<li>describir una MT
+<ul>
+<li>no es siempre necesario describir regla por regla</li>
+<li>pero deben haber ambiguedades que puedan afectar el comportamiento de la máquina, ni magia</li>
+</ul></li>
+</ul>
+</section>
+<section id="definiciones-de-mt" class="slide level2">
+<h2>Definiciones de MT</h2>
+<ul>
+<li>parece que hay distintas definiciones</li>
+<li>¡es el caso! en el libro todavía es otra</li>
+<li>vamos a ver que esas diferencias no importan</li>
+</ul>
+<p><code>FIN</code></p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

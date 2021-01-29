@@ -1,0 +1,140 @@
+# Prog. 1 - Parcial 2 - Christian Roggio
+
+#include <stdlib.h>
+#include <stdio.h>
+#define T 11
+
+main(){
+  int a[T];
+  int incremento = 0;
+  int llenar = 1;
+  int entero_m;
+  int entero_n;
+  int suma=0;
+  int sumar = 0;
+  int cantidad = 0;
+  char c[T];
+
+
+  while (incremento < T){
+    a[incremento] = llenar;
+    incremento++;
+    llenar++;
+    }
+  scanf("%d", &entero_n);
+  scanf("%d", &entero_m);
+
+  incremento = 0;
+
+while (incremento < T){
+  if (a[incremento] %2 == 0)
+    suma = a[incremento]+entero_m;
+  else
+    suma = a[incremento]+entero_n;
+
+    a[incremento] = suma;
+
+  if (a[incremento]<20)
+      sumar = a[incremento] + sumar;
+  else
+    cantidad++;
+
+
+  incremento++;
+}
+
+  incremento = 0;
+
+  while(incremento < T){
+    if (a[incremento] > 0 && a[incremento] < 25)
+        c[incremento] = 'a' + a[incremento];
+    else
+        c[incremento] = 'o';
+
+    incremento++;
+  }
+  incremento = T;
+  while (incremento > 0){
+    printf ("%c ", c[incremento]);
+    incremento--;
+  }
+
+  printf ("\n");
+  printf("la suma de todos los elementos menores a 20 es : %d\n", sumar);
+  printf("La cantidad de elementos mayores o iguales a 20 son %d\n", cantidad);
+
+}
+
+
+                                                                          segunda parte del parcial
+
+
+#include <stdio.h>
+#define T 50
+
+int mayor(int a, int b, int c){
+  if(a > b && a > c)
+    return (a);
+
+  if (b > a && b > c)
+    return (b);
+  else
+    return (c);
+}
+
+int f1(char d, int a){
+  if (a >= 0)
+    return d;
+  else
+    return d+1;
+}
+
+int f2(int x, int y){
+  printf ("el producto es : %d \n", x*y);
+
+  return x;
+}
+
+int f3(int a[]){
+  int i = 0;
+  a[T];
+
+  while(i < T){
+    if ( i < T-1)
+      printf("%d, ", a[i]);
+
+    if (i < T)
+      printf ("%d. ", a[i]);
+
+    i++;
+  }
+}
+
+int sumar1(int a[], int b){
+  int i = 0;
+  int suma;
+  a[T];
+  while (i < T){
+    suma = a[i]+b;
+    i++;
+  }
+  return b;
+}
+
+int sumar2(int a[]){
+  int suma = 0;
+  int i=0;
+  a[T];
+  while(i < T){
+  suma = a[i]+suma;
+  }
+  return suma;
+}
+
+
+int main(){
+  return 0;
+}
+
+
+

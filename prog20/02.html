@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Programación-1 - Clases del lunes 6 de abril</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+line-height: 1.5;
+color: #24292e;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.5;
+word-wrap: break-word;
+}
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+}
+@media (max-width: 767px) {
+body {
+padding: 15px;
+}
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border-style: none;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+overflow: visible;
+}
+input {
+font: inherit;
+margin: 0;
+}
+input {
+overflow: visible;
+}
+[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font-family: inherit;
+font-size: inherit;
+line-height: inherit;
+}
+a {
+color: #0366d6;
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+strong {
+font-weight: 600;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #dfe2e5;
+}
+hr::before {
+display: table;
+content: "";
+}
+hr::after {
+display: table;
+clear: both;
+content: "";
+}
+table {
+border-spacing: 0;
+border-collapse: collapse;
+}
+td,
+th {
+padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 0;
+margin-bottom: 0;
+}
+h1 {
+font-size: 32px;
+font-weight: 600;
+}
+h2 {
+font-size: 24px;
+font-weight: 600;
+}
+h3 {
+font-size: 20px;
+font-weight: 600;
+}
+h4 {
+font-size: 16px;
+font-weight: 600;
+}
+h5 {
+font-size: 14px;
+font-weight: 600;
+}
+h6 {
+font-size: 12px;
+font-weight: 600;
+}
+p {
+margin-top: 0;
+margin-bottom: 10px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding-left: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 0.25em;
+padding: 0;
+margin: 24px 0;
+background-color: #e1e4e8;
+border: 0;
+}
+blockquote {
+padding: 0 1em;
+color: #6a737d;
+border-left: 0.25em solid #dfe2e5;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 24px;
+margin-bottom: 16px;
+font-weight: 600;
+line-height: 1.25;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2em;
+border-bottom: 1px solid #eaecef;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.5em;
+border-bottom: 1px solid #eaecef;
+}
+h3 {
+font-size: 1.25em;
+}
+h4 {
+font-size: 1em;
+}
+h5 {
+font-size: 0.875em;
+}
+h6 {
+font-size: 0.85em;
+color: #6a737d;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li {
+word-wrap: break-all;
+}
+li>p {
+margin-top: 16px;
+}
+li+li {
+margin-top: 0.25em;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: 600;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+}
+table th {
+font-weight: 600;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #dfe2e5;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #c6cbd1;
+}
+table tr:nth-child(2n) {
+background-color: #f6f8fa;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+img[align=right] {
+padding-left: 20px;
+}
+img[align=left] {
+padding-right: 20px;
+}
+code {
+padding: 0.2em 0.4em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(27,31,35,0.05);
+border-radius: 3px;
+}
+pre {
+word-wrap: normal;
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f6f8fa;
+border-radius: 3px;
+}
+pre code {
+display: inline;
+max-width: auto;
+padding: 0;
+margin: 0;
+overflow: visible;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+hr {
+border-bottom-color: #eee;
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Programación-1 - Clases del lunes 6 de abril</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#parte-1-entrada-y-salida-expresiones-aritméticas">Parte 1: Entrada y salida, expresiones aritméticas</a><ul>
+<li><a href="#printf">1.1. <code>printf</code></a></li>
+<li><a href="#scanf">1.2. <code>scanf</code></a></li>
+<li><a href="#scanf-y-printf">1.3. <code>scanf</code> y <code>printf</code></a></li>
+</ul></li>
+<li><a href="#parte-2-expresiones-aritméticas">Parte 2: Expresiones aritméticas</a></li>
+<li><a href="#parte-3-sentencias-condicionales">Parte 3: sentencias condicionales</a><ul>
+<li><a href="#comparaciones">3.1. Comparaciones</a></li>
+<li><a href="#getchar-comparaciones-y-estructuras-condicionales">3.2. <code>getchar</code>, comparaciones y estructuras condicionales</a></li>
+</ul></li>
+</ul>
+</nav>
+<p>Los ejercicios se deben hacer dentro de <a href="http://tinyurl.com/prog1linux">JSLinux</a>, y con el editor de texto <code>vi</code>.</p>
+<h1 id="parte-1-entrada-y-salida-expresiones-aritméticas">Parte 1: Entrada y salida, expresiones aritméticas</h1>
+<h2 id="printf">1.1. <code>printf</code></h2>
+<p>¿Qué hace el programa siguiente? ¿Es lo que esperabas? Probalo en JSLinux con <code>tcc</code> y corregí el error:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb1-1" title="1">main(){</a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">int</span> a = <span class="dv">5</span>;</a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">int</span> b = <span class="dv">7</span>;</a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">int</span> c = a + b;</a>
+<a class="sourceLine" id="cb1-5" title="5">  a = b - c;</a>
+<a class="sourceLine" id="cb1-6" title="6">  b = a - c;</a>
+<a class="sourceLine" id="cb1-7" title="7">  c = a * b;</a>
+<a class="sourceLine" id="cb1-8" title="8">  printf(<span class="st">&quot;&amp;d</span><span class="sc">\n</span><span class="st">&quot;</span>, c);</a>
+<a class="sourceLine" id="cb1-9" title="9">}</a></code></pre></div>
+<h2 id="scanf">1.2. <code>scanf</code></h2>
+<p>¿Qué hace el programa siguiente? ¿Es lo que esperabas? Probalo en JSLinux con <code>tcc</code> y corregí los dos errores:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><a class="sourceLine" id="cb2-1" title="1">main(){</a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">int</span> a = <span class="dv">5</span>;</a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">int</span> b; </a>
+<a class="sourceLine" id="cb2-4" title="4">  scanf(<span class="st">&quot;%d&quot;</span>, b);</a>
+<a class="sourceLine" id="cb2-5" title="5">  a = a - b;</a>
+<a class="sourceLine" id="cb2-6" title="6">  a = abs(a);</a>
+<a class="sourceLine" id="cb2-7" title="7">  printf(<span class="st">&quot;&amp;d</span><span class="sc">\n</span><span class="st">&quot;</span>, a);</a>
+<a class="sourceLine" id="cb2-8" title="8">}</a></code></pre></div>
+<h2 id="scanf-y-printf">1.3. <code>scanf</code> y <code>printf</code></h2>
+<p>Escribir un programa C que haga lo siguiente</p>
+<ul>
+<li>pedir un entero al usuario</li>
+<li>luego imprimir un mensaje que diga “Usted ingreso el entero X.”, donde X es reemplazado por el valor ingresado.</li>
+<li>luego imprimir “El valor absoluto del entero que ingreso es Y.”, donde Y es reemplazado por el valor absoluto del valor ingresado.</li>
+</ul>
+<h1 id="parte-2-expresiones-aritméticas">Parte 2: Expresiones aritméticas</h1>
+<ol type="1">
+<li><p>Escribí un programa <code>rectangulo.c</code> que permita ingresar dos valores numéricos, que representan la base y la altura de un rectángulo, luego calcula y publica su perímetro y superficie.</p></li>
+<li><p>Uso del operador <code>%</code> (módulo).</p>
+<p>Necesitamos hacer un mueble de madera, para eso necesitamos listones de pino de tamaño adecuado. Conocemos un negocio de maderas solo vende listones de 244 cm de longitud.</p>
+<p>Escribir un programa llamado <code>madera.c</code> que pide al usuario el tamaño de los listones que necesita para su mueble, en cm. El programa tiene que imprimir cuantos listones se pueden hacer con uno de 244 cm, y el tamaño del sobrante.</p>
+<p>Por ejemplo si el usuario ingresa 40 (cm), el programa tiene que imprimir:</p>
+<pre><code>Ud. va a poder cortar 6 listones de 40 cm, y tendra un sobrante de 4 cm.</code></pre></li>
+<li><p><em>Problema</em></p>
+<p>Tenemos que organizar un torneo de cartas. Según el reglamento del torneo, se deben ubicar los jugadores en mesas de 3 o 4, con la condición de tener como máximo 3 mesas de 3 jugadores.</p>
+<p>Escribir un programa que toma como entrada un valor entero (ese valor representa la cantidad de jugadores que se inscriben al torneo), y luego imprime la cantidad de mesas necesarias.</p>
+<p>El programa tiene que funcionar para 6 jugadores o más (no se probará nunca para 5 jugadores o menos).</p></li>
+</ol>
+<h1 id="parte-3-sentencias-condicionales">Parte 3: sentencias condicionales</h1>
+<h2 id="comparaciones">3.1. Comparaciones</h2>
+<p>En un programa nuevo <code>comparar.c</code>:</p>
+<ul>
+<li>declarar dos enteros a y b</li>
+<li>pedir dos valores al usuario para cargar en esas variables a y b</li>
+<li>si <code>a &gt; b</code>, mostrar “a es mayor” (tal cual, sin reemplazo de valores)</li>
+<li>sino, mostrar “b es mayor”</li>
+<li>finalmente, mostrar el valor absoluto de la diferencia entre a y b</li>
+</ul>
+<p>Si <code>x</code> es una expresión aritmetica, <code>abs(x)</code> nos da su valor absoluto.</p>
+<h2 id="getchar-comparaciones-y-estructuras-condicionales">3.2. <code>getchar</code>, comparaciones y estructuras condicionales</h2>
+<ol type="1">
+<li><p>Escribir un progama que pida al usuario un carácter, luego si el carácter es <code>&#39;a&#39;</code> imprime “Hola!”, sino imprime “Buen dia.”, y luego imprime (en todos casos) “Adios!”.</p></li>
+<li><p>Escribir un programa que imprima primero “Ingrese una letra, mayuscula o minuscula”. Pedir un carácter con <code>getchar</code>. Luego, usando una sentencia <code>if</code> con un solo operador relacional, si el carácter es una mayúscula imprimir “Es una mayuscula!”, sino es imprimir “Es una minúscula!”. (Estamos suponiendo que el usuario ingresa o una mayúscula o una minúscula, ninguna otra cosa).</p>
+<p>Ayuda: los caracteres están ordenados según algo que se llama “código ASCII”. Las siguientes comparaciones son verdaderas: <code>&#39;a&#39; &lt; &#39;b&#39;</code> , <code>&#39;b&#39; &lt; &#39;m&#39;</code>, <code>&#39;X&#39; &gt; &#39;D&#39;</code>. Por convención, <code>n &lt; m</code> siempre vale cuando <code>n</code> tiene el valor de una mayúscula y <code>m</code> de una minúscula (o sea, las mayúsculas son menores a las minúsculas).</p></li>
+</ol>
+</body>
+</html>

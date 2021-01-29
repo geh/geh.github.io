@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Práctico Haskell 1: Tipos Algebraicos</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-ms-text-size-adjust: 100%;
+-webkit-text-size-adjust: 100%;
+line-height: 1.5;
+color: #24292e;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.5;
+word-wrap: break-word;
+}
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+}
+@media (max-width: 767px) {
+body {
+padding: 15px;
+}
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border-style: none;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+overflow: visible;
+}
+input {
+font: inherit;
+margin: 0;
+}
+input {
+overflow: visible;
+}
+[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font-family: inherit;
+font-size: inherit;
+line-height: inherit;
+}
+a {
+color: #0366d6;
+text-decoration: none;
+}
+a:hover {
+text-decoration: underline;
+}
+strong {
+font-weight: 600;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #dfe2e5;
+}
+hr::before {
+display: table;
+content: "";
+}
+hr::after {
+display: table;
+clear: both;
+content: "";
+}
+table {
+border-spacing: 0;
+border-collapse: collapse;
+}
+td,
+th {
+padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 0;
+margin-bottom: 0;
+}
+h1 {
+font-size: 32px;
+font-weight: 600;
+}
+h2 {
+font-size: 24px;
+font-weight: 600;
+}
+h3 {
+font-size: 20px;
+font-weight: 600;
+}
+h4 {
+font-size: 16px;
+font-weight: 600;
+}
+h5 {
+font-size: 14px;
+font-weight: 600;
+}
+h6 {
+font-size: 12px;
+font-weight: 600;
+}
+p {
+margin-top: 0;
+margin-bottom: 10px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding-left: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 0.25em;
+padding: 0;
+margin: 24px 0;
+background-color: #e1e4e8;
+border: 0;
+}
+blockquote {
+padding: 0 1em;
+color: #6a737d;
+border-left: 0.25em solid #dfe2e5;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 24px;
+margin-bottom: 16px;
+font-weight: 600;
+line-height: 1.25;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2em;
+border-bottom: 1px solid #eaecef;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.5em;
+border-bottom: 1px solid #eaecef;
+}
+h3 {
+font-size: 1.25em;
+}
+h4 {
+font-size: 1em;
+}
+h5 {
+font-size: 0.875em;
+}
+h6 {
+font-size: 0.85em;
+color: #6a737d;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li {
+word-wrap: break-all;
+}
+li>p {
+margin-top: 16px;
+}
+li+li {
+margin-top: 0.25em;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: 600;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+}
+table th {
+font-weight: 600;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #dfe2e5;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #c6cbd1;
+}
+table tr:nth-child(2n) {
+background-color: #f6f8fa;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+img[align=right] {
+padding-left: 20px;
+}
+img[align=left] {
+padding-right: 20px;
+}
+code {
+padding: 0.2em 0.4em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(27,31,35,0.05);
+border-radius: 3px;
+}
+pre {
+word-wrap: normal;
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f6f8fa;
+border-radius: 3px;
+}
+pre code {
+display: inline;
+max-width: auto;
+padding: 0;
+margin: 0;
+overflow: visible;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+hr {
+border-bottom-color: #eee;
+}
+</style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header>
+<h1 class="title">Práctico Haskell 1: Tipos Algebraicos</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#tipos-algebraicos-de-datos">Tipos Algebraicos de Datos</a><ul>
+<li><a href="#tipos-enumerados">1. Tipos enumerados</a></li>
+<li><a href="#constructores-con-parámetros">2. Constructores con parámetros</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="tipos-algebraicos-de-datos">Tipos Algebraicos de Datos</h1>
+<p>Definir los tipos y funciones siguientes en un archivo <code>tipos.hs</code>.</p>
+<h2 id="tipos-enumerados">1. Tipos enumerados</h2>
+<p><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QpsRXhpZgAASUkqAAgAAAALAAsAAgANAAAAkgAAAAABCQABAAAAlgAAAAEBCQABAAAAwAAAABIBCQABAAAAAQAAABoBCQABAAAASAAAABsBCQABAAAASAAAACgBCQABAAAAAgAAADEBAgAHAAAAoAAAADIBAgAUAAAAqAAAABMCCQABAAAAAQAAAGmHBAABAAAAvAAAAAoBAABnVGh1bWIgMy41LjIAAEdvb2dsZQAAMjAxNzoxMDoxMSAxMTowODozNAAGAACQBwAEAAAAMDIyMAGRBwAEAAAAAQIDAACgBwAEAAAAMDEwMAGgCQABAAAAAQAAAAKgCQABAAAAlgAAAAOgCQABAAAAwAAAAAAAAAAGAAMBAwABAAAABgAAABoBCQABAAAASAAAABsBCQABAAAASAAAACgBCQABAAAAAgAAAAECBAABAAAAWAEAAAICBAABAAAADAkAAAAAAAD/2P/gABBKRklGAAEBAAABAAEAAP/bAEMANSUoLyghNS8rLzw5NT9QhVdQSUlQo3V7YYXBqsvIvqq6t9Xw///V4v/mt7r////////////O///////////////bAEMBOTw8UEZQnVdXnf/cutz////////////////////////////////////////////////////////////////////AABEIAIAAZAMBIgACEQEDEQH/xAAZAAACAwEAAAAAAAAAAAAAAAADBAABAgX/xAAyEAACAQMDAgQFAwUAAwAAAAABAhEAAyESMUEEURMiYXEygbHR8EKRwRQjYqHhBXKC/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/ADdOHXpwWdWQ55JJ4oSNcLsDkgmWq7b3CBakGMahuPT39a2gJGlCIGJ4FBWkL3L+m/7/AGqwrGVEKPSjhVRdK780LqeoHTWgQo1HAFBa2wsnRJO+Y+lDK2HJgDV3nIpC5eu3vjc94G1DAXtQNjp7m51DsZ+1TzjfUSODn60ulxreUcr86d6e744gqNY/Y+1AMXj+pDp3q9VtiCSSWxqG4+/zo7W1PBB7UE2NAJUke1BTAiFYn0YHBram5a6c6EJME65ECKpW1eVhPp3olq54WHMgiASJ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ITUvKy88OTU/UIVXUElJUKN1e2GFwarLyL6qurfV8P//1eL/5re6////////////zv//////////////2wBDATk8PFBGUJ1XV53/3Lrc////////////////////////////////////////////////////////////////////wAARCADAAJYDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAgMEAQAF/8QANBAAAgEDAgQDBwMEAwEAAAAAAQIRAAMhEjEEIkFRE2FxMoGRobHB8CPR4QUUQlIkQ/Fi/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AO4S/eRXJW5e5gInam8U5QaVQgM2T86Zwr/8ZSz63/MUm9Lk25lzBYnZR+/lQYlyWhAWY4ESa1beqNXPnMeyPXv7qJUt20wcHdp39f2FEA93GVSMjb4/sPfQLOkIVYhwp2AAVfz3mtLO4gYneMfX9qb4YEaRP/0fsKNbZBJnJoELaQtqeAepiT85oyiOPbcjsWIrLvEWbAILjV0VckVHd43VBt2yPNmmfdQUNwtuJtmGPlP1qMBmJAfIP+JC0S8ZcUc1tT9aNOLtCNdnSf8AYUGA3E/7LoHQyYrQxBlirg9+vwin/pXVlGB9DtQ+CGBBUED3GgAXwJBwezZB99HI0wrCCZg5U0s2ABDBs9KWwa20oYBwcfWgeLQ2ttpb/RmMH0oAxBKO+hhuGoFjUGJg7QNj+dqofnQeITIOGG60E4DLcViwKgzIEQe9VXOISxZ/SuK11ckDIPelJyXgl0w5ys5B7fHNUGwl61c0W1S62CYoI7XFvbuPct21/UMmSd66iscN4ly5aW4QbZydFdQcAbZiy+liN+lPCpbtAsCUnlAyWNZaUEsWJHfER5UxLZdtTemRsKDktliCYUDYL09P3+FPkLAAAG0AVnkAI8q2CW+9BkNqxv51D/UOJZW8FGOw1EVeeUFj7KiSK8Nibjs7YLGZNAIAUTRRpgCM5zWFdwDg1TZRP7m2LkMpXY96CcHEdfSuBwc17DcDw75NuPQkVw/p/DAg+H8zQeOGKmUaGG0da9Ky5vpIGlx7Q+9UjhbKIQltRNQ2VI4krqBBBHvH8UFJ1BSGEiaBrYJODjtTAT/n9K4r2z6U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" /></p>
+<p>Cuando los distintos valores que debemos distinguir en un tipo son finitos, podemos enumerar todos los valores distintos para el tipo. Por ejemplo, podrı́amos representar los tı́tulos nobiliarios de algún paı́s (retrógrado) con el siguiente tipo:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">data</span> <span class="dt">Titulo</span> <span class="fu">=</span> <span class="dt">Ducado</span> <span class="fu">|</span> <span class="dt">Marquesado</span> <span class="fu">|</span> <span class="dt">Condado</span> <span class="fu">|</span> <span class="dt">Vizcondado</span> <span class="fu">|</span> <span class="dt">Baronia</span></a></code></pre></div>
+<ol type="a">
+<li>Definí el tipo <code>Titulo</code> como descrito arriba.</li>
+<li>Definí <code>hombre :: Titulo -&gt; String</code> que devuelve la forma masculina del tı́tulo.</li>
+<li>Definí la función <code>dama</code> que devuelve la inflexión femenina.</li>
+</ol>
+<h2 id="constructores-con-parámetros">2. Constructores con parámetros</h2>
+<p><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4QbCRXhpZgAASUkqAAgAAAALAAsAAgANAAAAkgAAAAABCQABAAAAlgAAAAEBCQABAAAAyQAAABIBCQABAAAAAQAAABoBCQABAAAASAAAABsBCQABAAAASAAAACgBCQABAAAAAgAAADEBAgAHAAAAoAAAADIBAgAUAAAAqAAAABMCCQABAAAAAQAAAGmHBAABAAAAvAAAAAoBAABnVGh1bWIgMy41LjIAAEdvb2dsZQAAMjAxNzoxMDoxMSAxMTowNzo1NwAGAACQBwAEAAAAMDIyMAGRBwAEAAAAAQIDAACgBwAEAAAAMDEwMAGgCQABAAAAAQAAAAKgCQABAAAAlgAAAAOgCQABAAAAyQAAAAAAAAAGAAMBAwABAAAABgAAABoBCQABAAAASAAAABsBCQABAAAASAAAACgBCQABAAAAAgAAAAECBAABAAAAWAEAAAICBAABAAAAYQUAAAAAAAD/2P/gABBKRklGAAEBAAABAAEAAP/bAEMANSUoLyghNS8rLzw5NT9QhVdQSUlQo3V7YYXBqsvIvqq6t9Xw///V4v/mt7r////////////O///////////////bAEMBOTw8UEZQnVdXnf/cutz////////////////////////////////////////////////////////////////////AABEIAIAAYAMBIgACEQEDEQH/xAAZAAACAwEAAAAAAAAAAAAAAAACAwABBAX/xAAtEAACAgEDAwQCAQMFAAAAAAABAgARAxIhMQQiQRNRYXEygZEFwdFCUrHh8P/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDpySSQJKLAcymathFmARc+NpRY+5gy6MCaj7mEMh87waMkBoYHiXE8Ritf3AKSSSBJTGpcWxswKMrmSK6h9JxrfNk/qAnP1T6/TxbAct5MEBat+4nfc2TEJel3bnav8zb0+NMaKzEa23H1ApdmpVKmroWIzHlDMEbZjx8w0dHJ0kEjmZer0DScbAPdHSdxA1yCBhf1cIbe+DcOA1TqEuKU0Y2ALmh9xcLId4FwIWUbE15mPNmV8ytXag8zQwAN82bN+0z9V2l9VnWtfRgZ6bK5uhSEgfAnRQMemQI2k6RvVznAlnANXoIAP1OhgsdPjB50wDxggUxsnzMnVKV6dDq7b2AHE0sxo1rU+GC2Jj6l2OPEpuyS0B/RvTNhrYDVdzTMfQAasp87Ca4Fxqm1ibjMZ5EAXPcYEtj3H7gwIVDc1twfac/OxdWO2lW8HyZq6pyoCreqZXK1t+A2H2fMBIYplsgk0RX6nVTfDjI/2j/ic7Bjy5MqugoKdmbidAMuNQjDTWwvj+YFHKurQ2Nifb3mHIzNnZiQCDQ+JtZ8ZIOpf5iXwM7DJjU9pvfzARjbIjLoPcfE6QNgH3nLbUuUmtLX52nRxsDjFG6gMhJ+cAGEn5CBTDuP3BJC7niMyDeJsNkGNv1RgZepyk5OwsCBZMSR6mgAEtquuRN2TpkyfkWvxvJhxDGKIFgwGgUoA4AkklQIAAbAAP1LkkgBlwplHdsfBmXu6d9DFingrNmoKpZjQEBshOPWHXGo3J5uAOPJtuQwPkTRj/ITI7itfqYmoccf93HdKQX2vcXfIP1ALq2dSgXSAeSZjyPobtQEqdiT554/zOjnT1MTAc1tM3pAMzNspF37GAaOMqrRrJVkESW1qCtMNzXB+pi6jIa7VIaybI4+ZtTLizoCH1ECyOCIBWD5gk7wjqs7be5gnVf+kb3sYBSiyqCWNASvI2Ne52Ai6OTIVvs96/EgeYBLeR/UAJSqUHb7NQM2i9K41B/Iir8/H/t4w5lbCNLKxY6RRmEY2VlZKUGz8UP7QKyYxrBA/LfkbTb/AE7EU9RjqF0KMTix5SVydr7bAHcTo41CIABQ9oBTPnxMy9jUfE0SiLEDmPhbcuTZNHa6+YhWyYMnaSre3v8AE6xmfqOnOY2GFVuD4+oC36y8hZcXbxuauTF1bdurDYHJXc3KJc9I4P5JR3HkbSdMx9LLqrkfAgL9TKMzZSdLDavH1KzZHYHWdq4XYGHkBZ8gXYljXzBygUQOF2EBiIVwsQSqaOyub81BUtkyisJIVNFFv7xnTYrwgmxvsDNKIEFKNzAvDiVOP37R0pRQlwJJJJAFlv7iztHSioPMBJUEMK/Ln5ixjCg1sDXi484z4MHS3tAXoGqz7k/zIMSA3QjNDe0IY/c/xAEWT7mMVdP3LAA4lwJJJJA//9kA/9sAQwA1JSgvKCE1LysvPDk1P1CFV1BJSVCjdXthhcGqy8i+qrq31fD//9Xi/+a3uv///////////87//////////////9sAQwE5PDxQRlCdV1ed/9y63P///////////////////////////////////////////////////////////////////8AAEQgAyQCWAwEiAAIRAQMRAf/EABkAAAMBAQEAAAAAAAAAAAAAAAACAwEEBf/EADMQAAICAQMDAwMBBwQDAAAAAAECABEDEiExBEFREyJhMnGBkQUUI0KhscEzUtHwYnKC/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/APThCEAhCEAhAkAbybOTxAcsB3i+ob2ESEDSzeYam8xYQGDtGGTyJOEC4IPBhIjbcR1fzAeEIQCEIQCEIQCEIQCYTQmnaTJswAkmLNJmQMhN2AtiAObM5X60FiuFb/8AI/8AEDqomFETkByMP4uYqa44jItC/wB4bfjmB0Qk1dhsXR/vsZVSGG36QCEJkB1atjxKSMdG7GA8IQgEIQgEITGNCArGzFM2LAIbAEsQANyTCQ6xv9JD9JNtfH5gS67IT7NwOanPjGlbJI8mHUHVmYKbF7R8lArjUnYA/kwKLkC6fTS2JFk9pZcWQamdgT/67R+nw6Me43P9JX8j9YEExt6TeoxJJsUOJFycTqUDBq3HidsTOl4WJG4EDcTjLjDAi+4HabPO6R1xZFZuSaJ8CelyLHBgZCEIFEax8xpJTRlYBCEIBJubNeJQmhclADMgZjsMa6mgb3nJ1pP7yhU/RV/BuWbM4VRjX3NuL5H4nGQzZbIJ07nV/W4G5lXEchLgs/ntIay4UlvpFbcza9XW47bx7X9yxldsmrSR5gek6oUBybgC+dpys3TZiQEBK7ElCB+s7Ow+0TSLvf8AWBoHp4TpH0rsDORji0NqZnyVZbeh/idg3seZOg2DU1+3keageatsQAvHPaespDICDwKM8rA3tYsa7jadX7OPsyc0TcDrhCEAlENr9pOMho/eBSEIQFyH2/eTMbIdwIhgFxSlvqY2AODNmMNSkXV94Co1sxA3LLv+Jze3HnZMjH3A+77zpUMHZiq2BdA7HacnVuGRD3Iv7fmBBHIxMq7We3eaTfRqAo+sm+8XVpx3wx7jtHwkjpWJ3HqKB/mB6aWMSaua3gSACSQAOSZrbbTNjzvA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" /></p>
+<p>En este ejercicio, introducimos dos conceptos: los sinónimos de tipos y tipos algebraicos cuyos constructores llevan parámetros. Los sinónimos de tipos nos permiten definir nombres de tipos nuevo a partir de tipos ya existentes:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- Territorio y Nombre son sinonimos de tipo.</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">type</span> <span class="dt">Territorio</span> <span class="fu">=</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">type</span> <span class="dt">Nombre</span> <span class="fu">=</span> <span class="dt">String</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">cba ,<span class="ot"> bsas ::</span> <span class="dt">Territorio</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">cba <span class="fu">=</span> <span class="st">&quot;Cordoba&quot;</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">bsas <span class="fu">=</span> <span class="st">&quot;Buenos Aires&quot;</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">alicia ,<span class="ot"> bob ::</span> <span class="dt">Nombre</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">alicia <span class="fu">=</span> <span class="st">&quot;Alicia&quot;</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">bob <span class="fu">=</span> <span class="st">&quot;Bob&quot;</span></a></code></pre></div>
+<p>Los tipos algebraicos tienen constructores que llevan parámetros. Esos parámetros nos permiten agregar información; por ejemplo, en este ejercicio además de distinguir el rango de cada persona, representamos datos pertinentes a cada tipo de persona:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">-- Persona es un tipo algebraico</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">data</span> <span class="dt">Persona</span> <span class="fu">=</span> <span class="dt">Rey</span>                  <span class="co">-- constructor sin parametro</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">          <span class="fu">|</span> <span class="dt">Noble</span> <span class="dt">Titulo</span> <span class="dt">Territorio</span> <span class="co">-- constructor con dos parametros</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">          <span class="fu">|</span> <span class="dt">Caballero</span> <span class="dt">Nombre</span>        <span class="co">-- constructor con un parametro</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">          <span class="fu">|</span> <span class="dt">Aldeano</span> <span class="dt">Nombre</span>          <span class="co">-- constructor con un parametro</span></a></code></pre></div>
+<ol type="a">
+<li>Definí los tipos <code>Territorio</code>, <code>Nombre</code> y <code>Persona</code> como descrito arriba.</li>
+<li>Definí la función <code>tratamiento :: Persona -&gt; String</code> que dada una persona devuelve la forma en que se lo menciona en la corte. Esto es, al rey se lo nombra “Su majestad el rey”, a un noble se lo nombra “El <forma masculina del titulo> de <territorio>”, a un caballero “Sir <nombre>” y a un aldeano simplemente con su nombre.</li>
+<li>Agreguemos el tipo <code>data Genero = Hombre | Mujer</code> a nuestro módulo. ¿Cómo modificar el tipo <code>Persona</code> para poder representar personas de distintos géneros <em>sin agregarle más constructores</em>? Realizá esta modificación y vuelva a programar la función <code>tratamiento</code> de forma tal de respetar el género de la persona al nombrarla.</li>
+</ol>
+</body>
+</html>

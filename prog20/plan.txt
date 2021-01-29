@@ -1,0 +1,128 @@
+% PROGRAMACIÓN I  
+% Docente: Hoffmann, Guillaume 
+
+# PROPÓSITO #
+
+En el área de las ingenierías es muy importante proporcionar al alumno los
+conocimientos necesarios como para implementar las herramientas de software
+apropiadas para atender fines específicos no cubiertos por los programas
+disponibles en el mercado. El propósito de la asignatura es brindar al alumno
+el entrenamiento necesario como para afrontar los requerimientos relacionados
+con la generación de software de aplicación pertinente para su actividad
+profesional.
+
+# OBJETIVOS #
+
+* Interpretar lógicamente el planteo de un problema y elaborar un algoritmo
+  adecuado para resolverlo, empleando el principio de descomposición
+* Codificar la solución utilizando un lenguaje de programación estructurado
+
+# CONTENIDOS #
+
+## UNIDAD I: INTRODUCCIÓN A LA PROGRAMACIÓN ##
+
+Objetivos de la programación.
+Conceptos de computadora, algoritmo y programa.
+Hardware y software.
+Software de base y de aplicación.
+Lenguajes de programación.
+Constantes y variables.
+Tipos de datos.
+Expresiones aritméticas, de relación y lógicas.
+Operandos y operadores.
+Concepto de programa simple y compuesto.
+Programación estructurada.
+Descomposición de problemas.
+Técnicas de representación de algoritmos: pseudocódigo y diagrama de flujo.
+Planteo de algoritmos simples: entrada y salida de datos, asignación,
+estructura de decisión.
+Codificación en un Lenguaje de Programación.
+
+## UNIDAD II: ESTRUCTURAS DE CONTROL ##
+
+Estructuras básicas de la programación estructurada.
+Concepto de secuencia lógica.
+Estructuras de decisión simple y múltiple.
+Estructuras de repetición.
+Sentencias mientras, hacer mientras, y estructura de repetición automática.
+Concepto de sentencia simple y compuesta.
+Variables de conteo y de acumulación.
+Resolución de problemas básicos: cálculo de promedios y porcentajes,
+búsqueda de máximo y mínimo.
+Prueba de escritorio.
+Procesamiento básico de caracteres y cadenas.
+
+## UNIDAD III: SUBPROGRAMAS ##
+
+Concepto de subprograma.
+Estructura de una función.
+Funciones de biblioteca y funciones del programador.
+Parámetros formales y parámetros reales.
+Pasaje de parámetros por valor y por referencia.
+Variables locales y variables globales.
+Prototipos de funciones.
+Estructuración modular de un programa empleando funciones.
+
+## UNIDAD IV: ARREGLOS ##
+
+Concepto de datos compuestos o estructurados.
+Definición de arreglo.
+Uso de subíndices.
+Dimensión de un arreglo.
+Operaciones básicas con arreglos unidimensionales: lectura, visualización
+y asignación.
+Arreglos de conteo y de acumulación.
+Arreglos en paralelo.
+Búsqueda, ordenamiento e intercalación en arreglos unidimensionales.
+
+# Bibliografía Básica #
+
+(Poner al dia)
+
+# FORMA DE TRABAJO #
+
+La programación es una actividad eminentemente práctica. En este sentido,
+las clases en esta asignatura son de carácter teórico-prácticas, en las
+cuales se destina una parte del tiempo para introducir los conceptos teóricos
+necesarios y el resto para ejercitar los conocimientos adquiridos mediante
+la resolución de problemas a través del desarrollo de algoritmos apropiados.
+Desde las primeras clases se introducen los conocimientos básicos de
+programación y su aplicación mediante un lenguaje apropiado, lo que permite
+desarrollar las actividades docentes en laboratorio de computación, durante
+las cuales se editan y ejecutan los programas elaborados por los alumnos.
+La posibilidad de trabajar en el laboratorio constituye un auxilio didáctico
+muy importante, ya que estimula el interés del alumno para trabajar sobre los
+objetivos de la materia, y permite desarrollar habilidades para resolver
+problemas de la ingeniería mediante el empleo de la programación. Por otra
+parte el alumno tiene acceso a un aula virtual, administrada por el docente
+y utilizada como complemento de las actividades presenciales, para facilitar
+la comunicación e interacción fuera de los horarios de clase y acompañar
+el proceso de aprendizaje.
+
+# EVALUACION #
+
+## Regularización ##
+
+Para regularizar la asignatura se requiere la aprobación de dos Evaluaciones
+Parciales y un Trabajo Práctico Grupal de carácter integrador, con un puntaje
+del 40% como mínimo en cada caso. El Parcial Nº 1 abarca las unidades 1 y 2 y
+el Parcial Nº 2 las unidades 3, 4 y 5. Cada una de estas evaluaciones tiene
+su correspondiente instancia de recuperación en caso de desaprobación.
+Las evaluaciones parciales son individuales, de carácter eminentemente práctico,
+consisten en el desarrollo de un algoritmo para resolver el problema propuesto,
+su formalización en pseudocódigo o diagrama de flujo, la codificación de la
+solución en un lenguaje de programación y su ejecución en la computadora.
+Existe la posibilidad de promocionar la asignatura en forma directa o por
+coloquio, para lo cual los resultados de las evaluaciones y el porcentaje de
+asistencia del alumno deben adecuarse a lo establecido en el Régimen de
+Promoción previsto por la Universidad.
+
+## Exámen final  ##
+
+TODO: examen final oral (~20min, por grupos de dos estudiantes)
+
+El examen final consiste en una evaluación integradora de tipo individual,
+que contempla el desarrollo de algoritmos para resolver los problemas
+planteados y la generación del código fuente correspondiente. Se requiere
+un mínimo del 50 % para aprobar esa evaluación.
+

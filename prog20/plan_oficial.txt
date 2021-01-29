@@ -1,0 +1,92 @@
+    Módulo I: PROGRAMACIÓN FUNCIONAL BÁSICA
+        Unidad I: PROGRAMACIÓN EN LENGUAJE HASKELL
+            Funciones. Sesiones y declaraciones. Reducción de expresiones y ordenes de reducción. Evaluación perezosa.
+            
+        Unidad II: TIPOS, OPERADORES Y FUNCIONES BÁSICAS EN HASKELL
+            El lenguaje Haskell. Tipos simples predefinidos. Constructores de tipos predefinidos. Comentarios. Operadores. Comparación de patrones. Expresiones case. Función error. Expresiones condicionales. Expresiones lambda. Indentación significativa. Ambitos y módulos.
+            
+    Módulo II: PROGRAMACIÓN FUNCIONAL GENÉRICA
+        Unidad III: FUNCIONES DE ORDEN SUPERIOR Y POLIMORFISMO
+            Parcialización. Polimorfismo.
+            
+        Unidad IV: DEFINICION DE TIPOS
+            Sinónimos de tipo. Definición de tipos de datos. Propiedades de funciones. Sobrecarga y polimorfismo restringido.
+            
+        Unidad V: EL SISTEMA DE CLASES EN HASKELL
+            Tipos y clases de tipos. Contextos. Subclases. Lectura y visualización básica de datos. Read y Show
+            Clases Num, Integral, Fractional de PRELUDE.
+            
+    Módulo III: ESTRUCTURAS DE DATOS FUNCIONALES
+    
+        Unidad VI: PROGRAMACION CON LISTAS
+            El tipo lista. Operaciones sobre listas. Listas por comprensión. Plegado de listas. Ordenación de listas.
+            Problemas combinatorios.
+            
+        Unidad VII: ENTRADA Y SALIDA
+            Operaciones de entrada y salida. Formateo de texto.
+
+
+
+
+ === oficial abajo ===
+ 
+PROPOSITO
+
+    Los propósitos de la materia Declaración Declarativa están vinculados al logro de los siguientes conocimientos y habilidades definidos en el Perfil del Egresado:
+    - Modelación de problemas y soluciones aplicando herramientas conceptuales provistas por la matemática, ciencias e ingeniería
+    - Construcción de software que computa eficientemente un modelo.
+    - Adaptación y desenvolvimiento en un escenario de cambio continuo y acelerado.
+    - Creatividad para realizarse como persona y disfrutar la profesión, para contribuir al crecimiento de la cultura humana y para crear valor agregado.
+
+    Los propósitos respecto del Alcance del Título están vinculados a:
+    - Entender, planificar, dirigir, controlar, relevar, analizar, especificar, detallar, diseñar, programar, verificar, implementar, poner a punto, mantener y actualizar:
+    I. Proyectos de desarrollo de software avanzado, complejo, de alta performance, de gran escala y/o de alta seguridad.
+    II. Proyectos de desarrollo que involucran la implementación computacional de modelos matemáticos en las ciencias naturales, en la ingeniería y en otras actividades públicas y privadas, en estrecha interrelación con los profesionales y especialistas de las correspondientes disciplinas.
+    - Desarrollar actividades científicas en ciencias de la computación en lo referente al software, al hardware, a los sistemas de información y a la modelización matemática de problemas de las ciencias naturales y la ingeniería.
+
+    Para el logro de estos propósitos se aborda la problemática de la Construcción de Software desde el paradigma de la Programación Declarativa que permite formular modelos de cómputo demostrables basados en el cálculo de funciones o en la Lógica. Además se abordan algunos problemas cuya solución se ha asociado a estos paradigmas como los de la Matemática Discreta, las Estructuras de Datos, el Ajuste de Patrones, la Satisfacción de Restricciones y los Sistemas Basados en el Conocimiento
+
+OBJETIVOS
+
+    Construir un programa funcional que resuelva un problema de mediana complejidad.
+    Construir un programa basado en reglas que resuelva un problema de conocimiento.
+    Construir un programa lógico que resuelva un problema de búsqueda u optimización con restricciones.
+    Seleccionar el/los paradigma/s más adecuado/s para resolver un problema.
+    Construir un programa basado en libretos.
+
+CONTENIDOS
+
+    Módulo I: PROGRAMACIÓN FUNCIONAL BÁSICA
+        Unidad I: PROGRAMACIÓN EN LENGUAJE HASKELL
+            Funciones. Sesiones y declaraciones. Reducción de expresiones y ordenes de reducción. Evaluación perezosa.
+        Unidad II: TIPOS, OPERADORES Y FUNCIONES BÁSICAS EN HASKELL
+            El lenguaje Haskell. Tipos simples predefinidos. Constructores de tipos predefinidos. Comentarios. Operadores. Comparación de patrones. Expresiones case. Función error. Expresiones condicionales. Expresiones lambda. Indentación significativa. Ambitos y módulos.
+    Módulo II: PROGRAMACIÓN FUNCIONAL GENÉRICA
+        Unidad III: FUNCIONES DE ORDEN SUPERIOR Y POLIMORFISMO
+            Parcialización. Polimorfismo.
+        Unidad IV: DEFINICION DE TIPOS
+            Sinónimos de tipo. Definición de tipos de datos. Propiedades de funciones. Sobrecarga y polimorfismo restringido.
+        Unidad V: EL SISTEMA DE CLASES EN HASKELL
+            Tipos y clases de tipos. Contextos. Subclases. Lectura y visualización básica de datos. Read y Show
+            Clases Num, Integral, Fractional de PRELUDE.
+    Módulo III: ESTRUCTURAS DE DATOS FUNCIONALES
+        Unidad VI: PROGRAMACION CON LISTAS
+            El tipo lista. Operaciones sobre listas. Listas por comprensión. Plegado de listas. Ordenación de listas.
+            Problemas combinatorios.
+        Unidad VII: ENTRADA Y SALIDA
+            Operaciones de entrada y salida. Formateo de texto.
+    Módulo IV: PROGRAMACION BASADA EN LA INFERENCIA LÓGICA
+        Unidad VIII: PROGRAMACION EN LENGUAJE CLIPS
+            Programación Basada en Sistemas de Producciones en CLIPS.
+            Hechos y Reglas. Estrategias de solución de conflictos. Ajuste de Patrones.
+            Diseño Modular y Control de Ejecución. Eficiencia. Aplicaciones
+        Unidad IX: PROGRAMACION EN LENGUAJE PROLOG
+            Programación en Prolog.
+            Sintaxis y Estructuras de Datos. Representación de Objetos y Relaciones.
+            Soluciones Múltiples y Corte. Entrada/Salida. Aplicaciones.
+    Módulo V: PROGRAMACION BASADA EN LIBRETOS
+        Unidad X: PROGRAMACION EN LENGUAJE PYTHON
+            Ciclo de lectura-evaluación-impresión.
+            Elementos básicos de programación. Objetos. Listas. Cadenas de caracteres.
+            Módulos y alcance. Funciones matemáticas. Programación funcional.
+

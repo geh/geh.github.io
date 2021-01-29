@@ -1,0 +1,121 @@
+# Prog. 1 - Parcial 2 - Eric Arndt
+
+#include <stdlib.h>
+#include <stdio.h>
+#define T 11
+int main(int argc, char **argv){
+    int a[T];
+    int i;
+    for (i=0; i< T; i++){
+        a[i] = i + 1;
+   }
+    int n;
+    int m;
+    printf("Ingrese dos enteros\n");
+    scanf("%d",&n);
+    scanf("%d",&m); 
+    for (i=0; i< T; i++){
+         if(i == 0 || i % 2 == 0){
+         a[i] = a[i] + n;
+         }
+         else{
+         a[i] = a[i] + m;
+       }
+     }
+    int j = 0;
+    int k = 0;
+    for (i=0; i< T; i++){
+        if (a[i]< 20){
+          j = j + a[i];
+        }
+        if (a[i] >= 20){
+           k = k + 1;
+        }
+   }
+   printf("Suma de elementos menores a 20: %d\n", j);
+   printf("Elementos mayores o iguales a 20: %d\n", k);
+   
+   char c[T];
+   for(i=0; i< T; i++){
+      if (a[i] >= 0 && a[i] <= 25)
+          c[i] = a[i] + 'a';
+ 
+      else
+          c[i] = 'o';
+    }
+   for(i=0; i< T; i++){
+      if (a[i] >= 0 && a[i] <= 25)
+         printf("%c. ", c[i]);
+      else
+         printf("%c ", c[i]);
+   }
+   int x;
+   for(x=T; x >= 0; x--){
+   printf("%c\n",c[x]);
+   }
+ 
+   }
+    return 0;
+__________________________________________________________________________________________
+
+
+# Prog. 2 - Parcial 2 - Eric Arndt
+#include <stdio.h>
+#include <stdio.h>
+#define T 50
+ 
+int Mayor(int a, int b, int c){
+     if ( a >= b && b >= c )
+        return a;
+    else
+        if ( b > c )
+            return b;
+    else
+        return c;
+}
+int f1(const char d,int a ){
+     if (a >= 0 ) {
+     return d;
+     }
+     else{
+       return d+1;
+    }
+}
+int f2(int x,int y ){
+      printf("%d\n" , x*y);
+      return x;
+}
+void f3(const int cadena[]){
+   int i;
+   for(i=0; i < T; i++){
+       if(i < T-1){
+          printf("%d,",cadena[i]);
+       }
+       else
+          printf("%d.",cadena[i]);
+   }
+}
+int sumar1(int array [T] ,int b){
+    int i;
+    int sum;
+    int sum_1;
+    for(i=0; i<T; i++) {
+       sum = array[i] + b;
+       sum_1 = sum;
+     }
+    return b;
+}
+}
+int sumar2(int array [T] ){
+   int sum;
+   int i;
+   for(i=0; i<T; i++) {
+   sum= sum + array[i];
+ }
+  return sum;
+}
+int main(){
+ 
+  return 0;
+ 
+}
