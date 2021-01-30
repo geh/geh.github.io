@@ -4,10 +4,10 @@ y Profesor Adjunto de la [Universidad Blas Pascal](https://es.wikipedia.org/wiki
 
 # Apuntes de materias
 
-* 2020: [Programacion Declarativa](https://geh.github.io/pd20) (Univ Blas Pascal) [(2019)](pd19) [(2018)](pd18) [(2017)](pd17) [(2016)](pd16) [(2015)](pd15)
-* 2020: [Matematicas Discretas III](https://geh.github.io/md20) (Univ Blas Pascal) [(2019)](md19) [(2018)](md18)
-* 2020: [Programacion 1](https://geh.github.io/prog20) (Univ Blas Pascal) [(2019)](prog19) [(2018)](prog18) [(2017)](prog17) [(2016)](prog16) [(2015)](http://hub.darcs.net/gh/prog1)
-* 2018: [Calculo Numerico/Metodos Numericos (taller)](mn) (Univ Blas Pascal)
+* 2020: [Programacion Declarativa](pd20) (Univ Blas Pascal)
+* 2020: [Matematicas Discretas III](md20) (Univ Blas Pascal)
+* 2020: [Programacion 1](prog20) (Univ Blas Pascal)
+* 2018: [Calculo Numerico/Metodos Numericos (taller)](2018_mn) (Univ Blas Pascal)
 * 2018: [Complejidad Computacional](2018_cc) (Univ Nacional de Cordoba)
 * 2018: [El sistema de tipos de Haskell](2018_rio_haskell) (Univ Nacional de Rio Cuarto)
 * 2017: [Data Structures](2017_ds) (Univ Blas Pascal)
