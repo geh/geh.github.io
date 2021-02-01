@@ -21,20 +21,27 @@ y Profesor Adjunto de la [Universidad Blas Pascal](https://es.wikipedia.org/wiki
 * [Publicaciones en DBLP](http://dblp.uni-trier.de/pers/hd/h/Hoffmann:Guillaume)
 * [Perfil en Google Scholar](https://scholar.google.com.ar/citations?user=d0O_hjsAAAAJ)
 
-# Propuestas de proyectos estudiantes
-
-Ideas de proyectos para trabajos de fin de carrera y/o
-tesis de licenciatura. Contactarme por mas informacion:
-
-* [verificacion SMT para Darcs con SBV](http://darcs-sbv.tumblr.com/)
-* [otros proyectos sobre Darcs](http://darcs.net/Projects)
-* problema del [Castor Atareado (Busy Beaver)](https://en.wikipedia.org/wiki/Busy_beaver)
-  con maquinas de Turing estandar y
-  [no estandar](http://dl.acm.org/citation.cfm?id=740607)
-* desarrollo de herramientas para la enseñanza del lengaje C (usando Javascript, Android)
-
 # Otras cosas
 
 * [Darcs, un sistema de control de versiones](http://darcs.net)
 * [mi blog](http://guiom.tumblr.com/)
-* contacto: <guillaume.hoffmann@conicet.gov.ar>
+* contacto: <guillaumh@gmail.com>
+
+
+# Posts
+
+<div class="posts">
+  {% for post in site.posts %}
+    <article class="post">
+
+      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+
+      <div class="entry">
+        {{ post.excerpt }}
+      </div>
+
+      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+    </article>
+  {% endfor %}
+</div>
+
