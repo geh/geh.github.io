@@ -7,9 +7,6 @@ segundo semestre de 2014.
 
 Guillaume Hoffmann <guillaumh@gmail.com>
 
-Horarios/lugar:
-
-
 Programa y apuntes
 ------------------
 1.  Modelos de cálculo, máquinas de Turing
@@ -33,10 +30,9 @@ Programa y apuntes
     * definiciones de NP
     * NP completitud, problema SAT
     * Teorema de Cook-Levin
-    * [slides](Slides020.html)
-    * [slides en una sóla página](handout_Slides020.html)
+    * [slides](Slides020.md)
     * [Polynomial Hierarchy (slides 1-85, apuntes de Nabil Mustafa)](http://sma.epfl.ch/~moustafa/Other/Complexityslides/lec13.pdf)
-    * [ejercicios](Ejercicios2.html)
+    * [ejercicios](Ejercicios2.md)
 
 3. Complejidad espacial
     * PSPACE, NPSPACE.
@@ -44,23 +40,24 @@ Programa y apuntes
     * L, NL
     * PATH, NL completitud
     * coNL
-    * [slides](Slides030.html)
-    * [slides en una sóla página](handout_Slides030.html)
-    * [ejercicios](Ejercicios3.html)
+    * [slides](Slides030.md)
+    * [ejercicios](Ejercicios3.md)
 
 4. Computación aleatoria
     * aleatoriedad en el mundo real
     * reducción de la probabilidad de error
     * RP, coRP, BPP, ZPP
     * Primes
-    * [slides](Slides040.html)
-    * [slides en una sóla página](handout_Slides040.html)
+    * [slides](Slides040.md)
     * [Randomized Computation, Nabil Mustafa](mustafa_random_complexity.pdf) (fuente [1](http://sma.epfl.ch/~moustafa/Other/Complexityslides/lec15.pdf), [2](http://sma.epfl.ch/~moustafa/Other/Complexityslides/lec15.pdf))
-    * [ejercicios](Ejercicios4.html)
+    * [ejercicios](Ejercicios4.md)
 
 5. Criptografía
-    * [slides](Slides080.html)
-    * [slides en una sóla página](handout_Slides080.html)
+    * [slides](Slides080.md)
+
+6. Prácticos para resolver en casa
+    * [Take home 1](takehome1.md)
+    * [Take home 2](takehome2.md)
 
 Bibliografía
 ------------
@@ -81,6 +78,6 @@ Más bibliografía
 Videos
 ------
 
-* [Una máquina de Turing tangible](http://www.aturingmachine.com/)<br />
+* [Una máquina de Turing tangible](http://www.aturingmachine.com/)
 * [Otra máquina de Turing hecha con Legos](http://rubens.ens-lyon.fr/)
 
