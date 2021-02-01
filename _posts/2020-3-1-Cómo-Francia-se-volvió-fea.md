@@ -1,4 +1,4 @@
-![](01.jpg)
+![](/images/01.jpg)
 
 **Nudos viales, loteos, zonas comerciales, desde los años 1960, la ciudad se puso a devorar el campo. ¿Una fatalidad? No: el resultado de decisiones políticas y económicas. Histórico de esas metástasis periurbanas.**
 
@@ -10,7 +10,7 @@ Fue en ese momento cuando se les complicó a los padres de Jean-Marc. Con el ens
 
 Las granjas cercanas se transforman en hosterías o centros ecuestres. “El Valle verde” se ve cercado por loteos muchos menos elegantes. “Nosotros hemos tenido suerte, por la cercanía del aeropuerto, los terrenos alrededor de la granja se quedaron no edificables”. Hoy, cuando Jean-Marc deja su trozo de naturaleza conservada para ir a Brest, evita solamente la zona de Kergaradec, por lo fea que le parece. “Compiten en quién tendrá el cartel más grande, quien añadirá más lonas, como si todo el mundo a la vez estuviera gritando sus propagandas.”
 
-![](02.jpg)
+![](/inages/02.jpg)
 
 Eso pasó cerca de lo de Jean-Marc, en Brest, pero también en Marsellas, Toulouse, Lyon, Metz o Lille, luego alrededor de las ciudades intermedias y ahora, y ahora de las más pequeñas. Después de una enorme aceleración en los años 1982-1983 y de las leyes de Descentralización de Defferre. En todas partes, la misma trilogía - infraestructuras viales, zonas comerciales y loteos - participa al esparcimiento urbano más asombroso de Europa: cada diez años, el equivalente de un departamento francés desaparece bajo el hormigón, el asfalto, los carteles, la chapa.
 
@@ -22,7 +22,7 @@ Cuando aparecen los primeros supermercados al principio de los años 60, Francia
 
 El estado se acapara de la idea, y entramos en la era de las "zonas": ZUP (Zona a Urbanizar en Prioridad) y las “ZAC” (Zona de Ordenación Concertada), etc. Y además hay que "alcanzar" a Alemania y su insolente red de autopistas! Es pan bendito para nuestra ilustre corporación de ingenieros en puentes y caminos! Francia inscribe en la ley (ley Pasqua, 1995) que cada ciudadano debe encontrarse a menos de 45 minutos de una entrada o salida de autopista! Se construyen variantes alrededor de las ciudades, el territorio se cubre de nudos viales. Veinte años después, las filas de rotondas, demasiado numerosas y demasiado grandes, completan el trabajo: actúan, según Mangin, "como difusores del esparcimiento en el nuevo armado urbano que se está instalando."
 
-![](03.jpg)
+![](/images/03.jpg)
 
 ## El imperio del galpón
 
@@ -38,7 +38,7 @@ El hombre más rico de Francia? Gérard Mulliez, fundador del grupo empresarial 
 
 No hay una localidad que no reciba al transeúnte con un caos abigarrado: "En todas partes, es el mismo alineamiento de cubos y rectángulos de chapa ondulada, la misma proliferación de carteles y letreros", se lamenta Jean-Pierre Sueur, senador socialista del mismo Loiret, que ingresó un proyecto de ley el otoño pasado. Su objetivo: que "todos los documentos de urbanismos resguarden la calidad urbana, arquitectónica y paisajística de las entradas de localidades." Lleno de buenas ideas, el texto fue adoptado hace dos meses por la mayoría senatorial UMP, que lo vació de su sustancia - sin más medida vinculante.
 
-![](04.jpg)
+![](/images/04.jpg)
 
 ## El sueño de la casa propia
 
@@ -50,7 +50,7 @@ Será, durante veinte años, la política de los "conjuntos de grandes edificios
 
 El poder público se suma a la situación: incapaz de hacerse cargo de la continuidad urbana, piensa compensar imponiendo las reglas estrictas de los Planes locales de urbanismo (PLU). Las Direcciones departamentales del Equipamiento (DDE) imponen sus normas, y los arquitectos de los Edificios de Francia (ABF) homogeneizan a punta de pastiche regionalista. Vayan a intentar construir una casa de madera o un poco personalizada en un loteo! "La gente que lo intenta se hace fusilar, dice David Mangin. Deben explicarse con el intendente, ingresar tres permisos, hay recursos... Se desalientan."
 
-<!-- ![](05.jpg) -->
+![](/images/05.jpg)
 
 ## Los daños de la descentralización
 
@@ -74,7 +74,7 @@ El imperativo ecológico reemplazará la impericia política? Durante el verano 
 
 Entonces soñemos un momento en lo que podría ser una "ciudad transeúnte", como la llama David Mangin, una ciudad desintoxicada del auto, conectada, que se olvida de las grandes arterias que segmentan y de los countries, una ciudad de barrios donde las funciones - vivienda, trabajo, negocios, ocio - estarían de vuelta mezcladas, una ciudad híbrida, mestizada, donde cada uno pondría un poco de lo suyo... Demasiado tarde?
 
-<!-- ![](06.jpg) -->
+![](/inages/06.jpg)
 
 ## La casa propia, una elección?
 
