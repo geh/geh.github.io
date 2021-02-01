@@ -2,20 +2,20 @@
 
 Año 2020, Ingenieria en Informática, Universidad Blas Pascal.
 
-                                                    Tema
-----------  -----------------------------------------------------------------------------------------
-10/9        [Intro. Máquinas de Turing.](01.html)
-17/9        [Lenguajes formales. Lenguajes decidibles.](02.html)
-24/9        [Clase P.](03.html)
-1/10        [Clase NP.](04.html)
-8/10        [Reducciones. Completitud en NP.](05.html)
-15/10       [Repaso ejercicios.](06.html)
-22/10       *parcial 2*
-29/10       [Automatas finitos deterministas](07.html)
-5/11        [Automatas finitos no deterministas](08.html)
-12/11       [Automatas finitos con transiciones $\epsilon$](09.html)
-19/11       *parcial 3*
-26/11       *recuperatorios*
+Fecha   |                                            Tema
+--------|------------------------------------------------------------------------------------
+10/9    |    [Intro. Máquinas de Turing.](01.md)
+17/9    |    [Lenguajes formales. Lenguajes decidibles.](02.md)
+24/9    |    [Clase P.](03.md)
+1/10    |    [Clase NP.](04.md)
+8/10    |    [Reducciones. Completitud en NP.](05.md)
+15/10   |    [Repaso ejercicios.](06.md)
+22/10   |    *parcial 2*
+29/10   |    [Automatas finitos deterministas](07.md)
+5/11    |    [Automatas finitos no deterministas](08.md)
+12/11   |    [Automatas finitos con transiciones $\epsilon$](09.md)
+19/11   |    *parcial 3*
+26/11   |    *recuperatorios*
 
 # Bibliografía
 

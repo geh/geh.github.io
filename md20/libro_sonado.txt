@@ -1,9 +1,0 @@
-mi libro soñado en español sobre computabilidad
-
-1. maquinas de turing. tabla de transicion.
-
-2. programacion con laconic
-
-3. se puede programar todo siempre?
-
-
