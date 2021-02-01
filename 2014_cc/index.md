@@ -18,9 +18,9 @@ Programa y apuntes
     * Máquina de Turing
     * MT universal
     * problema de la detención
-    * [slides](md/Slides005.html)
-    * [slides en una sóla página](md/handout_Slides005.html)
-    * [ejercicios](md/Ejercicios1.html)
+    * [slides](Slides005.html)
+    * [slides en una sóla página](handout_Slides005.html)
+    * [ejercicios](Ejercicios1.html)
 
 2. Clases de complejidad
     * clases en tiempo: P, EXPTIME, ejemplos
@@ -33,10 +33,10 @@ Programa y apuntes
     * definiciones de NP
     * NP completitud, problema SAT
     * Teorema de Cook-Levin
-    * [slides](md/Slides020.html)
-    * [slides en una sóla página](md/handout_Slides020.html)
+    * [slides](Slides020.html)
+    * [slides en una sóla página](handout_Slides020.html)
     * [Polynomial Hierarchy (slides 1-85, apuntes de Nabil Mustafa)](http://sma.epfl.ch/~moustafa/Other/Complexityslides/lec13.pdf)
-    * [ejercicios](md/Ejercicios2.html)
+    * [ejercicios](Ejercicios2.html)
 
 3. Complejidad espacial
     * PSPACE, NPSPACE.
@@ -44,23 +44,23 @@ Programa y apuntes
     * L, NL
     * PATH, NL completitud
     * coNL
-    * [slides](md/Slides030.html)
-    * [slides en una sóla página](md/handout_Slides030.html)
-    * [ejercicios](md/Ejercicios3.html)
+    * [slides](Slides030.html)
+    * [slides en una sóla página](handout_Slides030.html)
+    * [ejercicios](Ejercicios3.html)
 
 4. Computación aleatoria
     * aleatoriedad en el mundo real
     * reducción de la probabilidad de error
     * RP, coRP, BPP, ZPP
     * Primes
-    * [slides](md/Slides040.html)
-    * [slides en una sóla página](md/handout_Slides040.html)
+    * [slides](Slides040.html)
+    * [slides en una sóla página](handout_Slides040.html)
     * [Randomized Computation, Nabil Mustafa](mustafa_random_complexity.pdf) (fuente [1](http://sma.epfl.ch/~moustafa/Other/Complexityslides/lec15.pdf), [2](http://sma.epfl.ch/~moustafa/Other/Complexityslides/lec15.pdf))
-    * [ejercicios](md/Ejercicios4.html)
+    * [ejercicios](Ejercicios4.html)
 
 5. Criptografía
-    * [slides](md/Slides080.html)
-    * [slides en una sóla página](md/handout_Slides080.html)
+    * [slides](Slides080.html)
+    * [slides en una sóla página](handout_Slides080.html)
 
 Bibliografía
 ------------
@@ -82,7 +82,5 @@ Videos
 ------
 
 * [Una máquina de Turing tangible](http://www.aturingmachine.com/)<br />
-  <video src="atm.webm" controls></video>
-
 * [Otra máquina de Turing hecha con Legos](http://rubens.ens-lyon.fr/)
 

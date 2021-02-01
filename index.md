@@ -24,7 +24,6 @@ y Profesor Adjunto de la [Universidad Blas Pascal](https://es.wikipedia.org/wiki
 # Otras cosas
 
 * [Darcs, un sistema de control de versiones](http://darcs.net)
-* [mi blog](http://guiom.tumblr.com/)
 * contacto: <guillaumh@gmail.com>
 
 # Artículos varios
