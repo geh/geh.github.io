@@ -15,9 +15,8 @@ Programa y apuntes
     * Máquina de Turing
     * MT universal
     * problema de la detención
-    * [slides](Slides005.html)
-    * [slides en una sóla página](handout_Slides005.html)
-    * [ejercicios](Ejercicios1.html)
+    * [slides](Slides005.md)
+    * [ejercicios](Ejercicios1.md)
 
 2. Clases de complejidad
     * clases en tiempo: P, EXPTIME, ejemplos
