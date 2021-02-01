@@ -28,5 +28,5 @@ Contacto: [Guillaume Hoffmann](guillaumh@gmail.com)
 
 * [JSLinux: simulador de computadora con sistema Linux](http://tinyurl.com/prog1linux)
 * [Libro "Aprenda C como si estuviera en primero"](aprendaC.pdf)
-<!--* [PythonTutor: visualizador de ejecución](http://www.pythontutor.com/c.html)
-* Configuración red en el laboratorio: `proxy.lab.ubp.edu.ar` puerto `3128`  -->
+* [PythonTutor: visualizador de ejecución](http://www.pythontutor.com/c.html)
+* Configuración red en el laboratorio: `proxy.lab.ubp.edu.ar` puerto `3128`
