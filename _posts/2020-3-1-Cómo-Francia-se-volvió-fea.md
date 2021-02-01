@@ -1,6 +1,6 @@
 ![](/images/01.jpg)
 
-**Nudos viales, loteos, zonas comerciales, desde los años 1960, la ciudad se puso a devorar el campo. ¿Una fatalidad? No: el resultado de decisiones políticas y económicas. Histórico de esas metástasis periurbanas.**
+**Nudos viales, loteos, zonas comerciales, rotondas... Desde los años 1960, la ciudad se puso a devorar el campo. ¿Una fatalidad? No: el resultado de decisiones políticas y económicas. Histórico de esas metástasis periurbanas.**
 
 Un pueblo grande con granjas perdidas en el campo, muros de granito, techos de pizarras, balas de paja, vacas.. Y para llegar a la ciudad de Brest, una carretera local asfaltada; era esto Gouesnou, durante décadas, un paisaje casi inmutable. Jean-Marc nace en la granja de sus padres en el 1963. Tiene 5 años cuando un tío de Brest, Jean Cam, tiene la idea extraña de instalar en pleno campo un negocio comercial construido con bloques de hormigón y chapa, se llama “Rallye”. Cuatro años más tarde, los funcionarios electos locales crean, un poco más lejos al norte, en Kergaradec, un prototipo: una “ZAC” (Zona de Ordenación Concertada). Los galpones se multiplican.
 
@@ -10,7 +10,7 @@ Fue en ese momento cuando se les complicó a los padres de Jean-Marc. Con el ens
 
 Las granjas cercanas se transforman en hosterías o centros ecuestres. “El Valle verde” se ve cercado por loteos muchos menos elegantes. “Nosotros hemos tenido suerte, por la cercanía del aeropuerto, los terrenos alrededor de la granja se quedaron no edificables”. Hoy, cuando Jean-Marc deja su trozo de naturaleza conservada para ir a Brest, evita solamente la zona de Kergaradec, por lo fea que le parece. “Compiten en quién tendrá el cartel más grande, quien añadirá más lonas, como si todo el mundo a la vez estuviera gritando sus propagandas.”
 
-![](/inages/02.jpg)
+![](/images/02.jpg)
 
 Eso pasó cerca de lo de Jean-Marc, en Brest, pero también en Marsellas, Toulouse, Lyon, Metz o Lille, luego alrededor de las ciudades intermedias y ahora, y ahora de las más pequeñas. Después de una enorme aceleración en los años 1982-1983 y de las leyes de Descentralización de Defferre. En todas partes, la misma trilogía - infraestructuras viales, zonas comerciales y loteos - participa al esparcimiento urbano más asombroso de Europa: cada diez años, el equivalente de un departamento francés desaparece bajo el hormigón, el asfalto, los carteles, la chapa.
 
@@ -74,7 +74,7 @@ El imperativo ecológico reemplazará la impericia política? Durante el verano 
 
 Entonces soñemos un momento en lo que podría ser una "ciudad transeúnte", como la llama David Mangin, una ciudad desintoxicada del auto, conectada, que se olvida de las grandes arterias que segmentan y de los countries, una ciudad de barrios donde las funciones - vivienda, trabajo, negocios, ocio - estarían de vuelta mezcladas, una ciudad híbrida, mestizada, donde cada uno pondría un poco de lo suyo... Demasiado tarde?
 
-![](/inages/06.jpg)
+![](/images/06.jpg)
 
 ## La casa propia, una elección?
 
@@ -82,7 +82,7 @@ En el mapa del comité de turismo del departamento de la Haute-Vienne, los puebl
 
 A 5 kilómetros de ahí, en Pierre-Buffière, un pueblo viejo de 1200 habitantes, nos topamos con 21 lotes, al borde de los campos. Anne, niñera, y su marido, empleado público, se vinieron "por la calidad de vida". De todos modos, "Limoges era demasiado caro". Por supuesto, "80% de la gente que vive acá trabaja en Limoges. Hay que hacer todo en auto." Misma historia en Eybouleuf, de apenas 400 habitantes, 16 kilómetros al norte.
 
-La falta de dinero, siempre... "Con la crisis, la gente es reubicada y está obligada a vender", dice Louis, ex-camionero. "Edificar es más barato que alquilar", explica Fernand, trabajador jubilado de abasto, que tuvo su casa ya en el 1982. Desde entonces, cuántas aparecieron alrededor? "Una, dos,... nueve!" Y otras más lejos. Todos los negocios cayeron en quiebra. "La campiña, ahora, son dormitorios. Pero la gente ahí está más feliz que en la ciudad."
+La falta de dinero, siempre... "Con la crisis, la gente es reubicada y está obligada a vender", dice Louis, ex-camionero. "Edificar es más barato que alquilar", explica Fernand, trabajador jubilado de abasto, que tuvo su casa ya en el 1982. Desde entonces, ¿cuántas aparecieron alrededor? "Una, dos,... ¡nueve!" Y otras más lejos. Todos los negocios cayeron en quiebra. "La campiña, ahora, son dormitorios. Pero la gente está más feliz ahí que en la ciudad."
 
 
 [Texto original](https://www.telerama.fr/monde/comment-la-france-est-devenue-moche,52457.php) de Xavier de Jarcy y Vincent Remy publicado el 12/02/2010,
