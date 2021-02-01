@@ -27,20 +27,19 @@ y Profesor Adjunto de la [Universidad Blas Pascal](https://es.wikipedia.org/wiki
 * [mi blog](http://guiom.tumblr.com/)
 * contacto: <guillaumh@gmail.com>
 
-
-# Posts
+# Artículos varios
 
 <div class="posts">
   {% for post in site.posts %}
     <article class="post">
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+      <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
 
       <div class="entry">
         {{ post.excerpt }}
       </div>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Leer artículo</a>
     </article>
   {% endfor %}
 </div>
