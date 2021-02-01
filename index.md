@@ -34,7 +34,7 @@ y Profesor Adjunto de la [Universidad Blas Pascal](https://es.wikipedia.org/wiki
 <ul>
   {% for post in site.posts %}
     <li>
-      <a href="{{ site.baseurl }}{{ post.url }}">{{post.date}} {{ post.title }}</a>
+      <a href="{{ site.baseurl }}{{ post.url }}">{{post.date | date: "%Y-%m-%d" }}: {{ post.title }}</a>
     </li>
   {% endfor %}
 </ul>
