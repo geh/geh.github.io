@@ -30,17 +30,13 @@ y Profesor Adjunto de la [Universidad Blas Pascal](https://es.wikipedia.org/wiki
 # Artículos varios
 
 <div class="posts">
+
+<ul>
   {% for post in site.posts %}
-    <article class="post">
-
-      <h2><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
-
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
-
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Leer artículo</a>
-    </article>
+    <li>
+      <a href="{{ site.baseurl }}{{ post.url }}">{{post.date}} {{ post.title }}</a>
+    </li>
   {% endfor %}
+</ul>
 </div>
 
