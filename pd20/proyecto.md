@@ -48,7 +48,7 @@ evaluado/s con el examen escrito.
  
 # Criterios de evaluación
 
-| **Aspectos**  |               **Criterios de evaluación**                              |
+|   Aspectos    |                 Criterios de evaluación                                |
 |---------------|------------------------------------------------------------------------|
 | Previo aviso  |  * Indispensable: mandar (una versión casi final de) el proyecto más   |
 |               |    de 24 horas antes del final                                         |
@@ -73,18 +73,18 @@ evaluado/s con el examen escrito.
 
 # Proyectos entregados desde 2015 (para no repetirlos)
 
-| **# alumnos**  |               **Descripción**                                          | **Nota**  |
-|================+========================================================================+===========+
-|       2        | Generador de resumen de textos en HTML                                 |   9       |
-|       1        | Juego de truco en modo texto                                           |   6       |
-|       1        | Intérprete de Chip8                                                    |   10      |
-|       1        | Mejoro de un programa de path tracing                                  |   7       |
-|       2        | Resolvedor de Sudoku                                                   |   8       |
-|       2        | 4 en linea                                                             |   7       |
-|       1        | Motor de tilemap con QT                                                |   9       |
-|       1        | Herramienta a lo `find` de Unix                                        |   7       |
-|       1        | Protótipo de Arkanoid con Gloss                                        |   8       |
-|       1        | Sokoban en modo texto                                                  |   5       |
-|       1        | Convertidor de Markdown a HTML usando combinadores de parsers          |   7       |
-|       2        | Tateti con Gloss                                                       |   7       |
+| # alumnos  |               Descripción                                          | Nota  |
+|------------|--------------------------------------------------------------------|-------|
+|       2    | Generador de resumen de textos en HTML                             |   9   |
+|       1    | Juego de truco en modo texto                                       |   6   |
+|       1    | Intérprete de Chip8                                                |   10  |
+|       1    | Mejoro de un programa de path tracing                              |   7   |
+|       2    | Resolvedor de Sudoku                                               |   8   |
+|       2    | 4 en linea                                                         |   7   |
+|       1    | Motor de tilemap con QT                                            |   9   |
+|       1    | Herramienta a lo `find` de Unix                                    |   7   |
+|       1    | Protótipo de Arkanoid con Gloss                                    |   8   |
+|       1    | Sokoban en modo texto                                              |   5   |
+|       1    | Convertidor de Markdown a HTML usando combinadores de parsers      |   7   |
+|       2    | Tateti con Gloss                                                   |   7   |
 
