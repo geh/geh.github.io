@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+  <title>Complejidad Computacional Semana 8: criptografía</title>
+<style>
+  html { background-color: black; }
+  body { background-color: white; border-radius: 12px}
+  /* A section is a slide. It's size is 800x600, and this will never change */
+  section {
+      font-family: Arial, serif;
+      font-size: 20pt;
+    }
+  address, blockquote, dl, fieldset, form, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, table, ul, dl { padding: 10px 20px 10px 20px; }
+  h1, h2, h3 {
+    text-align: center;
+    margin: 10pt 10pt 20pt 10pt;
+  }
+  ul, ol {
+    margin: 10px 10px 10px 50px;
+  }
+  section.titleslide h1 { margin-top: 200px; }
+  h1.title { margin-top: 150px; }
+  h1 { font-size: 180%; }
+  h2 { font-size: 120%; }
+  h3 { font-size: 100%; }
+  q { quotes: "“" "”" "‘" "’"; }
+  blockquote { font-style: italic }
+  /* Figures are displayed full-page, with the caption on
+     top of the image/video */
+  figure {
+    background-color: black;
+  }
+  figcaption {
+    margin: 70px;
+  }
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 40px;
+    text-align: right;
+    background-color: #F3F4F8;
+    border-top: 1px solid #CCC;
+  }
+
+  /* Transition effect */
+  /* Feel free to change the transition effect for original
+     animations. See here:
+     https://developer.mozilla.org/en/CSS/CSS_transitions
+     How to use CSS3 Transitions: */
+  section {
+      -moz-transition: left 400ms linear 0s;
+      -webkit-transition: left 400ms linear 0s;
+      -ms-transition: left 400ms linear 0s;
+      transition: left 400ms linear 0s;
+  }
+
+  /* Before */
+  section { left: -150%; }
+  /* Now */
+  section[aria-selected] { left: 0; }
+  /* After */
+  section[aria-selected] ~ section { left: +150%; }
+
+  /* Incremental elements */
+
+  /* By default, visible */
+  .incremental > * { opacity: 1; }
+
+  /* The current item */
+  .incremental > *[aria-selected] { color: red; opacity: 1; }
+
+  /* The items to-be-selected */
+  .incremental > *[aria-selected] ~ * { opacity: 0.2; }
+</style>
+</head>
+<body>
+<section>
+  <h1 class="title">Complejidad Computacional Semana 8: criptografía</h1>
+  <h3 class="date"></h3>
+</section>
+<section class="slide level1" id="section">
+
+<p>Compiled from:</p>
+<ul>
+<li><a href="http://www.scottaaronson.com/democritus/lec8.html">Scott Aaronson and Gus Gutoski's lecture notes</a></li>
+<li>Arora and Barak's Chapter 9 on Cryptography</li>
+</ul>
+</section>
+<section class="slide level1" id="history">
+<h1>History</h1>
+<p>Cryptography is a 3,000-year old black art that has been completely transformed over the last few decades by ideas from theoretical computer science. Cryptography is perhaps the best example of a field in which the concepts of theoretical computer science have real practical applications: problems are designed to be hard, the worst case assumptions are the right assumptions, and computationally intractable problems are there because we put them there.</p>
+<p>For more on the history of cryptography, a great reference is David Kahn’s <em>The Codebreakers</em>, which was written before people even knew about the biggest cryptographic story of all: the breaking of the German naval code in World War II, by Alan Turing and others.</p>
+</section>
+<section class="slide level1" id="caesar-cipher">
+<h1>Caesar Cipher</h1>
+<p>Our journey through the history of cryptography begins with the famous and pathetic &quot;Caesar cipher&quot; used by the Roman Empire. Here the plaintext message is converted into a ciphertext by simply adding 3 to each letter, wrapping around to A after you reach Z. Thus D becomes G, Y becomes B, and DEMOCRITUS becomes GHPRFULWXV. More complex variants of the Caesar cipher have appeared, but given enough ciphertext they're all easy to crack, by using (for example) a frequency analysis of the letters appearing in the ciphertext. Not that that's stopped people from using these things! Indeed, as recently as last April, the head of the Sicilian mafia was finally caught after forty years because he used the Caesar cipher -- the original one -- to send messages to his subordinates!</p>
+</section>
+<section class="slide level1" id="one-time-pad">
+<h1>One-Time Pad</h1>
+<p>It was not until the 1920’s that a “serious” cryptosystem was devised. Gilbert Sandford Vernam, an American businessman, proposed what is known today as the one-time pad.</p>
+<p>Under the one-time pad cryptosystem, the plaintext message is represented by a binary string M which is them XOR-ed with a random binary key, K, of the same length. Then the ciphertext C is equal to the bitwise sum of M and K, mod 2.</p>
+<p>Assuming that the recipient is a trusted party who shares the knowledge of the key, the cipher- text can be decrypted by performing another XOR operation: C ⊕ K = M ⊕ K ⊕ K = M .</p>
+</section>
+<section class="slide level1" id="section-1">
+
+<p>To an eavesdropper who does not have knowledge of the key, the ciphertext appears to be non- sense since XOR-ing any string of bits with a random string just produces another random string. There is no way to guess what the ciphertext may be encoding because any binary key could have been used.</p>
+</section>
+<section class="slide level1" id="section-2">
+
+<p>As a result of this, the one-time pad is a provably unbreakable cryptographic encoding, but only if used correctly. The problem with using the one-time pad is that it literally is a “one- time” encryption. If the same key is ever used to encrypt more than one message, then the cryptosystem is no longer secure. For example, if we sent another message M2 encrypted with the same key K to produce C2 , the eavesdropper could obtain a combination of the messages: C1 ⊕ C2 M1 ⊕ K ⊕ M2 ⊕ K = M1 ⊕ M2 . If the eavesdropper had any idea of what either of the messages may have contained, the eavesdropper could learn about the other plaintext message, and indeed obtain the key K.</p>
+<p>As a concrete example, Soviet spies during the Cold War used the one-time pad to encrypt their messages and occasionally slipped up and re-used keys. As a result, the NSA, through its VENONA project, was able to decipher some of the ciphertext and even gather enough information to catch Julius and Ethel Rosenberg.</p>
+</section>
+<section class="slide level1" id="shannons-theorem">
+<h1>Shannon's Theorem</h1>
+<p>The one-time pad has the severe shortcoming that the number of messages that can be encrypted is limited by the amount of key available.</p>
+<p>Is it possible to have a cryptographic code which is unbreakable (in the same absolute sense that the one-time pad is unbreakable), yet uses a key that is much smaller than the message?</p>
+<p>In the 1940s, Claude Shannon proved that a perfectly secure cryptographic code requires the encryption key to be at least as long as the message that is sent.</p>
+</section>
+<section class="slide level1" id="section-3">
+
+<p>Here's his proof: given the ciphertext and the key, the plaintext had better be uniquely recoverable. In other words, for any fixed key, the function that maps plaintexts to ciphertexts had better be an injective function.</p>
+<p>But this immediately implies that, for a given ciphertext c, the number of plaintexts that could possibly have produced c is at most the number of keys. In other words, if there are fewer possible keys than plaintexts, then an eavesdropper will be able to rule out some of the plaintexts -- the ones that wouldn't encrypt to c for any value of the key.</p>
+<p>Therefore our cryptosystem won't be perfectly secure. It follows that, if we want perfect security, then we need at least as many keys as plaintexts -- or equivalently, the key needs to have at least as many bits as the plaintext.</p>
+</section>
+<section class="slide level1" id="section-4">
+
+<p>The key loophole in Shannon’s argument is the assumption that the adversary has unlimited computational power. For a practical cryptosystem, we can exploit computational complexity theory, and in particular the assumption that the adversary is a polynomial-time Turning machine that does not have unlimited computational power.</p>
+</section>
+<section class="slide level1" id="pseudorandom-generators">
+<h1>Pseudorandom Generators</h1>
+<p>A pseudorandom generator (PRG) is a function that takes as input a short, truly random string (called the seed) and produces as output a long, seemingly random string.</p>
+</section>
+<section class="slide level1" id="section-5">
+
+<h2 id="seed-generation">Seed Generation</h2>
+<p>A seed is a “truly” random string used as input to a PRG. How do you get truly random numbers?</p>
+<p>Some seeds used are generated from the system time, typing on a keyboard randomly, the last digits of stock prices, or mouse movements. There are subtle correlations in these sources so they aren’t completely random, but there are ways of extracting randomness from weak random sources. For example, according to some powerful recent results, nearly “pure” randomness can often be extracted from two or more weak random sources that are assumed to be uncorrelated with each other.</p>
+</section>
+<section class="slide level1" id="section-6">
+
+<p>How do you prove that a sequence of numbers is random? Well, it’s much easier to give overwhelming evidence that a sequence is not random! In general, one does this by finding a pattern in the sequence, i.e. a computable description with fewer bits than the sequence itself. (In other words, by showing that the sequence has less-than-maximal Kolmogorov complexity.)</p>
+<p>Now we’ll simply assume that we have a short random seed, and consider the problem of how to expand it into a long “random-looking” sequence.</p>
+</section>
+<section class="slide level1" id="section-7">
+
+<h2 id="how-to-expand-random-numbers">How to Expand Random Numbers</h2>
+</section>
+<section class="slide level1" id="section-8">
+
+<h3 id="linear-congruential-generator">Linear-Congruential Generator</h3>
+<p>In most programming languages, if you ask for random numbers you get something like the following (with a, b, and N integers):</p>
+<p><span class="math"><em>x</em><sub>1</sub> = <em>a</em> ⋅ <em>x</em><sub>0</sub> + <em>b</em> <em>m</em><em>o</em><em>d</em> <em>N</em></span><br /> <span class="math"><em>x</em><sub>2</sub> = <em>a</em> ⋅ <em>x</em><sub>1</sub> + <em>b</em> <em>m</em><em>o</em><em>d</em> <em>N</em></span><br /> <span class="math">…</span><br /> <span class="math"><em>x</em><sub><em>n</em></sub> = <em>a</em> ⋅ <em>x</em><sub><em>n</em>−1</sub> + <em>b</em> <em>m</em><em>o</em><em>d</em> <em>N</em></span><br /></p>
+<p>This is good enough for many non-cryptographic applications, but an adversary could distinguish the sequence <span class="math"><em>x</em><sub>0</sub></span> , <span class="math"><em>x</em><sub>1</sub></span> , <span class="math">…</span> from random by solving a small system of equations modulo N.</p>
+<p>For cryptography applications, it must not be possible for an adversary to figure out a pattern in the output of the generator in polynomial time. Otherwise, the system is not secure.</p>
+</section>
+<section class="slide level1" id="section-9">
+
+<h3 id="cryptographic-pseudorandom-generator-cprg">Cryptographic Pseudorandom Generator (CPRG)</h3>
+<p><strong>Definition</strong> (Yao 1982) A CPRG is a function <span class="math"><em>f</em></span> such that:</p>
+<ol type="1">
+<li><span class="math"><em>f</em></span> maps an n-bit input string (the seed) to a <span class="math"><em>p</em>(<em>n</em>)</span>-bit output string, where <span class="math"><em>p</em>(<em>n</em>)</span> is some polynomial larger than n.</li>
+<li><span class="math"><em>f</em></span> is computable in time polynomial in <span class="math"><em>n</em></span>.</li>
+<li>For all polynomial-time algorithms A (adversaries):<br /> <span class="math">∣<em>P</em><em>r</em><sub><em>x</em> ∈ {0, 1}<sup><em>n</em></sup></sub>[<em>A</em> <em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em><em>s</em> <em>f</em>(<em>x</em>)] − <em>P</em><em>r</em><sub><em>y</em> ∈ {0, 1}<sup><em>p</em>(<em>n</em>)</sup></sub>[<em>A</em> <em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em><em>s</em> <em>y</em>]∣</span>,<br /> is negligibly small.</li>
+</ol>
+<p>Ie, it decreases faster than <span class="math">1 / <em>q</em>(<em>n</em>)</span> for any polynomial <span class="math"><em>q</em></span>.</p>
+<p>No polynomial-time adversary can distinguish the output of f from a truly random string with any non-negligible bias.</p>
+</section>
+<section class="slide level1" id="section-10">
+
+<p>How &quot;stretchy&quot; a PRG are we looking for? Do we want to stretch an n-bit seed to <span class="math">2<em>n</em></span> bits? To <span class="math"><em>n</em><sup>2</sup></span> bits? <span class="math"><em>n</em><sup>100</sup></span> bits? The answer turns out to be irrelevant!</p>
+<p>Why? Because even if we only had a PRG f that stretched n bits to n+1 bits, we could keep applying f recursively to its own output, and thereby stretch n bits to p(n) bits for any polynomial p. Furthermore, if the output of this recursive process were efficiently distinguishable from a random p(n)-bit string, then the output of f itself would have been efficiently distinguishable from a random (n+1)-bit string -- contrary to assumption! Of course, there's something that needs to be proved here, but the something that needs to be proved can be proved, and I'll leave it at that.</p>
+</section>
+<section class="slide level1" id="section-11">
+
+<p>if pseudorandom generators exist, then it's possible to build a computationally-secure cryptosystem using only short encryption keys.</p>
+<p>First use the PRG to stretch a short encryption key to a long one -- as long as the plaintext message itself. Then pretend that the long key is truly random, and use it exactly as you'd use a one-time pad!</p>
+</section>
+<section class="slide level1" id="section-12">
+
+<p>Admittedly, this has all been pretty abstract and conceptual. Sure, we could do wonderful things if we had a PRG -- but is there any reason to suppose PRG's actually exist?</p>
+<p>A first, trivial observation is that PRG's can only exist if <strong>P</strong>≠<strong>NP</strong>. Why?</p>
+<p>Because if <strong>P</strong>=<strong>NP</strong>, then given a supposedly random string y, we can decide in polynomial time whether there's a short seed x such that f(x)=y. If y is random, then such a seed almost certainly won't exist -- so if it does exist, we can be almost certain that y isn't random. We can therefore distinguish the output of f from true randomness.</p>
+</section>
+<section class="slide level1" id="blum-blum-shub-cprg">
+<h1>Blum-Blum-Shub CPRG</h1>
+<p>Suppose we do assume <strong>P</strong>≠<strong>NP</strong>. What are some concrete examples of functions that are believed to be pseudorandom generators?</p>
+<p>One example is what's called the Blum-Blum-Shub generator. Here's how it works: pick a large composite number N. Then the seed, x, will be a random element of <span class="math"><em>Z</em><sub><em>N</em></sub></span>. The output consists of the last bit of <span class="math"><em>x</em><sup>2</sup> <em>m</em><em>o</em><em>d</em> <em>N</em></span>, the last bit of <span class="math">(<em>x</em><sup>2</sup>)<sup>2</sup> <em>m</em><em>o</em><em>d</em> <em>N</em></span>, the last bit of <span class="math">((<em>x</em><sup>2</sup>)<sup>2</sup>)<sup>2</sup> <em>m</em><em>o</em><em>d</em> <em>N</em></span>, etc. and output that as your pseudorandom string f(x).</p>
+</section>
+<section class="slide level1" id="section-13">
+
+<img src="data:image/png;base64,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njE7iry9veXj42N2DJSB/fv3a+zYsTp69Kgef/xxBQYGqmHDhmbHAgAUU6UoHAGgMjtz5oyqVatWotejA7eSlpamWbNmae7cufLw8NC8efP07LPPcpYRACo4CkcAAFAidu7cqXHjxunkyZN68skntXDhQs4yAoCdKPR2HAAAANYcPXpUffv2tcySunPnTn377bcUjQBgRygcAQCmiYiI0JIlS5SdnW12FBTDlStX9Oqrr6pbt27asWOHXnzxRR04cEAPPPCA2dEAACWMoaoAANOMHTtWS5cuVVpamlxdXc2OAxvduHFDn376qd5++21dunRJPXr00EcffaTOnTubHQ0AUEo44wgAdq5atWoaPHiw2TFgBzIyMjRnzhw1a9ZML7zwgqpWraoNGzZo3759FI0AYOcoHAEAgFWGYWjNmjXq3Lmzpk2bppSUFL3yyis6dOiQHn30UbPjAQDKgLPZAQAAQPmUlZWl1atXa86cOTp06JCcnZ01ZswYvfXWW2ratKnZ8QAAZYjCEQAA5JGWlqZly5Zp3rx5On36tBwdHfXkk09q1qxZuvPOO82OBwAwAYUjAACQJF26dEmLFy/WokWLdPHiRVWvXl0vvviiJk2aJC8vL7PjAQBMxKyqAGDnqlWrpoEDB2rNmjVmR8nn0qVLSklJUatWreTg4GB2nEpro+7uLQAAIABJREFUz549WrBggYKDg5WZmak777xTU6ZM0fDhw1W9enWz4wEAygHOOAKAnXv++ed17733mh2jQPXr11f9+vXNjlEp5eTkaNOmTVqwYIG2b98uSfLx8dHEiRM1aNAgValSxeSEAIDyhDOOAABUImfPntWHH36o5cuX6/z586pdu7bGjRunMWPGqE2bNmbHAwCUUxSOAABUAocOHdKHH36or776SqmpqWrRooUmTpyoMWPGqHbt2mbHAwCUcwxVBQDATp0+fVrr1q3TmjVr9OOPP0qS7r//fk2aNEl+fn5ycnIyOSEAoKLgjCMAwDSTJk3SihUrFB8fr6pVq5odxy5ER0dr3bp1Wrt2rX755RdJUvXq1fX4449r0qRJ6tKli8kJAQAVEWccAcDOzZs3T15eXvLz8zM7Sj6pqalKSkoSf8O8PSdPntQ333yjVatW6dixY5IkT09PjRkzRn5+fnrooYfk6upqckoAQEVG4QgAdm7GjBkaOHBguSwc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n5GUlGSsX7/esn7uLyZRUVGGk5NTgbcR+f333w13d3fD2dnZiI6Otu1gFqAohWNuAf3VV18Ve3//7d///rexYsUKy/fZ2dmWojokJKRYfV68eNFwcXHJd8xzcnKMu+++2/J97mti/fr1edaLiooyJFl+YbZ1vVwff/yxpaC6fPlynv03b97c6NWrl/H666/n2SZ3H+vWrcv3eHKfn//9xaew/QwaNChfX0eOHDGcnZ2NhQsXWtqys7ONli1bGn369DEM4+a0+v/9i+H/Fo65Xn31VUOScejQoXz7efTRR4t8+4633nrLcHJyMt555x0jKyvLOH78uNGyZcs8f6Q4dOiQIckYNmxYvixOTk553sO5inqcrl69arRq1cp49tln890aZteuXQV+5kRHRxsuLi7Gzp078+0/KCjIqFWrlhEfH1+kXEV9ndyKre8HwzCMN954w5BknDlz5pb92fI8GYb5r9tbKc5ztXr16gLf69YU5bjf6lh16NDBuHTpUp62xYsXG5KM6dOnW9qK+hl1K0OGDDGys7ONX3/91ZBkdOzY0bhw4YJl+alTpwxJxoYNGyxtCxcuNBo1anTLPocPH27k5OQYe/fuNSQZ3bp1Mw4ePJhnnYceesjw8fEpNN/gwYONwYMH2/RYchV0bIvy3FhT1NdlUZ6n4rxPitK/re9joDRxjSNKnYuLi3r16qWePXuqQ4cONm93q5s0f//995avW7VqlWc/uUOAwsLC1LFjR7388st5rpEs7MbP1pbnLouJidGjjz6qWrVqaeDAgfrHP/6hadOmady4cZKkCRMmKDs7W25ubvLz88vTR4sWLfTggw8qKytLn3/+udUsJWXTpk06deqUhg0bViL9rV+/Xo899pjle0dHRw0dOlSStGrVqmL1mZSUpBs3bmjlypV52h0cHDRkyBBJN4dPTZw4UR4eHvL19c2zXpcuXdSyZUt99NFHNq/333KH+bRu3Vq1a9fOs/9mzZpp9+7dGjt2bJ5tcm+Wffz48XyP51bDhgrbz4kTJ/Jts2nTJmVlZeV57zg6Ouree+/V9u3blZSUJGdnZ5uufx0/frwcHBy0ZMmSPO3p6elq1KiRevToUWgf//t4srOz1bBhQzk5OemOO+7QmTNnNHLkSMs61atXV9WqVZWenp5n2549eyo7O1v79+8vsF/J9uP02muv6cyZM5oy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" />
+</section>
+<section class="slide level1" id="section-14">
+
+<p>Blum et al. show that, if we had a polynomial-time algorithm to distinguish f(x) from a random string, then we could use that algorithm to factor N in polynomial time. Equivalently, if factoring is hard, then Blum-Blum-Shub is a PRG.</p>
+<p>Alas, we don't think factoring is hard -- at least, not in a world with quantum computers!</p>
+</section>
+<section class="slide level1" id="section-15">
+
+<p>So can we base the security of PRG's on a more quantum-safe assumption? Yes, we can. There are many, many ways to build a candidate PRG, and we have no reason to think that quantum computers will be able to break all of them.</p>
+<p>Indeed, you could even base a candidate PRG on the apparent unpredictability of (say) the &quot;Rule 110&quot; cellular automaton, as advocated by Stephen Wolfram in his groundbreaking, revolutionary, paradigm-smashing book.</p>
+</section>
+<section class="slide level1" id="p-neq-np-based-cprg">
+<h1><span class="math"><em>P</em> ≠ <em>N</em><em>P</em></span>-based CPRG</h1>
+<p>Ideally, we would like to construct a CPRG or cryptosystem whose security was based on an NP-complete problem. Unfortunately, NP-complete problems are always about the worst case. In cryptography, this would translate to a statement like “there exists a message that’s hard to decode”, which is not a good guarantee for a cryptographic system! A message should be hard to decrypt with overwhelming probability.</p>
+<p>Despite decades of effort, no way has yet been discovered to relate worst case to average case for NP-complete problems. And this is why, if we want computationally-secure cryptosystems, we need to make stronger assumptions than <span class="math"><em>P</em> ≠ <em>N</em><em>P</em></span>.</p>
+</section>
+<section class="slide level1" id="section-16">
+
+<p>That's not to say, though, that we know nothing about average-case hardness.</p>
+<p>As an example, consider the Shortest Vector Problem (SVP): we're given a lattice L in <span class="math"><em>R</em><sup><em>n</em></sup></span>, consisting of all integer linear combinations of some given vectors <span class="math"><em>v</em><sub>1</sub>, . . . , <em>v</em><sub><em>n</em></sub></span> in <span class="math"><em>R</em><sup><em>n</em></sup></span>. Then the problem is to approximate the length of the shortest nonzero vector in L to within some multiplicative factor k.</p>
+<p>SVP is one of the few problems for which we can prove a worst-case / average-case equivalence (that is, the average case is every bit as hard as the worst case).</p>
+<p>Based on that equivalence, Ajtai, Dwork, Regev, and others have constructed cryptosystems and pseudorandom generators whose security rests on the worst-case hardness of SVP. Unfortunately, the same properties that let us prove worst-case / average-case equivalence also make it unlikely that SVP is NP-complete for the relevant values of k! It seems more likely that SVP is intermediate between P and NP-complete, just like we think factoring is.</p>
+</section>
+<section class="slide level1" id="section-17">
+
+<p>Suppose we just assume NP-complete problems are hard on average.</p>
+<p>Even then, there's a further difficulty in using NP-complete problems to build a PRG. This is that breaking PRG's just doesn't seem to have the right &quot;shape&quot; to be NP-complete:</p>
+<p>Think about how we prove a problem B is NP-complete: we take some problem A that's already known to be NP-complete, and we give a polynomial-time reduction that maps yes-instances of A to yes-instances of B, and no-instances of A to no-instances of B. In the case of breaking a PRG, presumably the yes-instances would be pseudorandom strings and the no-instances would be truly random strings (or maybe vice versa).</p>
+<p>So the problem is: How do we describe a &quot;truly random string&quot; for the purpose of mapping to it in the reduction? The whole point of a string being random is that we can't describe it by anything shorter than itself!</p>
+<p>(Admittedly, this argument may not work since the reduction might be randomized.)</p>
+<p>Nevertheless, it is possible to conclude something from the argument: that if breaking PRG's is NP-complete, then the proof will have to be very different from the sort of NP-completeness proofs that we're used to.</p>
+</section>
+<section class="slide level1" id="section-18">
+
+<h2 id="one-way-functions">One-Way Functions</h2>
+<p>One-way functions are the cousins of pseudorandom generators. Intuitively, a one-way function (OWF) is just a function that's easy to compute but hard to invert. More formally, a function f from n bits to p(n) bits is a one way function if</p>
+<ol type="1">
+<li><span class="math"><em>f</em></span> is computable in time polynomial in n</li>
+<li>for all polynomial-time algorithms A, the probability that A succeeds at inverting f, <br><span class="math"><em>P</em><em>r</em><sub><em>x</em> ∈ {0, 1}<sup><em>n</em></sup></sub>[<em>f</em>(<em>A</em>(<em>f</em>(<em>x</em>))) = <em>f</em>(<em>x</em>)]</span><br> is negligibly small -- that is, smaller than 1/q(n) for any polynomial q.</li>
+</ol>
+<p>With this definition, we consider algorithms A that find anything in the preimage of f(x), not just x itself.</p>
+</section>
+<section class="slide level1" id="section-19">
+
+<h2 id="relation-between-prgs-and-owfs">Relation Between PRGs and OWFs</h2>
+<p>The existence of PRG's implies the existence of OWF's.</p>
+<p>Can anyone tell why?</p>
+</section>
+<section class="slide level1" id="section-20">
+
+<p>Because a PRG is an OWF!</p>
+<p>Alright then, can anyone prove that the existence of OWF's implies the existence of PRG's?</p>
+<p>This one's a little harder! The main reason is that the output of an OWF f doesn't have to appear random in order for f to be hard to invert.</p>
+<p>And indeed, it took more than a decade of work -- culminating in a behemoth 1997 paper of Håstad, Impagliazzo, Levin, and Luby -- to figure out how to construct a pseudorandom generator from any one-way function.</p>
+<p>Because of Håstad et al.'s result, we now know that OWF's exist if and only if PRG's do.</p>
+<p>The proof is pretty complicated, and the reduction is not exactly practical: the blowup is by about <span class="math"><em>n</em><sup>40</sup></span>! This is the sort of thing that gives polynomial-time a bad name -- but it's the exception, not the rule!</p>
+</section>
+<section class="slide level1" id="section-21">
+
+<p>So far we've restricted ourselves to private-key cryptosystems, which take for granted that the sender and receiver share a secret key.</p>
+<p>But how would you share a secret key with (say) Amazon.com before sending them your credit card number? Would you email them the key? Oops -- if you did that, then you'd better encrypt your email using another secret key, and so on ad infinitum! The solution, of course, is to meet with an Amazon employee in an abandoned garage at midnight.</p>
+<p>No, wait ... I meant that the solution is public-key cryptography.</p>
+</section>
+<section class="slide level1" id="public-key-cryptosystems">
+<h1>Public Key Cryptosystems</h1>
+<p>The first inventors of public-key cryptography were Ellis, Cocks, and Williamson, working for the GCHQ (the British NSA) in the early 70's. Of course they couldn't publish their work, so today they don't get much credit! Let that be a lesson to you.</p>
+<p>The first public public-key cryptosystem was that of Diffie and Hellman, in 1976. A couple years later, Rivest, Shamir, and Adleman discovered the famous RSA system that bears their initials.</p>
+<p>RSA had several advantages over Diffie-Hellman: for example, it only required one party to generate a public key instead of both, and it let users authenticate themselves in addition to communicating in private. But if you read Diffie and Hellman's paper, pretty much all the main ideas are there.</p>
+</section>
+<section class="slide level1" id="trapdoor-one-way-functions">
+<h1>Trapdoor One-Way Functions</h1>
+<p>The core of any public-key cryptosystem is what's called a <strong>trapdoor one-way function</strong>. This is a function that's</p>
+<ol type="1">
+<li>easy to compute,</li>
+<li>hard to invert, and</li>
+<li>easy to invert given some secret &quot;trapdoor&quot; information.</li>
+</ol>
+<p>The first two requirements are just the same as for ordinary OWF's. The third requirement -- that the OWF should have a &quot;trapdoor&quot; that makes the inversion problem easy -- is the new one. For comparison, notice that the existence of ordinary one-way functions implies the existence of secure private-key cryptosystems, whereas the existence of trapdoor one-way functions implies the existence of secure public-key cryptosystems.</p>
+</section>
+<section class="slide level1" id="example-rsa">
+<h1>Example: RSA</h1>
+<p>Let's say you want to send your credit card number to Amazon.com. What happens?</p>
+<p>First Amazon randomly selects two large prime numbers p and q (which can be done in polynomial time), such that (p-1) and (q-1) should not be divisible by 3.</p>
+<p>Then Amazon computes the product N = pq and publishes it for all the world to see, while keeping p and q themselves a closely-guarded secret.</p>
+</section>
+<section class="slide level1" id="section-22">
+
+<p>Now, assume your credit card number is encoded as a positive integer x, smaller but not too much smaller than N. Then what do you do? Simple: you compute <span class="math"><em>x</em><sup>3</sup> <em>m</em><em>o</em><em>d</em> <em>N</em></span> and send it over to Amazon!</p>
+<p>If a credit card thief intercepted your message en route, then she would have to recover x given only <span class="math"><em>x</em><sup>3</sup> <em>m</em><em>o</em><em>d</em> <em>N</em></span>.</p>
+<p>But computing cube roots modulo a composite number is believed to be an extremely hard problem, at least for classical computers! If p and q are both reasonably large (say 10,000 digits each), then any classical eavesdropper would need millions of years to recover x.</p>
+</section>
+<section class="slide level1" id="section-23">
+
+<p>Now how does Amazon itself recover x?</p>
+<p>By using its knowledge of p and q! We know from our friend Mr. Euler, way back in 1761, that the sequence <br><span class="math"><em>x</em> <em>m</em><em>o</em><em>d</em> <em>N</em>, <em>x</em><sup>2</sup> <em>m</em><em>o</em><em>d</em> <em>N</em>, <em>x</em><sup>3</sup> <em>m</em><em>o</em><em>d</em> <em>N</em>, …</span><br></p>
+<p>repeats with period (p-1)(q-1). So provided Amazon can find an integer k such that</p>
+<p><br><span class="math">3<em>k</em> = 1 <em>m</em><em>o</em><em>d</em> (<em>p</em> − 1)(<em>q</em> − 1)</span><br></p>
+<p>it'll then have</p>
+<p><br><span class="math">(<em>x</em><sup>3</sup>)<sup><em>k</em></sup> <em>m</em><em>o</em><em>d</em> <em>N</em> = <em>x</em><sup>3<em>k</em></sup> <em>m</em><em>o</em><em>d</em> <em>N</em> = <em>x</em> <em>m</em><em>o</em><em>d</em> <em>N</em></span><br></p>
+<p>Now, we know that such a k exists, by the assumption that p-1 and q-1 are not divisible by 3.</p>
+<p>Furthermore, Amazon can find such a k in polynomial time, using Euclid's algorithm (from way way back, around 300BC). Finally, given <span class="math"><em>x</em><sup>3</sup> <em>m</em><em>o</em><em>d</em> <em>N</em></span>, Amazon can compute <span class="math">(<em>x</em><sup>3</sup>)<sup><em>k</em></sup></span> in polynomial time by using a simple repeated squaring trick. So that's RSA.</p>
+</section>
+<section class="slide level1" id="section-24">
+
+<p>Of course, if the credit card thief could factor N into pq, then she could run the exact same decoding algorithm that Amazon runs, and thereby recover the message x.</p>
+<p>So the whole scheme relies crucially on the assumption that factoring is hard! This immediately implies that RSA could be broken by a credit card thief with a quantum computer.</p>
+<p>Classically, however, the best known factoring algorithm is the Number Field Sieve, which takes about <span class="math">2<sup><em>n</em><sup>1 / 3</sup></sup></span> steps.</p>
+</section>
+<section class="slide level1" id="section-25">
+
+<p>As a side note, no one has yet proved that breaking RSA requires factoring: it's possible that there's a more direct way to recover the message x, one that doesn't entail learning p and q.</p>
+<p>On the other hand, in 1979 Rabin discovered a variant of RSA for which recovering the plaintext is provably as hard as factoring.</p>
+</section>
+<section class="slide level1" id="trapdoor-one-way-functions-1">
+<h1>Trapdoor One-Way Functions</h1>
+<p>The operation <span class="math"><em>x</em><sup>3</sup> <em>m</em><em>o</em><em>d</em> <em>N</em></span> in RSA is an example of what’s called trapdoor one way function, or TDOWF. A trapdoor one-way function is a one-way function with the additional property that if you know some secret “trapdoor” information then you can efficiently invert it. So for example, the function <span class="math"><em>f</em>(<em>x</em>) = <em>x</em><sup>3</sup><em>m</em><em>o</em><em>d</em><em>N</em></span> is believed to be a one-way function, yet is easy to invert by someone who knows the prime factors of N .</p>
+</section>
+<section class="slide level1" id="different-classes-of-tdowfs">
+<h1>Different Classes of TDOWF’s</h1>
+<p>Are there any candidate TDOWF’s not based on modular arithmetic (like RSA is)?</p>
+<p>One class that’s been the subject of much recent research is based on lattices. (Strictly peaking, the objects in this class are not TDOWF’s, but something called lossy TDOWF’s, but they still suffice for public-key encryption.) Part of the motivation for studying this class is that the cryptosystems based on modular arithmetic could all be broken by a quantum computer, if we had one. By contrast, even with a quantum computer we don’t yet know how to break lattice cryptosystems. Right now, however, lattice cryptosystems are not used much. Part of the problem is that, while the message and key lengths are polynomial in n, there are large polynomial blowups. Thus, these cryptosystems aren’t considered to be as practical as RSA. On the other hand, in recent years people have come up with better constructions, so it’s becoming more practical.</p>
+</section>
+<section class="slide level1" id="section-26">
+
+<p>There’s also a third class of public-key cryptosystems based on elliptic curves, and elliptic-curve cryptography is currently practical. Like RSA, elliptic-curve cryptography is based on abelian groups, and like RSA it can be broken by a quantum computer. However, elliptic-curve cryptogra- phy has certain nice properties that are not known to be shared by RSA.</p>
+<p>In summary, we only know of a few classes of candidate TDOWF’s, and all of them are based on some sort of interesting math. When you ask for a trapdoor that makes your one-way function easy to invert again, you’re really asking for something mathematically special. It almost seems like an accident that plausible candidates exist at all! By contrast, if you just want an ordinary, non-trapdoor OWF, then as far as we know, all sorts of “generic” computational processes that scramble up the input will work.</p>
+</section>
+<section class="slide level1" id="impagliazzos-five-worlds">
+<h1>Impagliazzo’s Five Worlds</h1>
+<p>A famous paper by Impagliazzo discusses five possible worlds of computational complexity and cryp- tography, corresponding to five different assumptions you can make. You don’t need to remember the names of the worlds, but I thought you might enjoy seeing them.</p>
+<ol type="1">
+<li><p>Algorithmica - <span class="math"><em>P</em> = <em>N</em><em>P</em></span> or at the least fast probabalistic algorithms exist to solve all NP problems.</p></li>
+<li><p>Heuristica - <span class="math"><em>P</em> ≠ <em>N</em><em>P</em></span> , but while NP problems are hard in the worst case, they are easy on average.</p></li>
+<li><p>Pessiland - NP-complete problems are hard on average but one-way functions don’t exist, hence no cryptography</p></li>
+<li><p>Minicrypt - One-way functions exist (hence private-key cryptography, pseudorandom number generators, etc.), but there’s no public-key cryptography</p></li>
+<li><p>Cryptomania - Public-key cryptography exists; there are TDOWF’s</p></li>
+</ol>
+<p>The reigning belief is that we live in Cryptomania, or at the very least in Minicrypt.</p>
+</section>
+<section class="slide level1" id="fun-with-encryption">
+<h1>Fun with Encryption</h1>
+<h2 id="message-authentication">Message Authentication</h2>
+<p>Besides encrypting a message, can you prove that a message actually came from you? Think back to the one-time pad, the first decent cryptosystem we saw.</p>
+<p>On its face, the one-time pad seems to provide authentication as a side benefit. Recall that this system involves you and a friend sharing a secret key k, you transmitting a message x securely by sending y = x ⊕ k, and your friend decoding the message by computing x = y ⊕ k. Your friend might reason as follows: if it was anyone other than you who sent the message, then why would y ⊕ k yield an intelligible message as opposed to gobbledygook?</p>
+</section>
+<section class="slide level1" id="section-27">
+
+<p>There are some holes in this argument (see if you can spot any), but the basic idea is sound. However, to accomplish this sort of authentication, you do need the other person to share a secret with you, in this case the key. It’s like a secret handshake of fraternity brothers.</p>
+<p>Going with the analogy of private vs. public key cryptography, we can ask whether there’s such a thing public-key authentication. That is, if a person trusts that some public key N came from you, he or she should be able to trust any further message that you send as also coming from you. As a side benefit, RSA gives you this ability to authenticate yourself, but we won’t go into the details.</p>
+</section>
+<section class="slide level1" id="section-28">
+
+<h2 id="computer-scientists-and-dating">Computer Scientists and Dating</h2>
+<p>Once you have cryptographic primitives like the RSA function, there are all sorts of games you can play. Take, for instance, the problem of Alice and Bob wanting to find out if they’re both interested in dating each other.</p>
+<p>Being shy computer scientists, however, they should only find out they like each other if they’re both interested; if one of them is not interested, then that one shouldn’t be able to find out the other is interested.</p>
+<p>An obvious solution (sometimes used in practice) would be to bring in a trusted mutual friend, Carl, but then Alice and Bob wold have to trust Carl not to spill the beans. Apparently there are websites out there that give this sort of functionality. However, ideally we would like to not have to rely on a third party.</p>
+</section>
+<section class="slide level1" id="section-29">
+
+<h3 id="the-dating-protocol">The Dating Protocol</h3>
+<p>So let’s suppose Alice and Bob are at their computers, just sending messages back and forth. If we make no assumptions about computational complexity, then the dating task is clearly impossible.</p>
+<p>Why? Intuitively it’s “obvious”: because eventually one of them will have to say something, without yet knowing whether his or her interest will be reciprocated or not! And indeed one can make this intuitive argument more formal.</p>
+<p>So we’re going to need a cryptographic assumption. In particular, let’s assume RSA is secure. Let’s also assume, for the time being, that Alice and Bob are what the cryptographers call honest but curious. In other words, we’ll assume that they can both be trusted to follow the protocol correctly, but that they’ll also try to gain as much information as possible from whatever messages they see. Later we’ll see how to remove the honest-but-curious assumption, to get a protocol that’s valid even if one player is trying to cheat.</p>
+</section>
+<section class="slide level1" id="section-30">
+
+<p>Before we give the protocol, three further remarks might be in order. First, the very fact that Alice and Bob are carrying out a dating protocol in the first place, might be seen as prima facie evidence that they’re interested! So you should imagine, if it helps, that Alice and Bob are at a singles party where every pair of people has to carry out the protocol.</p>
+<p>Second, it’s an unavoidable feature of any protocol that if one player is interested and the other one isn’t, then the one who’s interested will learn that the other one isn’t. (Why?)</p>
+<p>Third, it’s also unavoidable that one player could pretend to be interested, and then after learning of the other player’s interest, say “ha ha! I wasn’t serious. Just wanted to know if you were interested.”</p>
+</section>
+<section class="slide level1" id="section-31">
+
+<p>In other words, we can’t ask cryptography to solve the problem of heartbreak, or of people being jerks. All we can ask it to do is ensure that each player can’t learn whether the other player has stated an interest in them, without stating interest themselves.</p>
+</section>
+<section class="slide level1" id="section-32">
+
+<p>Without further ado, then, here’s how Alice and Bob can solve the dating problem:</p>
+<ol type="1">
+<li><p>Alice goes through the standard procedure of picking two huge primes, p and q, such that p − 1 and q − 1 are not divisible by 3, and then taking N = pq. She keeps p and q secret, but sends Bob N together with <span class="math"><em>x</em><sup>3</sup><em>m</em><em>o</em><em>d</em><em>N</em></span> and <span class="math"><em>y</em><sup>3</sup><em>m</em><em>o</em><em>d</em><em>N</em></span> for some x and y. If she’s not interested, then x and y are both 0 with random garbage padded onto them. If she is interested, then x is again 0 with random garbage, but y is 1 with random garbage.</p></li>
+<li><p>Assuming RSA is secure, Bob (not knowing the prime factors of N ) doesn’t know how to take cube roots mod N efficiently, so <span class="math"><em>x</em><sup>3</sup><em>m</em><em>o</em><em>d</em><em>N</em></span> and <span class="math"><em>y</em><sup>3</sup><em>m</em><em>o</em><em>d</em><em>N</em></span> both look completely random to him. Bob does the following: he first picks a random integer r from 0 to N − 1. Then, if he’s not interested in Alice, he sends her <span class="math"><em>x</em><sup>3</sup><em>r</em><sup>3</sup><em>m</em><em>o</em><em>d</em><em>N</em></span> . If he is interested, he sends her <span class="math"><em>y</em><sup>3</sup><em>r</em><sup>3</sup><em>m</em><em>o</em><em>d</em><em>N</em></span> .</p></li>
+</ol>
+</section>
+<section class="slide level1" id="section-33">
+
+<ol start="3" type="1">
+<li><p>Alice takes the cube root of whatever number Bob sent. If Bob wasn’t interested, this cube root will be xr mod N , while if he was interested it will be yr mod N . Either way, the outcome will look completely random to Alice, since she doesn’t know r (which was chosen randomly). She then sends the cube root back to Bob.</p></li>
+<li><p>Since Bob knows r, he can divide out r. We see that if Bob was not interested, he simply gets x which reveals nothing about Alice’s interest. Otherwise he gets y which is 1 if and only if Alice is interested.</p></li>
+</ol>
+</section>
+<section class="slide level1" id="section-34">
+
+<p>So there we have it. It seems that, at least in principle, computer scientists have solved the problem of flirting for shy people (assuming RSA is secure). This is truly nontrivial for computer scientists.</p>
+<p>However, this is just one example of what’s called secure multiparty computation; a general theory to solve essentially all such problems was developed in the 1980’s. So for example: suppose two people want to find out who makes more money, but without either of them learning anything else about the other’s wealth. Or a group of friends want to know how much money they have in total, without any individual revealing her own amount. All of these problems, and many more, are known to be solvable cryptographically.</p>
+</section>
+<!-- {{{{ dzslides core
+#
+#
+#     __  __  __       .  __   ___  __
+#    |  \  / /__` |    | |  \ |__  /__`
+#    |__/ /_ .__/ |___ | |__/ |___ .__/ core :€
+#
+#
+# The following block of code is not supposed to be edited.
+# But if you want to change the behavior of these slides,
+# feel free to hack it!
+#
+-->
+
+<div id="progress-bar"></div>
+
+<!-- Default Style -->
+<style>
+  * { margin: 0; padding: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+  details { display: none; }
+  html, .view body { background-color: black; counter-reset: slideidx; }
+  body, .view section { background-color: white; border-radius: 12px }
+  body {
+    width: 800px; height: 600px;
+    margin-left: -400px; margin-top: -300px;
+    position: absolute; top: 50%; left: 50%;
+    overflow: hidden;
+    display: none;
+  }
+  .view body {
+    position: static;
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    display: inline-block;
+    overflow: visible; overflow-x: hidden;
+    /* undo Dz.onresize */
+    transform: none !important;
+    -moz-transform: none !important;
+    -webkit-transform: none !important;
+    -o-transform: none !important;
+    -ms-transform: none !important;
+  }
+  .view head, .view head > title { display: block }
+  section {
+    position: absolute;
+    pointer-events: none;
+    width: 100%; height: 100%;
+  }
+  .view section {
+    pointer-events: auto;
+    position: static;
+    width: 800px; height: 600px;
+    margin: -150px -200px;
+    float: left;
+
+    transform: scale(.4);
+    -moz-transform: scale(.4);
+    -webkit-transform: scale(.4);
+    -o-transform: scale(.4);
+    -ms-transform: scale(.4);
+  }
+  .view section > * { pointer-events: none; }
+  section[aria-selected] { pointer-events: auto; }
+  html { overflow: hidden; }
+  html.view { overflow: visible; }
+  body.loaded { display: block; }
+  .incremental {visibility: hidden; }
+  .incremental[active] {visibility: visible; }
+  #progress-bar{
+    bottom: 0;
+    position: absolute;
+    -moz-transition: width 400ms linear 0s;
+    -webkit-transition: width 400ms linear 0s;
+    -ms-transition: width 400ms linear 0s;
+    transition: width 400ms linear 0s;
+  }
+  .view #progress-bar {
+    display: none;
+  }
+
+div.thm {
+    max-width: 27em;
+    margin: 1em;
+    padding: .5em;
+    border: thin solid;
+    border-bottom: .15em solid;
+    border-radius: 1em;
+    box-shadow: 0px 5px 10px 1px hsl(0, 0%, 60%);
+}
+</style>
+
+<script>
+  var Dz = {
+    remoteWindows: [],
+    idx: -1,
+    step: 0,
+    html: null,
+    slides: null,
+    progressBar : null,
+    params: {
+      autoplay: "1"
+    }
+  };
+
+  Dz.init = function() {
+    document.body.className = "loaded";
+    this.slides = Array.prototype.slice.call($$("body > section"));
+    this.progressBar = $("#progress-bar");
+    this.html = document.body.parentNode;
+    this.setupParams();
+    this.onhashchange();
+    this.setupTouchEvents();
+    this.onresize();
+    this.setupView();
+  }
+
+  Dz.setupParams = function() {
+    var p = window.location.search.substr(1).split('&');
+    p.forEach(function(e, i, a) {
+      var keyVal = e.split('=');
+      Dz.params[keyVal[0]] = decodeURIComponent(keyVal[1]);
+    });
+  // Specific params handling
+    if (!+this.params.autoplay)
+      $$.forEach($$("video"), function(v){ v.controls = true });
+  }
+
+  Dz.onkeydown = function(aEvent) {
+    // Don't intercept keyboard shortcuts
+    if (aEvent.altKey
+      || aEvent.ctrlKey
+      || aEvent.metaKey
+      || aEvent.shiftKey) {
+      return;
+    }
+    if ( aEvent.keyCode == 37 // left arrow
+      || aEvent.keyCode == 38 // up arrow
+      || aEvent.keyCode == 33 // page up
+    ) {
+      aEvent.preventDefault();
+      this.back();
+    }
+    if ( aEvent.keyCode == 39 // right arrow
+      || aEvent.keyCode == 40 // down arrow
+      || aEvent.keyCode == 34 // page down
+    ) {
+      aEvent.preventDefault();
+      this.forward();
+    }
+    if (aEvent.keyCode == 35) { // end
+      aEvent.preventDefault();
+      this.goEnd();
+    }
+    if (aEvent.keyCode == 36) { // home
+      aEvent.preventDefault();
+      this.goStart();
+    }
+    if (aEvent.keyCode == 32) { // space
+      aEvent.preventDefault();
+      this.toggleContent();
+    }
+    if (aEvent.keyCode == 70) { // f
+      aEvent.preventDefault();
+      this.goFullscreen();
+    }
+    if (aEvent.keyCode == 79) { // o
+      aEvent.preventDefault();
+      this.toggleView();
+    }
+  }
+
+  /* Touch Events */
+
+  Dz.setupTouchEvents = function() {
+    var orgX, newX;
+    var tracking = false;
+
+    var db = document.body;
+    db.addEventListener("touchstart", start.bind(this), false);
+    db.addEventListener("touchmove", move.bind(this), false);
+
+    function start(aEvent) {
+      aEvent.preventDefault();
+      tracking = true;
+      orgX = aEvent.changedTouches[0].pageX;
+    }
+
+    function move(aEvent) {
+      if (!tracking) return;
+      newX = aEvent.changedTouches[0].pageX;
+      if (orgX - newX > 100) {
+        tracking = false;
+        this.forward();
+      } else {
+        if (orgX - newX < -100) {
+          tracking = false;
+          this.back();
+        }
+      }
+    }
+  }
+
+  Dz.setupView = function() {
+    document.body.addEventListener("click", function ( e ) {
+      if (!Dz.html.classList.contains("view")) return;
+      if (!e.target || e.target.nodeName != "SECTION") return;
+
+      Dz.html.classList.remove("view");
+      Dz.setCursor(Dz.slides.indexOf(e.target) + 1);
+    }, false);
+  }
+
+  /* Adapt the size of the slides to the window */
+
+  Dz.onresize = function() {
+    var db = document.body;
+    var sx = db.clientWidth / window.innerWidth;
+    var sy = db.clientHeight / window.innerHeight;
+    var transform = "scale(" + (1/Math.max(sx, sy)) + ")";
+
+    db.style.MozTransform = transform;
+    db.style.WebkitTransform = transform;
+    db.style.OTransform = transform;
+    db.style.msTransform = transform;
+    db.style.transform = transform;
+  }
+
+
+  Dz.getDetails = function(aIdx) {
+    var s = $("section:nth-of-type(" + aIdx + ")");
+    var d = s.$("details");
+    return d ? d.innerHTML : "";
+  }
+
+  Dz.onmessage = function(aEvent) {
+    var argv = aEvent.data.split(" "), argc = argv.length;
+    argv.forEach(function(e, i, a) { a[i] = decodeURIComponent(e) });
+    var win = aEvent.source;
+    if (argv[0] === "REGISTER" && argc === 1) {
+      this.remoteWindows.push(win);
+      this.postMsg(win, "REGISTERED", document.title, this.slides.length);
+      this.postMsg(win, "CURSOR", this.idx + "." + this.step);
+      return;
+    }
+    if (argv[0] === "BACK" && argc === 1)
+      this.back();
+    if (argv[0] === "FORWARD" && argc === 1)
+      this.forward();
+    if (argv[0] === "START" && argc === 1)
+      this.goStart();
+    if (argv[0] === "END" && argc === 1)
+      this.goEnd();
+    if (argv[0] === "TOGGLE_CONTENT" && argc === 1)
+      this.toggleContent();
+    if (argv[0] === "SET_CURSOR" && argc === 2)
+      window.location.hash = "#" + argv[1];
+    if (argv[0] === "GET_CURSOR" && argc === 1)
+      this.postMsg(win, "CURSOR", this.idx + "." + this.step);
+    if (argv[0] === "GET_NOTES" && argc === 1)
+      this.postMsg(win, "NOTES", this.getDetails(this.idx));
+  }
+
+  Dz.toggleContent = function() {
+    // If a Video is present in this new slide, play it.
+    // If a Video is present in the previous slide, stop it.
+    var s = $("section[aria-selected]");
+    if (s) {
+      var video = s.$("video");
+      if (video) {
+        if (video.ended || video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
+    }
+  }
+
+  Dz.setCursor = function(aIdx, aStep) {
+    // If the user change the slide number in the URL bar, jump
+    // to this slide.
+    aStep = (aStep != 0 && typeof aStep !== "undefined") ? "." + aStep : ".0";
+    window.location.hash = "#" + aIdx + aStep;
+  }
+
+  Dz.onhashchange = function() {
+    var cursor = window.location.hash.split("#"),
+        newidx = 1,
+        newstep = 0;
+    if (cursor.length == 2) {
+      newidx = ~~cursor[1].split(".")[0];
+      newstep = ~~cursor[1].split(".")[1];
+      if (newstep > Dz.slides[newidx - 1].$$('.incremental > *').length) {
+        newstep = 0;
+        newidx++;
+      }
+    }
+    this.setProgress(newidx, newstep);
+    if (newidx != this.idx) {
+      this.setSlide(newidx);
+    }
+    if (newstep != this.step) {
+      this.setIncremental(newstep);
+    }
+    for (var i = 0; i < this.remoteWindows.length; i++) {
+      this.postMsg(this.remoteWindows[i], "CURSOR", this.idx + "." + this.step);
+    }
+  }
+
+  Dz.back = function() {
+    if (this.idx == 1 && this.step == 0) {
+      return;
+    }
+    if (this.step == 0) {
+      this.setCursor(this.idx - 1,
+                     this.slides[this.idx - 2].$$('.incremental > *').length);
+    } else {
+      this.setCursor(this.idx, this.step - 1);
+    }
+  }
+
+  Dz.forward = function() {
+    if (this.idx >= this.slides.length &&
+        this.step >= this.slides[this.idx - 1].$$('.incremental > *').length) {
+        return;
+    }
+    if (this.step >= this.slides[this.idx - 1].$$('.incremental > *').length) {
+      this.setCursor(this.idx + 1, 0);
+    } else {
+      this.setCursor(this.idx, this.step + 1);
+    }
+  }
+
+  Dz.goStart = function() {
+    this.setCursor(1, 0);
+  }
+
+  Dz.goEnd = function() {
+    var lastIdx = this.slides.length;
+    var lastStep = this.slides[lastIdx - 1].$$('.incremental > *').length;
+    this.setCursor(lastIdx, lastStep);
+  }
+
+  Dz.toggleView = function() {
+    this.html.classList.toggle("view");
+
+    if (this.html.classList.contains("view")) {
+      $("section[aria-selected]").scrollIntoView(true);
+    }
+  }
+
+  Dz.setSlide = function(aIdx) {
+    this.idx = aIdx;
+    var old = $("section[aria-selected]");
+    var next = $("section:nth-of-type("+ this.idx +")");
+    if (old) {
+      old.removeAttribute("aria-selected");
+      var video = old.$("video");
+      if (video) {
+        video.pause();
+      }
+    }
+    if (next) {
+      next.setAttribute("aria-selected", "true");
+      if (this.html.classList.contains("view")) {
+        next.scrollIntoView();
+      }
+      var video = next.$("video");
+      if (video && !!+this.params.autoplay) {
+        video.play();
+      }
+    } else {
+      // That should not happen
+      this.idx = -1;
+      // console.warn("Slide doesn't exist.");
+    }
+  }
+
+  Dz.setIncremental = function(aStep) {
+    this.step = aStep;
+    var old = this.slides[this.idx - 1].$('.incremental > *[aria-selected]');
+    if (old) {
+      old.removeAttribute('aria-selected');
+    }
+    var incrementals = $$('.incremental');
+    if (this.step <= 0) {
+      $$.forEach(incrementals, function(aNode) {
+        aNode.removeAttribute('active');
+      });
+      return;
+    }
+    var next = this.slides[this.idx - 1].$$('.incremental > *')[this.step - 1];
+    if (next) {
+      next.setAttribute('aria-selected', true);
+      next.parentNode.setAttribute('active', true);
+      var found = false;
+      $$.forEach(incrementals, function(aNode) {
+        if (aNode != next.parentNode)
+          if (found)
+            aNode.removeAttribute('active');
+          else
+            aNode.setAttribute('active', true);
+        else
+          found = true;
+      });
+    } else {
+      setCursor(this.idx, 0);
+    }
+    return next;
+  }
+
+  Dz.goFullscreen = function() {
+    var html = $('html'),
+        requestFullscreen = html.requestFullscreen || html.requestFullScreen || html.mozRequestFullScreen || html.webkitRequestFullScreen;
+    if (requestFullscreen) {
+      requestFullscreen.apply(html);
+    }
+  }
+  
+  Dz.setProgress = function(aIdx, aStep) {
+    var slide = $("section:nth-of-type("+ aIdx +")");
+    if (!slide)
+      return;
+    var steps = slide.$$('.incremental > *').length + 1,
+        slideSize = 100 / (this.slides.length - 1),
+        stepSize = slideSize / steps;
+    this.progressBar.style.width = ((aIdx - 1) * slideSize + aStep * stepSize) + '%';
+  }
+  
+  Dz.postMsg = function(aWin, aMsg) { // [arg0, [arg1...]]
+    aMsg = [aMsg];
+    for (var i = 2; i < arguments.length; i++)
+      aMsg.push(encodeURIComponent(arguments[i]));
+    aWin.postMessage(aMsg.join(" "), "*");
+  }
+  
+  function init() {
+    Dz.init();
+    window.onkeydown = Dz.onkeydown.bind(Dz);
+    window.onresize = Dz.onresize.bind(Dz);
+    window.onhashchange = Dz.onhashchange.bind(Dz);
+    window.onmessage = Dz.onmessage.bind(Dz);
+  }
+
+  window.onload = init;
+</script>
+
+
+<script> // Helpers
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function (oThis) {
+
+      // closest thing possible to the ECMAScript 5 internal IsCallable
+      // function 
+      if (typeof this !== "function")
+      throw new TypeError(
+        "Function.prototype.bind - what is trying to be fBound is not callable"
+      );
+
+      var aArgs = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP = function () {},
+          fBound = function () {
+            return fToBind.apply( this instanceof fNOP ? this : oThis || window,
+                   aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
+  }
+
+  var $ = (HTMLElement.prototype.$ = function(aQuery) {
+    return this.querySelector(aQuery);
+  }).bind(document);
+
+  var $$ = (HTMLElement.prototype.$$ = function(aQuery) {
+    return this.querySelectorAll(aQuery);
+  }).bind(document);
+
+  $$.forEach = function(nodeList, fun) {
+    Array.prototype.forEach.call(nodeList, fun);
+  }
+
+</script>
+<!-- vim: set fdm=marker: }}} -->
+</body>
+</html>

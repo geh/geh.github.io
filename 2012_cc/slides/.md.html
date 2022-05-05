@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+</head>
+<body>
+<p>We want to show that <span class="math"><em>L</em> ≤ <sub><em>p</em></sub><em>S</em><em>A</em><em>T</em></span> for any <span class="math"><em>L</em> ∈ <em>N</em><em>P</em></span>.</p>
+<p>Let <span class="math"><em>L</em> ∈ <em>N</em><em>P</em></span>. By definition, there is polynomial time TM M and some polynomial <span class="math"><em>p</em>: ℕ  ↦ ℕ </span> such that for every <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>: <br /><span class="math"><em>x</em> ∈ <em>L</em> ↔ ∃ <em>u</em> ∈ {0, 1}<sup><em>p</em>(∣<em>x</em>∣)</sup>. <em>M</em>(<em>x</em>, <em>u</em>) = 1</span><br /></p>
+<p>We want a polynomial-time transformation <span class="math"><em>x</em> ↦ <em>φ</em><sub><em>x</em></sub></span> to CNF formulas such that: <br /><span class="math"><em>x</em> ∈ <em>L</em> ↔ ∃ <em>u</em> ∈ {0, 1}<sup><em>p</em>(∣<em>x</em>∣)</sup>. <em>M</em>(<em>x</em>, <em>u</em>) = 1 ↔ <em>φ</em><sub><em>x</em></sub> ∈ <em>S</em><em>A</em><em>T</em></span><br /></p>
+<p>We can replace the verifier M (with an acceptable polynomial-time slowdown) with a version that:</p>
+<ol style="list-style-type: decimal">
+<li>only has two tapes (an input tape and a work/output tape)</li>
+<li>is oblivious, ie, whose head movement does not depend on the contents of its tapes. That is, M’s computation takes the same time for all inputs of size <span class="math"><em>n</em></span>, and for every <span class="math"><em>i</em></span> the location of M’s heads at the <span class="math"><em>i</em></span>th step depends only on <span class="math"><em>i</em></span> and the length of the input.</li>
+</ol>
+<p>Let <span class="math"><em>Q</em></span> the set of M's states and <span class="math">Γ </span> its alphabet. The <em>snapshot</em> of M's execution on some input <span class="math"><em>y</em></span> at a particular step <span class="math"><em>i</em></span> is the triple <span class="math">(<em>a</em>, <em>b</em>, <em>q</em>) ∈ Γ  × Γ  × <em>Q</em></span> such that <span class="math"><em>a</em>, <em>b</em></span> are the symbols under M's heads and <span class="math"><em>q</em></span> is the state M is in at the <span class="math"><em>i</em></span>th step. The snapshot can be encoded as a binary string of length <span class="math"><em>c</em></span>, a constant depending upon |Q| and <span class="math">∣Γ ∣</span>.</p>
+<p>The <em>trace</em> of M's execucion on some input <span class="math"><em>y</em></span> is the succession of <span class="math"><em>p</em>ʹ(∣<em>x</em>∣)</span> snapshots.</p>
+<p>Now, suppose somebody were to claim the existence of some <span class="math"><em>u</em></span> satisfying <span class="math"><em>M</em>(<em>x</em>, <em>u</em>) = 1</span> and, as evidence, present you with a trace of M's execution on <span class="math"><em>x</em>, <em>u</em></span>. How can you tell that the trace present a valid computation that was actually performed by M?</p>
+<p><!-- Let $\delta : \Gamma^2 \times Q \mapsto \Gamma \times Q \times \{←,=,→\}^2$
+M's transition function. --> From M's transition function <span class="math"><em>δ</em></span>, define the functions:</p>
+<ul>
+<li><span class="math"><em>δ</em><sub><em>w</em><em>r</em><em>i</em><em>t</em><em>e</em></sub>: Γ <sup>2</sup> × <em>Q</em> ↦ Γ </span></li>
+<li><span class="math"><em>δ</em><sub><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em></sub>: Γ <sup>2</sup> × <em>Q</em> ↦ <em>Q</em></span></li>
+</ul>
+<p>Since M is oblivious, we can define the following two functions:</p>
+<ul>
+<li><span class="math"><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>: ℕ  ↦ ℕ </span>, <span class="math"><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>n</em>)</span> is the location of M's input tape head at step <span class="math"><em>n</em></span>.</li>
+<li><span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>: ℕ  ↦ ℕ </span>, <span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>(<em>n</em>)</span> is the last step before <span class="math"><em>n</em></span> when M's head was in the same cell on its work tape that at step <span class="math"><em>n</em></span>. If there is no such step, we define <span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>(<em>n</em>) = 1</span>.</li>
+</ul>
+<p>Let us use <span class="math"><em>y</em></span> as shorthand for <span class="math"><em>x</em><em>u</em></span>. We have the following constraints for a snapshot <span class="math"><em>z</em><sub><em>i</em></sub> = (<em>a</em><sub><em>i</em></sub>, <em>b</em><sub><em>i</em></sub>, <em>q</em><sub><em>i</em></sub>)</span>:</p>
+<ul>
+<li><span class="math"><em>a</em><sub><em>i</em></sub> = <em>y</em>[<em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)]</span></li>
+<li><span class="math"><em>b</em><sub><em>i</em></sub> = <em>δ</em><sub><em>w</em><em>r</em><em>i</em><em>t</em><em>e</em></sub>(<em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>)</span></li>
+<li><span class="math"><em>q</em><sub><em>i</em></sub> = <em>δ</em><sub><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em></sub>(<em>z</em><sub><em>i</em> − 1</sub>)</span></li>
+</ul>
+<p>Because M is oblivious, the values <span class="math"><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</span> and <span class="math"><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</span> do not depend on the particular input <span class="math"><em>y</em></span>. Also, these indices can be computed in polynomial time by simulating M on a trivial input, but it is not necessary to them to show that the polynomial-time translation exists.</p>
+<p>Now we turn the above thought exercise into a reduction. Recall that an input <span class="math"><em>x</em> ∈ {0, 1}<sup><em>n</em></sup></span> is in L if and only if <span class="math"><em>M</em>(<em>x</em> ∘ <em>u</em>) = 1</span> for some <span class="math"><em>u</em> ∈ {0, 1}<sup><em>p</em>(<em>n</em>)</sup></span>. The previous discussion shows this latter condition occurs if and only if there exists a string <span class="math"><em>y</em> ∈ {0, 1}<sup><em>n</em> + <em>p</em>(<em>n</em>)</sup></span> and a sequence of strings <span class="math"><em>z</em><sub>1</sub>, …, <em>z</em><sub><em>T</em>(<em>n</em>)</sub> ∈ {0, 1}<sup><em>c</em></sup></span> (where T(n) is the number of steps M takes on inputs of length n + p(n)) satisfying the following four conditions:</p>
+<ol style="list-style-type: decimal">
+<li>The first <span class="math"><em>n</em></span> bits of <span class="math"><em>y</em></span> are equal to <span class="math"><em>x</em></span></li>
+<li>The string <span class="math"><em>z</em><sub>1</sub></span> encodes the initial snapshot of M, <span class="math">( ⊳ ,  ⊳ , <em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub>)</span>.</li>
+<li>The last string <span class="math"><em>z</em><sub><em>T</em>(<em>n</em>)</sub></span> encodes a snapshot in which the machine halts and outputs 1, that is, we have <span class="math"><em>b</em><sub><em>T</em>(<em>n</em>)</sub> = 1</span> and <span class="math"><em>q</em><sub><em>T</em>(<em>n</em>)</sub> = <em>q</em><sub><em>h</em><em>a</em><em>l</em><em>t</em></sub></span>.</li>
+<li>For every <span class="math"><em>i</em> ∈ {2, …, <em>T</em>(<em>n</em>)}</span>:
+<ul>
+<li><span class="math"><em>a</em><sub><em>i</em></sub> = <em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub></span></li>
+<li><span class="math"><em>b</em><sub><em>i</em></sub> = <em>δ</em><sub><em>w</em><em>r</em><em>i</em><em>t</em><em>e</em></sub>(<em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>)</span></li>
+<li><span class="math"><em>q</em><sub><em>i</em></sub> = <em>δ</em><sub><em>s</em><em>t</em><em>a</em><em>t</em><em>e</em></sub>(<em>z</em><sub><em>i</em> − 1</sub>)</span></li>
+</ul></li>
+</ol>
+<p>4. can be rephrased as: there is a function <span class="math"><em>f</em></span> such that <span class="math"><em>z</em><sub><em>i</em></sub> = <em>f</em>(<em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em> − 1</sub>, <em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub>)</span>. And further as: there is a binary function <span class="math"><em>f</em>ʹ</span> such that <span class="math"><em>f</em>ʹ(<em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em> − 1</sub>, <em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em></sub>) = 1</span> iff <span class="math"><em>z</em><sub><em>i</em></sub> = <em>f</em>(<em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em> − 1</sub>, <em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub>)</span>. Hence the last condition can be stated as:</p>
+<ol start="4" style="list-style-type: decimal">
+<li>For every <span class="math"><em>i</em> ∈ {2, …, <em>T</em>(<em>n</em>)}</span>: <br /><span class="math"><em>f</em>ʹ(<em>z</em><sub><em>p</em><em>r</em><em>e</em><em>v</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em> − 1</sub>, <em>y</em><sub><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em>(<em>i</em>)</sub>, <em>z</em><sub><em>i</em></sub>) = 1</span></li>
+</ol>
+<p>Now we define a propositional formula <span class="math"><em>φ</em><sub><em>x</em></sub></span> that takes variables <span class="math"><em>Y</em><sub><em>i</em></sub></span> for i from 1 to n+p(n), and <span class="math"><em>Z</em><sub><em>i</em></sub></span> for i from 1 to <span class="math"><em>c</em><em>T</em>(<em>n</em>)</span>. Note that a snapshot <span class="math"><em>z</em><sub><em>i</em></sub></span> is encoded as <span class="math"><em>c</em></span> propositional symbols <span class="math"><em>Z</em><sub><em>j</em></sub></span>. <span class="math"><em>φ</em><sub><em>x</em></sub></span> will verify that the variables <span class="math"><em>Y</em><sub><em>i</em></sub></span> and <span class="math"><em>Z</em><sub><em>i</em></sub></span> verify the four conditions above.</p>
+<p>Condition 1 can be expressed as a CNF formula of size <span class="math">2<em>n</em></span>: <br /><span class="math">(<em>y</em><sub>1</sub> ∨ ¬ <em>x</em><sub>1</sub>) ∧ (¬ <em>y</em><sub>1</sub> ∨ <em>x</em><sub>1</sub>) ∧ … ∧ (<em>y</em><sub><em>n</em></sub> ∨ ¬ <em>x</em><sub><em>n</em></sub>) ∧ (¬ <em>y</em><sub><em>n</em></sub> ∨ <em>x</em><sub><em>n</em></sub>)</span><br /></p>
+<p>Similarly, Condition 2 and 3 can respectively be expressed as a CNF formula of size <span class="math">2<em>c</em></span> and of size <span class="math"> ≤ 2<em>c</em></span>.</p>
+<p>Each <span class="math">(<em>T</em>(<em>n</em>) − 1)</span> condition of Condition 4 is a formula depending on at most <span class="math">3<em>c</em> + 1</span> variables (since <span class="math"><em>f</em>ʹ: {0, 1}<sup>3<em>c</em> + 1</sup> ↦ {0, 1}</span>). One condition can be expressed as a CNF formula of size at most <span class="math">(3<em>c</em> + 1)2<sup>3<em>c</em> + 1</sup></span>.</p>
+<p>The AND of these formulas is a CNF formula of size <span class="math"><em>d</em>(<em>n</em> + <em>T</em>(<em>n</em>))</span> where <span class="math"><em>d</em></span> is some constant depending only on M. Moreover, this CNF formula can be computed in time polynomial in the running time of M (remember we have to compute the indices <span class="math"><em>p</em><em>r</em><em>e</em><em>v</em></span> and <span class="math"><em>i</em><em>n</em><em>p</em><em>o</em><em>s</em></span> with a dummy input).</p>
+<p>Thus <span class="math"><em>x</em> ∈ <em>L</em> ↔ <em>φ</em><sub><em>x</em></sub> ∈ <em>S</em><em>A</em><em>T</em></span> with <span class="math"><em>φ</em><sub><em>x</em></sub></span> a CNF formula of computable in time polynomial in function of <span class="math">∣<em>x</em>∣</span>.</p>
+</body>
+</html>

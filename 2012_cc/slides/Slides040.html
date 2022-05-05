@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Complejidad Computacional Semana 4: Complejidad espacial</title>
+  <link href="data:text/css,div%2Ethm%20%7B%0A%20%20%20%20max%2Dwidth%3A%2027em%3B%0A%20%20%20%20margin%2Dleft%3A%202em%3B%20%0A%20%20%20%20padding%3A%20%2E5em%3B%0A%20%20%20%20border%3A%20thin%20solid%3B%0A%20%20%20%20border%2Dbottom%3A%20%2E15em%20solid%3B%0A%20%20%20%20border%2Dradius%3A%201em%3B%0A%20%20%20%20box%2Dshadow%3A%200px%205px%2010px%201px%20hsl%280%2C%200%25%2C%2060%25%29%3B%0A%7D%0A%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">Complejidad Computacional Semana 4: Complejidad espacial</h1>
+</div>
+<h1 id="contenido">Contenido</h1>
+<ul>
+<li>cálculos acotados por espacio</li>
+<li>clases PSPACE, NPSPACE</li>
+<li>relación con P, NP, EXPTIME</li>
+<li>problemas completos para clases espaciales</li>
+<li>clases espaciales sublineales (L, NL)</li>
+</ul>
+<h1 id="space"><strong>SPACE</strong></h1>
+<div class="thm">
+<p>Sea <span class="math"><em>s</em>: ℕ  ↦ <em>N</em></span> y <span class="math"><em>L</em> ⊆ {0, 1}<sup> * </sup></span>.</p>
+<p>Decimos que <span class="math"><em>L</em> ∈ </span><strong>SPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span> si existe una MT M y una constante <span class="math"><em>c</em></span> tal que M decide <span class="math"><em>L</em></span> y además, para todo input de longitud <span class="math"><em>n</em></span>, <span class="math"><em>M</em></span> visita cómo máximo <span class="math"><em>c</em><em>s</em>(<em>n</em>)</span> casillas en sus cintas (excluyendo la cinta de input) durante la computación.</p>
+</div>
+
+<p>Observación: como <span class="math"><em>M</em></span> decide <span class="math"><em>L</em></span>, <span class="math"><em>M</em></span> se detiene después de un número finito de pasos.</p>
+<h1 id="nspace"><strong>NSPACE</strong></h1>
+<div class="thm">
+<p>Sea <span class="math"><em>s</em>: ℕ  ↦ <em>N</em></span> y <span class="math"><em>L</em> ⊆ {0, 1}<sup> * </sup></span>.</p>
+<p>Decimos que <span class="math"><em>L</em> ∈ </span><strong>NSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span> si existe una MTND M cuyas ejecuciones nondeterminísticas cumplen con el mismo límite de espacio.</p>
+</div>
+
+<p>Observación: los caminos que no llegan a <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span> pueden ser infinitos.</p>
+<h1 id="precaución">Precaución</h1>
+<p>Trabajamos con cotas espaciales <span class="math"><em>s</em>: ℕ  ↦ ℕ </span> que son <em>constructibles en espacio</em>, ie:</p>
+<ul>
+<li><span class="math"><em>s</em>(<em>n</em>) ≥ <em>l</em><em>o</em><em>g</em>(<em>n</em>)</span></li>
+<li>existe una MT que computa <span class="math"><em>s</em>(∣<em>x</em>∣)</span> en espacio <span class="math"><em>O</em>(<em>s</em>(∣<em>x</em>∣))</span> dada <span class="math"><em>x</em></span> como input.</li>
+</ul>
+<h1 id="simulación-universal">Simulación universal</h1>
+<p>Asumimos lo siguiente:</p>
+<p>Se puede hacer una simulación universal de una máquina con <span class="math"><em>k</em></span> cintas de trabajo por una máquina con una sola cinta de trabajo, con sólo un gasto de espacio más grande por una constante multiplicativa.</p>
+<p>Entonces, podemos asumir sin perdida de generalidad que hablamos de complejidad espacial con máquinas con solo 1 cinta de trabajo.</p>
+<h1 id="space-hierarchy-theorem">Space hierarchy theorem</h1>
+<div class="thm">
+<p>Si <span class="math"><em>f</em>, <em>g</em></span> son funciones constructibles en espacio tales que <span class="math"><em>f</em>(<em>n</em>) ∈ <em>o</em>(<em>g</em>(<em>n</em>))</span>, entonces</p>
+<p><strong>SPACE</strong><span class="math">(<em>f</em>(<em>n</em>))</span> <span class="math"> ⊂  ≠ </span> <strong>SPACE</strong><span class="math">(<em>g</em>(<em>n</em>))</span></p>
+</div>
+
+<p>Demo: a lo time hierarchy theorem.</p>
+<p>Stearns, Hartmanis y Lewis, <em>Hierarchies of memory limited computations</em> 1965</p>
+<p>Sipser Sección 9.1: Space hierarchy theorem</p>
+<h1 id="time-y-space"><strong>TIME</strong> y <strong>SPACE</strong></h1>
+<p>En cada paso, una MT determinística puede descubrir cómo máximo un número constante de casillas nuevas, entonces:</p>
+<div class="thm">
+<strong>TIME</strong><span class="math">(<em>s</em>(<em>n</em>)) ⊆ </span> <strong>SPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span>
+</div>
+
+<h1 id="configuraciónes">Configuraciónes</h1>
+<p>Una <em>configuración</em> de una MT M es el contenido de todas las casillas no blancas de las cintas, las posiciones de sus cabezales y su estado.</p>
+<p>Si una MT corre en espacio <span class="math"><em>O</em>(<em>s</em>(<em>n</em>))</span>, entonces una configuración ocupa un espacio <span class="math"><em>O</em>(<em>s</em>(<em>n</em>))</span>.</p>
+<h1 id="grafo-de-configuraciones">Grafo de configuraciones</h1>
+<p>Sea M una MT determinística o nondeterminística, <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>.</p>
+<p>El <em>grafo de configuraciones</em> de M, llamado <span class="math"><em>G</em><sub><em>M</em>, <em>x</em></sub></span>, es un grafo dirigido cuyos nodos corresponden a todas las configuraciones posibles de M cuando el input es <span class="math"><em>x</em></span>.</p>
+<p><span class="math"><em>G</em><sub><em>M</em>, <em>x</em></sub></span> tiene un eje de la configuración <span class="math"><em>C</em></span> a la configuración <span class="math"><em>C</em>ʹ</span> si <span class="math"><em>C</em>ʹ</span> es alcanzable a partir de <span class="math"><em>C</em></span> en un paso según la(s) función(es) de transición de M.</p>
+<p>Podemos siempre modificar M para que borre su cinta y ponga sus cabezales en posición inicial cuando acepta el input <span class="math"> → </span> hay sólo una configuración final <span class="math"><em>C</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span>.</p>
+<hr />
+<div class="thm">
+<p>Sea M una MT(ND) usando espacio <span class="math"><em>s</em>(<em>n</em>)</span>. El número de configuraciones <span class="math"><em>C</em><sub><em>M</em></sub>(<em>n</em>)</span> de <span class="math"><em>M</em></span> con input <span class="math"><em>n</em></span> es acotado por:</p>
+<p><span class="math"><em>C</em><sub><em>M</em></sub>(<em>n</em>) ≤ ∣<em>Q</em><sub><em>M</em></sub>∣ ⋅ <em>n</em> ⋅ <em>s</em>(<em>n</em>) ⋅ ∣Σ <sub><em>M</em></sub>∣<sup><em>s</em>(<em>n</em>)</sup></span></p>
+<p>con <span class="math">∣<em>Q</em><sub><em>M</em></sub>∣</span> los estados de <span class="math"><em>M</em></span>, <span class="math">∣Σ <sub><em>M</em></sub>∣</span> su alfabeto.</p>
+<p>En particular si <span class="math"><em>s</em>(<em>n</em>) ≥ <em>l</em><em>o</em><em>g</em>(<em>n</em>)</span> tenemos <span class="math"><em>C</em><sub><em>M</em></sub>(<em>n</em>) = 2<sup><em>O</em>(<em>s</em>(<em>n</em>))</sup></span>.</p>
+</div>
+
+<hr />
+<div class="thm">
+<p>Para toda <span class="math"><em>s</em>: ℕ  ↦ ℕ </span> constructible en espacio:</p>
+<strong>TIME</strong><span class="math">(<em>s</em>(<em>n</em>))</span> <span class="math"> ⊆ </span> <strong>SPACE</strong>(s(n)) <span class="math"> ⊆ </span> <strong>NSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span> <span class="math"> ⊆ </span> <strong>TIME</strong><span class="math">(2<sup><em>O</em>(<em>s</em>(<em>n</em>))</sup>)</span>
+</div>
+
+<hr />
+<p>Demo <strong>SPACE</strong>(s(n)) <span class="math"> ⊆ </span> <strong>TIME</strong><span class="math">(2<sup><em>O</em>(<em>s</em>(<em>n</em>))</sup>)</span>:</p>
+<p>Sea <span class="math"><em>L</em> ∈ </span> <strong>SPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span> y <span class="math"><em>M</em></span> una MT corriendo en espacio <span class="math"><em>O</em>(<em>s</em>(<em>n</em>))</span> decidiendo <span class="math"><em>L</em></span>. Consideramos el cálculo de <span class="math"><em>M</em>(<em>x</em>)</span> con <span class="math"><em>x</em></span> input de longitud <span class="math"><em>n</em></span>.</p>
+<p>Hay como máximo <span class="math"><em>C</em><sub><em>M</em></sub>(<em>n</em>) = 2<sup><em>O</em>(<em>s</em>(<em>n</em>))</sup></span> configuraciones de <span class="math"><em>M</em></span> con input <span class="math"><em>x</em></span>, pero si <span class="math"><em>M</em>(<em>x</em>)</span> repite una configuración entonces buclearía y nunca se detendría.</p>
+<p>Entonces <span class="math"><em>M</em></span> con input <span class="math"><em>x</em></span> se detiene en <span class="math"><em>C</em><sub><em>M</em></sub>(<em>n</em>) = 2<sup><em>O</em>(<em>s</em>(<em>n</em>))</sup></span> pasos.</p>
+<hr />
+<p>Demo <strong>NSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span> <span class="math"> ⊆ </span> <strong>TIME</strong><span class="math">(2<sup><em>O</em>(<em>s</em>(<em>n</em>))</sup>)</span> por &quot;reachability method&quot;. Sea <span class="math"><em>M</em></span> que decide <span class="math"><em>L</em> ∈ </span><strong>NPSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span>:</p>
+<ul>
+<li>Generar el grafo de configuracion <span class="math"><em>G</em><sub><em>M</em>, <em>x</em></sub></span> en tiempo <span class="math">2<sup>0(<em>s</em>(<em>n</em>))</sup></span></li>
+<li>Chequear en tiempo lineal en función del tamaño de <span class="math"><em>G</em><sub><em>M</em>, <em>x</em></sub></span> si <span class="math"><em>C</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span> es alcanzable a partir de <span class="math"><em>C</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub></span> (por ej. depth-first search)</li>
+</ul>
+<h1 id="definiciones-clases-espaciales">Definiciones clases espaciales</h1>
+<div class="thm">
+<p><strong>PSPACE</strong> = <span class="math">⋃ <sub><em>c</em> &gt; 0</sub></span> <strong>SPACE</strong><span class="math">(<em>n</em><sup><em>c</em></sup>)</span></p>
+<p><strong>NPSPACE</strong> = <span class="math">⋃ <sub><em>c</em> &gt; 0</sub></span> <strong>NSPACE</strong><span class="math">(<em>n</em><sup><em>c</em></sup>)</span></p>
+<p><strong>L</strong> = <strong>SPACE</strong><span class="math">(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span></p>
+<p><strong>NL</strong> = <strong>NSPACE</strong><span class="math">(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span></p>
+</div>
+
+<h1 id="ejemplo">Ejemplo</h1>
+<p>3SAT <span class="math"> ∈ </span> <strong>PSPACE</strong></p>
+<p>Dado input <span class="math">⌊<em>φ</em>⌋</span>, buclear enumerando todas las asignaciones de variables de <span class="math"><em>φ</em></span> y chequear el valor de <span class="math"><em>φ</em>(<em>z</em><sub><em>i</em></sub>)</span>.</p>
+<p>Espacio usado para las asignacíones: polinomial (reutilizar para cada asignación nueva).</p>
+<p>Espacio usado para el chequeo: polinomial (cuota espacial de un algoritmo determinístico en tiempo polinomial).</p>
+<h1 id="generalización-np-subseteq-pspace">Generalización: <strong>NP</strong> <span class="math"> ⊆ </span> <strong>PSPACE</strong></h1>
+<p>Sea <span class="math"><em>L</em> ∈ </span><strong>NP</strong>.</p>
+<p>Dado input <span class="math"><em>x</em></span>, buclear sobre todos los certificados posibles de <span class="math"><em>x</em></span> con respeto a <span class="math"><em>L</em></span>. Se puede reutilizar el espacio (polinomial) usado para alojar un certificado, para el certificado siguiente.</p>
+<p>El chequeo de cada certificado se hace en tiempo determinístico polinomial en función de <span class="math">∣<em>x</em>∣</span>, entonces en espacio polinomial en función de <span class="math">∣<em>x</em>∣</span>.</p>
+<h1 id="path">PATH</h1>
+<p>PATH = <span class="math">{⌊<em>G</em>, <em>s</em>, <em>t</em>⌋ ∣ <em>G</em></span> es un grafo dirigido con camino de <span class="math"><em>s</em></span> a <span class="math"><em>t</em>}</span></p>
+<div class="thm">
+PATH <span class="math"> ∈ </span> <strong>NL</strong>
+</div>
+
+<p>Sea <span class="math"><em>n</em></span> la cantidad de nodos en el grafo:</p>
+<ul>
+<li>tamaño de un puntero para referirse a un nodo: <span class="math"><em>l</em><em>o</em><em>g</em>(<em>n</em>)</span></li>
+<li>tamaño de un contador para referirse a los sucesores de un nodo que ya encontramos: <span class="math"><em>l</em><em>o</em><em>g</em>(<em>n</em>)</span></li>
+<li>tamaño de un contador para guardar la longitud del camino visitado: <span class="math"><em>l</em><em>o</em><em>g</em>(<em>n</em>)</span></li>
+<li>explorar todos los caminos de longitud <span class="math"> &lt; <em>n</em></span> posibles a partir de <span class="math"><em>s</em></span>, pasar al estado <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span> si encontramos <span class="math"><em>t</em></span></li>
+</ul>
+<h1 id="pspace-completitud"><strong>PSPACE</strong> completitud</h1>
+<div class="thm">
+<p>Un lenguaje <span class="math"><em>L</em></span> es <strong>PSPACE</strong> hard si para todo <span class="math"><em>L</em>ʹ ∈ </span> <strong>PSPACE</strong>, <span class="math"><em>L</em>ʹ ≤ <sub><em>p</em></sub><em>L</em></span>.</p>
+<p>Si además <span class="math"><em>L</em> ∈ </span> <strong>PSPACE</strong>, <span class="math"><em>L</em></span> es <strong>PSPACE</strong> completo.</p>
+</div>
+
+<p>Usamos las mismas reducciones que para <strong>NP</strong>, ie, <span class="math"><em>f</em></span> corriendo en tiempo polinomial.</p>
+<h1 id="un-lenguaje-pspace-completo">Un lenguaje <strong>PSPACE</strong> completo</h1>
+<p>SPACESAT = <span class="math">{⌊<em>M</em>, <em>w</em>, 1<sup><em>n</em></sup>⌋ ∣ </span> M MTD, acepta <span class="math"><em>w</em></span> en espacio <span class="math"><em>n</em>}</span></p>
+<div class="thm">
+SPACESAT es <strong>PSPACE</strong> completo.
+</div>
+
+<blockquote>
+<ul>
+<li>SPACESAT <span class="math"> ∈ </span> <strong>PSPACE</strong>: se puede decidir si <span class="math"><em>x</em> ∈ </span>SPACESAT con una máquina universal de Turing (que usa tanto espacio como M modulo una constante multiplicativa) que verifica que M acepta <span class="math"><em>w</em></span> sin usar más de <span class="math"><em>n</em></span> espacio</li>
+<li>Sea L <span class="math"> ∈ </span> <strong>PSPACE</strong>: existe <span class="math"><em>M</em></span> que decide L usando espacio <span class="math"><em>O</em>(<em>n</em><sup><em>d</em></sup>)</span>. Para un <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span> construimos <span class="math"><em>f</em>(<em>x</em>) = ⌊<em>M</em>, <em>x</em>, 1<sup><em>n</em><sup><em>d</em></sup></sup>⌋</span>. Entonces L <span class="math"> ≤ <sub><em>p</em></sub></span> SPACESAT.</li>
+</ul>
+</blockquote>
+<h1 id="quantified-boolean-formulas">Quantified Boolean Formulas</h1>
+<p>Una Quantified Boolean Formula es una formula proposicional con cuantificación (<span class="math">∀ </span> y <span class="math">∃ </span>) sobre sur variables booleanas.</p>
+<p>Una QBF está en forma <em>prenexa</em> si tiene todos los cuantificadores primeros:</p>
+<p><span class="math"><em>Q</em><sub>1</sub><em>x</em><sub>1</sub><em>Q</em><sub>2</sub><em>x</em><sub>2</sub>…<em>Q</em><sub><em>n</em></sub><em>x</em><sub><em>n</em></sub> <em>φ</em>(<em>x</em><sub>1</sub>, <em>x</em><sub>2</sub>, …, <em>x</em><sub><em>n</em></sub>)</span></p>
+<p>Asumimos que todas las variables están cuantificadas.</p>
+<hr />
+<p>Una QBF es verdadera o falsa (todos los <span class="math"><em>x</em><sub><em>i</em></sub></span> son cuantificados).</p>
+<p>Verdadera: <span class="math">∀ <em>x</em>∃ <em>y</em>. (<em>x</em> ∧ <em>y</em>) ∨ (¬ <em>x</em> ∧ ¬ <em>y</em>)</span></p>
+<p>Falsa: <span class="math">∀ <em>x</em>∀ <em>y</em>. (<em>x</em> ∧ <em>y</em>) ∨ (¬ <em>x</em> ∧ ¬ <em>y</em>)</span></p>
+<hr />
+<p>Se puede reescribir una QBF <span class="math"><em>φ</em></span> en una formula proposicional <span class="math"><em>φ</em>ʹ</span> equisatisfacible, pero de tamaño exponencialmente más grande:</p>
+<ul>
+<li><span class="math">∀ <em>x</em><sub><em>i</em></sub><em>φ</em></span> se reescribe en <span class="math"><em>φ</em>[<em>x</em><sub><em>i</em></sub> ← 0] ∧ <em>φ</em>[<em>x</em><sub><em>i</em></sub> ← 1]</span></li>
+<li><span class="math">∃ <em>x</em><sub><em>i</em></sub><em>φ</em></span> se reescribe en <span class="math"><em>φ</em>[<em>x</em><sub><em>i</em></sub> ← 0] ∨ <em>φ</em>[<em>x</em><sub><em>i</em></sub> ← 1]</span></li>
+</ul>
+<p>Una formula booleana es una QBF sin cuantificadores existenciales.</p>
+<h1 id="tqbf">TQBF</h1>
+<p>TQBF = <span class="math">{⌊<em>φ</em>⌋ ∣ </span> formulas booleanas cuantificadas verdaderas <span class="math">}</span></p>
+<div class="thm">
+<p>TQBF es <strong>PSPACE</strong> completo</p>
+</div>
+
+<p>Stockmeyer y Meyer, <em>Word problems requiring exponential time</em>, 1973</p>
+<h1 id="tqbf-in-pspace">TQBF <span class="math"> ∈ </span> <strong>PSPACE</strong></h1>
+<p>Describimos el algoritmo <span class="math"><em>A</em></span> para TQBF:</p>
+<p>Sea <span class="math"><em>n</em></span> el número de variables del input <span class="math"><em>ψ</em></span>, y <span class="math"><em>m</em></span> su tamaño.</p>
+<p>Escribimos <span class="math"><em>ψ</em>[<em>x</em><sub><em>i</em></sub> = <em>b</em>]</span> para <span class="math"><em>ψ</em></span> con <span class="math"><em>x</em><sub><em>i</em></sub></span> reemplazado por <span class="math"><em>b</em> ∈ {0, 1}</span>.</p>
+<p>Si <span class="math"><em>n</em> = 0</span> se puede evaluar <span class="math"><em>ψ</em></span> en tiempo (y espacio) <span class="math"><em>O</em>(<em>m</em>)</span>.</p>
+<p>Si <span class="math"><em>n</em> &gt; 0</span>:</p>
+<ul>
+<li>si <span class="math"><em>ψ</em> = ∀ <em>x</em><sub><em>i</em></sub><em>φ</em></span>: return <span class="math"><em>A</em>(<em>φ</em>[<em>x</em><sub><em>i</em></sub> = 0])</span> &amp;&amp; <span class="math"><em>A</em>(<em>φ</em>[<em>x</em><sub><em>i</em></sub> = 1])</span></li>
+<li>si <span class="math"><em>ψ</em> = ∃ <em>x</em><sub><em>i</em></sub><em>φ</em></span>: return <span class="math"><em>A</em>(<em>φ</em>[<em>x</em><sub><em>i</em></sub> = 0])</span> || <span class="math"><em>A</em>(<em>φ</em>[<em>x</em><sub><em>i</em></sub> = 1])</span></li>
+</ul>
+<hr />
+<p>Sea <span class="math"><em>s</em><sub><em>n</em>, <em>m</em></sub></span> el espacio usado para una llamada a <span class="math"><em>A</em></span>.</p>
+<p>Una vez terminada una llamada recursiva a <span class="math"><em>A</em></span>, se puede reutilizar el espacio usado.</p>
+<p><span class="math"><em>A</em></span> usa <span class="math"><em>O</em>(<em>m</em>)</span> espacio para escribir <span class="math"><em>ψ</em>[<em>x</em><sub><em>i</em></sub> = <em>b</em>]</span>.</p>
+<p><span class="math"><em>s</em><sub><em>n</em>, <em>m</em></sub> = <em>s</em><sub><em>n</em> − 1, <em>m</em></sub> + <em>O</em>(<em>m</em>) = <em>O</em>(<em>n</em> ⋅ <em>m</em>)</span></p>
+<p><span class="math"><em>A</em></span> necesita un espacio polinomial y decide TQBF.</p>
+<h1 id="tqbf-es-pspace-hard">TQBF es <strong>PSPACE</strong> hard</h1>
+<blockquote>
+<ul>
+<li>Mostramos que <span class="math"><em>L</em> ≤ <sub><em>p</em></sub><em>T</em><em>Q</em><em>B</em><em>F</em></span> para cualquier <span class="math"><em>L</em> ∈ </span> <strong>PSPACE</strong>.</li>
+<li>Sea <span class="math"><em>M</em></span> una MT decidiendo un lenguaje <span class="math"><em>L</em></span> y corriendo en espacio <span class="math"><em>O</em>(<em>s</em>(<em>n</em>))</span>, y sea <span class="math"><em>x</em> ∈ {0, 1}<sup><em>n</em></sup></span>. La idea es construir una QBF de tamaño <span class="math"><em>O</em>(<em>s</em><sup>2</sup>(<em>n</em>))</span> que es verdadera ssi <span class="math"><em>M</em></span> acepta <span class="math"><em>x</em></span>.</li>
+<li>Una configuración de <span class="math"><em>M</em>(<em>x</em>)</span> es de tamaño <span class="math"><em>m</em> = <em>O</em>(<em>s</em>(<em>n</em>))</span>.</li>
+<li>Lemma: se puede construir una formula booleana <span class="math"><em>φ</em><sub><em>M</em>, <em>x</em></sub></span> de tamaño <span class="math"><em>O</em>(<em>m</em>)</span> tal que para <span class="math"><em>C</em>, <em>C</em>ʹ ∈ {0, 1}<sup><em>m</em></sup></span>, <span class="math"><em>φ</em><sub><em>M</em>, <em>x</em></sub>(<em>C</em>, <em>C</em>ʹ) = 1</span> ssi <span class="math"><em>C</em></span> y <span class="math"><em>C</em>ʹ</span> codifican configuraciones sucesivas en el grafo de configuraciones de <span class="math"><em>M</em>(<em>x</em>)</span></li>
+<li>Construimos <span class="math"><em>ψ</em></span> una QBF de tamaño polinomial tal que <span class="math"><em>ψ</em></span> es verdadera ssi existe un camino desde <span class="math"><em>C</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub></span> hasta <span class="math"><em>C</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span></li>
+</ul>
+</blockquote>
+<hr />
+<blockquote>
+<ul>
+<li>Construimos una secuencia de QBF <span class="math"><em>ψ</em><sub><em>i</em></sub>(<em>C</em>, <em>C</em>ʹ)</span> verdadera ssi existe camino de longitud <span class="math">2<sup><em>i</em></sup></span> de <span class="math"><em>C</em></span> a <span class="math"><em>C</em>ʹ</span></li>
+<li>Obs 1: <span class="math"><em>ψ</em><sub>0</sub> = <em>φ</em><sub><em>M</em>, <em>x</em></sub></span> , <span class="math"><em>ψ</em> = <em>ψ</em><sub><em>m</em></sub></span></li>
+<li>Obs 2: hay un camino de tamaño máximo <span class="math">2<sup><em>i</em></sup></span> de <span class="math"><em>C</em></span> a <span class="math"><em>C</em>ʹ</span> ssi hay un camino de tamaño máximo <span class="math">2<sup><em>i</em> − 1</sup></span> de <span class="math"><em>C</em></span> a <span class="math"><em>C</em>ʺ</span> y un camino de tamaño máximo <span class="math">2<sup><em>i</em> − 1</sup></span> de <span class="math"><em>C</em>ʺ</span> a <span class="math"><em>C</em>ʹ</span>.</li>
+<li>Tenemos ganas de definir: <br /><span class="math"><em>ψ</em><sub><em>i</em></sub>(<em>C</em>, <em>C</em>ʹ) = ∃ <em>C</em>ʺ <em>ψ</em>(<em>C</em>, <em>C</em>ʺ) ∧ <em>ψ</em>(<em>C</em>ʺ, <em>C</em>ʹ)</span><br /></li>
+<li>Sería correcto pero <span class="math"><em>ψ</em><sub><em>m</em></sub></span> de tamaño <span class="math"><em>O</em>(2<sup><em>m</em></sup>)</span>.</li>
+<li><span class="math"><em>ψ</em><sub><em>i</em></sub>(<em>C</em>, <em>C</em>ʹ) = </span><br /> <span class="math">∃ <em>C</em>ʺ ∀ <em>D</em> ∀ <em>E</em> ((<em>D</em> = <em>C</em> ∧ <em>E</em> = <em>C</em>ʺ) ∨ (<em>D</em> = <em>C</em>ʺ ∧ <em>E</em> = <em>C</em>ʹ))</span><br /> <span class="math"> → <em>ψ</em><sub><em>i</em> − 1</sub>(<em>D</em>, <em>E</em>)</span></li>
+<li><span class="math">∣<em>ψ</em><sub><em>i</em></sub>∣ ≤ ∣<em>ψ</em><sub><em>i</em> − 1</sub>∣ + <em>O</em>(<em>m</em>)</span></li>
+<li><span class="math">∣<em>ψ</em><sub><em>m</em></sub>∣ ≤ <em>O</em>(<em>m</em><sup>2</sup>)</span></li>
+<li>¡Convertimos <span class="math"><em>ψ</em><sub><em>m</em></sub></span> en forma prenexa en tiempo polinomial!</li>
+</ul>
+</blockquote>
+<h1 id="observación">Observación</h1>
+<ul>
+<li>la demostración anda para <span class="math"><em>L</em> ∈ </span><strong>NPSPACE</strong></li>
+<li>entonces <strong>PSPACE</strong>=<strong>NPSPACE</strong></li>
+</ul>
+<p>Teorema de Savitch (1970):</p>
+<div class="thm">
+<p>Para <span class="math"><em>s</em>: ℕ  ↦ ℕ </span> constructible en espacio:</p>
+<p><strong>NSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span> <span class="math"> ⊆ </span> <strong>SPACE</strong><span class="math">(<em>s</em>(<em>n</em>)<sup>2</sup>)</span></p>
+</div>
+
+<h1 id="referencias">Referencias</h1>
+<ul>
+<li>Arora y Barak Sección 4.2.2</li>
+<li>Stearns, Hartmanis y Lewis. <em>Hierarchies of memory limited computations</em>. In FOCS, pages 179–190. IEEE, 1965.</li>
+<li>Sipser Sección 9.1: Space hierarchy theorem</li>
+<li>Stockmeyer y Meyer. <em>Word problems requiring exponential time</em>. In STOC, pages 1–9. ACM, 1973.</li>
+<li>Savitch. <em>Relationships between nondeterministic and deterministic tape complexities</em>. J. Comput. Syst. Sci., 4:177–192, 1970.</li>
+</ul>
+</body>
+</html>

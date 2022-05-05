@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Complejidad Computacional Take Home 1</title>
+  <link href="data:text/css,div%2Ethm%20%7B%0A%20%20%20%20max%2Dwidth%3A%2027em%3B%0A%20%20%20%20margin%2Dleft%3A%202em%3B%20%0A%20%20%20%20padding%3A%20%2E5em%3B%0A%20%20%20%20border%3A%20thin%20solid%3B%0A%20%20%20%20border%2Dbottom%3A%20%2E15em%20solid%3B%0A%20%20%20%20border%2Dradius%3A%201em%3B%0A%20%20%20%20box%2Dshadow%3A%200px%205px%2010px%201px%20hsl%280%2C%200%25%2C%2060%25%29%3B%0A%7D%0A%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">Complejidad Computacional Take Home 1</h1>
+</div>
+<p>A entregar durante la clase del jueves 11 de octubre 2012.</p>
+<ol class="incremental" style="list-style-type: decimal">
+<li><p>¿Porqué podemos decir que no cambia nada tener máquinas de Turing con <span class="math">1</span> o <span class="math"><em>n</em></span> registros internos con respeto al poder computacional?</p></li>
+<li>Sea <span class="math"><em>L</em><sub>1</sub>, <em>L</em><sub>2</sub> ⊆ {0, 1}</span>. Llamamos <span class="math"><em>L</em><sub>1</sub> ∘ <em>L</em><sub>2</sub></span> el lenguaje formado por la concatenación de strings de <span class="math"><em>L</em><sub>1</sub></span> y <span class="math"><em>L</em><sub>2</sub></span>: <br /><span class="math"><em>L</em><sub>1</sub> ∘ <em>L</em><sub>2</sub> = {<em>x</em> ∘ <em>y</em> ∣ <em>x</em> ∈ <em>L</em><sub>1</sub>, <em>y</em> ∈ <em>L</em><sub>2</sub>}</span><br /> Demostrar o infirmar las siguientes proposiciones:
+<ol class="incremental" style="list-style-type: decimal">
+<li>Si <span class="math"><em>L</em><sub>1</sub></span> y <span class="math"><em>L</em><sub>2</sub></span> están en <strong>NP</strong> entonces <span class="math"><em>L</em><sub>1</sub> ∘ <em>L</em><sub>2</sub></span> también</li>
+<li>Si <span class="math"><em>L</em><sub>1</sub></span> y <span class="math"><em>L</em><sub>2</sub></span> están en <strong>PSPACE</strong> entonces <span class="math"><em>L</em><sub>1</sub> ∘ <em>L</em><sub>2</sub></span> también</li>
+<li>Si <span class="math"><em>L</em><sub>1</sub> ∘ <em>L</em><sub>2</sub></span> está en <strong>P</strong>, entonces <span class="math"><em>L</em><sub>1</sub></span> y <span class="math"><em>L</em><sub>2</sub></span> también</li>
+</ol></li>
+<li>El problema de la autopista con peaje (turnpike problem) es el siguiente: &quot;dadas n(n − 1) / 2 distancias entre pares de puntos, ¿les corresponde alguna configuración de n puntos en una línea?&quot;.
+<ul class="incremental">
+<li>Definir un lenguaje que corresponde a ese problema.</li>
+<li>Mostrar que ese lenguaje está en <strong>NP</strong>.</li>
+</ul></li>
+<li><p>(Sipser 7.21) <span class="math"><em>D</em><em>O</em><em>U</em><em>B</em><em>L</em><em>E</em><em>S</em><em>A</em><em>T</em> = {⌊<em>φ</em>⌋ ∣ <em>φ</em></span> tiene al menos dos asignaciones satisfactoras <span class="math">}</span> Mostrar que DOUBLESAT es <strong>NP</strong> completo.</p></li>
+<li><p>En la demostración del teorema de Cook-Levin del libro de Arora y Barak, se construye una fórmula CNF cuyas variables codifican una serie de instantaneos y que es verdadera si, y solamente si, esos instantaneos representan una computación valida. Una parte de esa formula chequea cada instantaneo <span class="math"><em>z</em></span> con respeto al último instantaneo cuando el cabezal de escritura de la máquina estaba en la misma posición que estaba para <span class="math"><em>z</em></span>. ¿Qué debe ser chequeado y porqué? ¿Cómo se determina con respeto a cual instantaneo hay que hacer el chequeo?</p></li>
+</ol>
+</body>
+</html>

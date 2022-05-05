@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+  <title>Complejidad Computacional Semana 1: máquinas de Turing y P</title>
+<style>
+  html { background-color: black; }
+  body { background-color: white; border-radius: 12px}
+  /* A section is a slide. It's size is 800x600, and this will never change */
+  section {
+      font-family: Arial, serif;
+      font-size: 20pt;
+    }
+  address, blockquote, dl, fieldset, form, h1, h2, h3, h4, h5, h6, hr, ol, p, pre, table, ul, dl { padding: 10px 20px 10px 20px; }
+  h1, h2, h3 {
+    text-align: center;
+    margin: 10pt 10pt 20pt 10pt;
+  }
+  ul, ol {
+    margin: 10px 10px 10px 50px;
+  }
+  section.titleslide h1 { margin-top: 200px; }
+  h1.title { margin-top: 150px; }
+  h1 { font-size: 180%; }
+  h2 { font-size: 120%; }
+  h3 { font-size: 100%; }
+  q { quotes: "“" "”" "‘" "’"; }
+  blockquote { font-style: italic }
+  /* Figures are displayed full-page, with the caption on
+     top of the image/video */
+  figure {
+    background-color: black;
+  }
+  figcaption {
+    margin: 70px;
+  }
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 40px;
+    text-align: right;
+    background-color: #F3F4F8;
+    border-top: 1px solid #CCC;
+  }
+
+  /* Transition effect */
+  /* Feel free to change the transition effect for original
+     animations. See here:
+     https://developer.mozilla.org/en/CSS/CSS_transitions
+     How to use CSS3 Transitions: */
+  section {
+      -moz-transition: left 400ms linear 0s;
+      -webkit-transition: left 400ms linear 0s;
+      -ms-transition: left 400ms linear 0s;
+      transition: left 400ms linear 0s;
+  }
+
+  /* Before */
+  section { left: -150%; }
+  /* Now */
+  section[aria-selected] { left: 0; }
+  /* After */
+  section[aria-selected] ~ section { left: +150%; }
+
+  /* Incremental elements */
+
+  /* By default, visible */
+  .incremental > * { opacity: 1; }
+
+  /* The current item */
+  .incremental > *[aria-selected] { color: red; opacity: 1; }
+
+  /* The items to-be-selected */
+  .incremental > *[aria-selected] ~ * { opacity: 0.2; }
+</style>
+</head>
+<body>
+<section>
+  <h1 class="title">Complejidad Computacional Semana 1: máquinas de Turing y <strong>P</strong></h1>
+  <h3 class="date"></h3>
+</section>
+<section class="slide level1" id="organización-de-la-materia">
+<h1>Organización de la materia</h1>
+<ul>
+<li>horarios: martes 10-12hs, jueves 10-13hs, aula 24</li>
+<li>evaluación: 2 take-homes</li>
+<li>sitio web <a href="http://tinyurl.com/ccfamaf12"><code class="url">http://tinyurl.com/ccfamaf12</code></a></li>
+</ul>
+</section>
+<section class="slide level1" id="bibliografía">
+<h1>Bibliografía</h1>
+<ul>
+<li>'Computational Complexity: A Modern Approach', Arora y Barak, 2007 (<a href="http://www.cs.princeton.edu/theory/index.php/Compbook/Draft">Draft</a>)</li>
+<li>'Introduction To The Theory Of Computation', Sipser, 1996.</li>
+<li>'The annotated Turing', Petzold, 2008.</li>
+</ul>
+</section>
+<section class="slide level1" id="preámbulo">
+<h1>Preámbulo</h1>
+<p>Se recomienda conocer un poco acerca de máquinas de Turing, y el resultado de la existencia de una máquina universal de Turing.</p>
+<p>Referirse a <a href="http://www.cs.princeton.edu/theory/complexity/modelchap.pdf">CC:AMA, capítulo 1</a> en particular secciones 1.2 a 1.4.</p>
+</section>
+<section class="slide level1" id="computabilidad">
+<h1>Computabilidad</h1>
+<ul>
+<li>¿cuales son las cosas que se pueden <em>calcular</em>?</li>
+<li>&quot;f es computable si existe un procedimiento efectivo p tal que p(x) = f(x) para todo x&quot;</li>
+<li>&quot;<span class="math"><em>x</em> ∈ ℝ </span> es computable si existe un procedimiento efectivo p tal que p genera las decimales de <span class="math"><em>x</em></span>&quot;</li>
+<li>&quot;procedimiento efectivo&quot;: algo que se puede hacer en el mundo real</li>
+</ul>
+</section>
+<section class="slide level1" id="la-propuesta-de-turing">
+<h1>1936: la propuesta de Turing</h1>
+<p>Turing propuso de manera convincente un modelo de computación que llamó &quot;computing machines&quot;.</p>
+<p>Su forma de proponerlo era:</p>
+<ul>
+<li>describir el comportamiento y los límites de un calculador humano</li>
+<li>introducir la &quot;computing machine&quot; cómo objeto matemático</li>
+<li>demostrar que los dos tienen el mismo poder computacional</li>
+</ul>
+</section>
+<section class="slide level1" id="resultados-importantes">
+<h1>Resultados importantes</h1>
+<ul>
+<li>las máquinas de Turing tienen una descripción finita y son enumerables</li>
+<li>la gran mayoría de los números reales es incomputable</li>
+<li>existe una máquina de Turing que puede leer la descripción de cualquier máquina de Turing, y imitar su comportamiento (máquina universal)</li>
+</ul>
+</section>
+<section class="slide level1" id="años-1960-complejidad-computacional">
+<h1>Años 1960: complejidad computacional</h1>
+<ul>
+<li>¿cuales son las cosas que se pueden calcular <em>de manera eficaz</em>?</li>
+<li>de manera eficaz = con recursos limitados (tiempo, memoria,...)</li>
+<li>¿Cual es la dificultad <em>intrinseca</em> de un problema?</li>
+<li>¿Hay problemas computacionalmente más difíciles que otros?</li>
+</ul>
+</section>
+<section class="slide level1" id="formas-inadecuadas-de-encarar-el-problema">
+<h1>Formas inadecuadas de encarar el problema</h1>
+<p>Ya sabemos medir las cosas siguientes en función de la longitud de la entrada:</p>
+<ul>
+<li>hacer benchmarks de programas</li>
+<li>calcular el tiempo de corrida de un algoritmo que calcula <span class="math"><em>f</em></span> en función de la longitud de la entrada
+<ul>
+<li>¿cómo saber si no hay mejor algoritmo para calcular <span class="math"><em>f</em></span>?</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="como-los-vamos-a-resolver">
+<h1>Como los vamos a resolver</h1>
+<ul>
+<li>sí nos importa la relación entre el <em>tamaño de la entrada</em> (para cualquiera entrada posible) y los recursos usados para llevar a cabo un cálculo</li>
+<li>queremos que no importe el lenguaje de programación usado para computar</li>
+<li>sin embargo queremos medir o clasificar la complejidad de manera informativa</li>
+<li>necesitamos un modelo que:
+<ul>
+<li>represente los cálculos que se hacen el el mundo real</li>
+<li>permite medir el costo de un cálculo
+<ul>
+<li>Máquinas de Turing</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="lenguages-y-funciones">
+<h1>Lenguages y funciones</h1>
+<ul>
+<li>Palabra (o string): <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span></li>
+<li>Lenguage: <span class="math"><em>L</em> ⊆ {0, 1} * </span> (conjunto de palabras)</li>
+<li>Función booleana: <span class="math"><em>f</em>: {0, 1}<sup> * </sup> ↦ {0, 1}</span></li>
+<li><span class="math"><em>f</em></span> es la <em>función característica</em> de <span class="math"><em>L</em><sub><em>f</em></sub></span> si: <br /><span class="math"><em>L</em><sub><em>f</em></sub> = {<em>x</em>  ∣  <em>f</em>(<em>x</em>) = 1, <em>x</em> ∈ {0, 1}<sup> * </sup>}</span></li>
+<li>&quot;Computar <span class="math"><em>f</em></span>&quot; = dado un <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>, computar <span class="math"><em>f</em>(<em>x</em>)</span></li>
+<li>&quot;Computar <span class="math"><em>f</em></span>&quot; = &quot;Decidir <span class="math"><em>L</em><sub><em>f</em></sub></span>&quot;</li>
+<li><span class="math"><em>f</em></span> es un <em>problema de decisión</em></li>
+</ul>
+</section>
+<section class="slide level1" id="unos-lenguajes-sobre-01">
+<h1>Unos lenguajes sobre <span class="math">{0, 1}<sup> * </sup></span></h1>
+<ul>
+<li>PAL = <span class="math">{<em>x</em> ∣ <em>x</em></span> es capicúa <span class="math">}</span></li>
+<li><span class="math">⌊<em>x</em>⌋</span> = representación de <span class="math"><em>x</em></span> como string binaria</li>
+<li>EVEN = <span class="math">{⌊<em>x</em>⌋ ∣ <em>x</em></span> es par <span class="math">}</span></li>
+<li>SMALLER = <span class="math">{⌊(<em>x</em>, <em>y</em>)⌋ ∣ <em>x</em> ≤ <em>y</em>}</span></li>
+<li>PRIMES = <span class="math">{⌊<em>x</em>⌋ ∣ <em>x</em></span> es primo <span class="math">}</span></li>
+<li>HAM = <span class="math">{⌊<em>G</em>⌋ ∣ <em>G</em></span> es hamiltoniano <span class="math">}</span> <!--
+* SUBSETSUM = $\{ (X,x) \mid \exists S\subseteq X, \Sigma S = x \}$
+  (con X conjunto de enteros, x entero)
+* INDSET =
+  <br />$\{(G,k)\mid\exists S\subseteq V(G),|S|\geq k,\forall uv\in S,uv\notin E(G)\}$
+  (con $G$ un grafo, $V(G)$ los puntos de $G$, $E(G)$ los ejes de G)
+--></li>
+</ul>
+</section>
+<section class="slide level1" id="los-problemas-de-decisión-no-son...">
+<h1>Los problemas de decisión <em>no</em> son...</h1>
+<p>...problemas de función (encontrar el <span class="math"><em>x</em></span> tal que...).</p>
+<p>Sin embargo, los problemas de función suelen tener su equivalente en problemas de decisión:</p>
+<ul>
+<li>travelling salesman
+<ul>
+<li>función: dada una lista de ciudades con sus distancias, encontrar el recorrido exaustivo más corto</li>
+<li>decisión: dada una lista de ciudades con sus distancias y una longitud <span class="math"><em>l</em></span>, existe un recorrido de longitud inferior a <span class="math"><em>l</em></span>?</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="nuestras-máquinas-de-turing">
+<h1>Nuestras Máquinas de Turing</h1>
+<p>Tienen:</p>
+<ul>
+<li><span class="math"><em>k</em></span> cintas (1 para el input, lo demas para cálculos intermedios) infinitas, siendo una successión de celdas</li>
+<li>un cabezal por cinta, capaz de leer, escribir y moverse</li>
+<li>un conjunto finito de estados internos</li>
+<li>una funcion de transición que describe su comportamiento</li>
+</ul>
+</section>
+<section class="slide level1" id="section">
+<h1></h1>
+<img src="data:image/png;base64,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G/z9/REZGYmxY8di9erVqK+vV7wOnGE9zRgZGYn27dsjISEBZrO5xXKXLl1CRkYG7rrrLrRv3x4hISEYOXIk1q1b55J6qo3pqf5sHjs/Px9TpkxBTEwM2rVrh3vuuQdff/31LWW0jgM1/empsae0P9X0ZWugdluxWCx44403MGLEiIZ+iY2NxbRp07Bz585b5tcybpWO55amu2u8q3HhwgW88MILGDhwIEJDQ+Hn54dOnTphwIABWLBgAfbv3++w/I8//ohJkyYhOjoaAQEBiI6OxqRJk7Bnzx7d6+qpbZN0Jgrdc889AkD27t2rtKj852jTLS8l5TZs2CABAQE2l3PHHXfIpUuXHMay91JS38avBx98UK5fv65qXdjz+eefi6+vr814ixYtslvn3NxciYqKslvXjIwMXeupJaan+rPxcvbt2ychISFOldcyDtT2pyfGnpr+VNOXelKyH7FSO26PHz8uPXv2VDT2tIxbJeO5penuGu9qHDhwQDp37qx6u165cqWYTCabZXx8fOSjjz5yGF/pGNJr/Ti7zyLXULzWIyIiBICUlpZqD66g463zhoSESGpqquTm5sr169flwoUL8umnn0pYWJgAkL/85S+6xLPq06ePLF68WLKysqS0tFRqamrk/Pnz8uWXX0psbKwAkCVLlihapiOnT5+WoKAgASBz5syRwsJCqa6ulhMnTsjMmTObbOSNlZeXS1xcnACQtLQ0yc3NFYvFIr/++qu8++670qFDBwEg27Zt062uWmJ6qj8blxs4cKAMHjxYNm/eLOXl5VJVVSVZWVmSkpJySxm140Btf2qJqZba/tSjL7VQOg7UttNisUivXr0EgNx9992yadMmuXz5slRVVcmJEydk3bp18rvf/U7X+uqZALljvKs1YsQIASDJycmyY8cOKS0tldraWikrK5N9+/bJ66+/Lv3797dZ9vjx4w2J95w5c6SgoECqq6uloKBAZs+eLQAkMDBQCgsLW1xHztJr/TAB8izFa9060GpqarQHV7EjGDdunM3pH3/8sQCQhIQEXeI5Y/PmzQ07Q71kZGQIAHnsscdsTn/kkUdstmPZsmUCQGbNmmWznNlsFgAyefJk3eqqJaYn+9NaLj4+Xq5du6a4fHOOxoHa/tQSUy21/alHX2qhdP2pbeebb74pAKRfv35SWVnplvrqmQC5Y7yr1a5dOwEgFy9eVFx2wYIFDrexiRMnCgBZuHCh3WXo+d2gZP0wAfIsr0uAdu/ebXP6uXPnBIB06NBBl3jOsFgsDX/56mXAgAECQLZv325z+r///W+b7bD+BXX06FGb5S5cuCAApEuXLrrVVUtMT/antVxmZqbisrY4Ggdq+1NLTLXU9qcefamF0vWntp333XefAJB169a5rb56JkDuGO9q9ejRQwDI/Pnz5ZdfflFUNikpyeE2tnXrVgEgAwYMsLsMPb8blKwfJkCepXith4eHC+C5U2BlZWU2p9fX1zu9I1DCYrHIP//5T7n//vslIiJC/P39mwxaAOLr66tomY5Yz9Hba2dpaanNdljPn/v6+oqvr6/4+PiIj4+PmEymJqdZ/P39daurlpie6s/G5c6dO+d0GbXjQG1/aompltr+1KMvtVC6bLXtvO222wSAlJSUuK2+eiZA7hjvai1fvrzJsqOiouSBBx6QZ555Rt5//32HSVFL29jly5cFgHTq1MnuMpSOIXevH3INxXukQYMGCXDzgjrNwT20I3DW2bNnG875t/TSi/Vi2bq6OpvTa2trbca0d5GtO+qqJqYn+rN5OXvruDkt40Btf3py7CmNqUdfaqF02Wrb6efnJwCktrbWbfXVcztxx3jX4osvvpAhQ4aIj4+PzVipqak2Tz06u405SkiUtMdT64f0p/hn8IMGDQIA7N69W2lRr7No0SIUFBSgT58++OSTT3D69GlUVlY23D20pqZG95gdOnQAAFRUVNicXl5ebvPzjh07okOHDrfc4dTWSy+eiKknX19fp+bTMg7U9qcnxp6396ez1LYzJCQEAFBWVub2Ottb544eRdScO8a7FlOmTEF2djauXLmCnJwcZGZmIiMjA0lJSQCAzz//HIsXL76lXHBwMICWtzHrtqiVp9YPuYDSjOn7778XANK/f3+pr69XWrwJuPkvIevh7Rs3bjgVMzQ0VADYPfx65MgR3TP9wYMHCwD54YcfbE7fsmWLzZhDhw4VAHLq1Cnd6tISLTE90Z9KYjemZRyo7U9PjD21/alHX2phPTJTVVXl1Pxq22m9Buirr75SUcv/pWTcWn9BeP78eZvTd+/e7fQRIGd5Yuy1ZM2aNQLYvp4wMTFRgJavAbL3KzIRZWOoNa4fUkfxEaCxY8eib9++yM3Nxdtvv620uEdZ/wIoKipyav7r168DAAIDA21Of/nll/WpWCPJyckAYPcmee+++67Nz8eNGwcAWLp0qe51sscTMRtT2p9qaRkHavvTE2PP0/2pVlRUFADgyJEjTs2vtp2TJk0CACxZsgQWi0VR2caUjNtu3boBALZs2WJz+quvvqq6HvZ4Yuy1ZPjw4QBsH/EaPXo0AOD999+3Wfa9995rMp8tSsaQnuuHT6L3MDVZ0+7du8Xf319MJpP86U9/ktzcXKmqqpKqqio5duyYvPPOO5KUlNTicuDmI0DWv/wmTpwohYWFLZ4THzVqlACQkSNHyt69e8VisUhJSYls3bpVxowZIx07dtQ90y8qKpLg4GABIOnp6XLy5EmpqamRgoICefLJJ+3eN+a3335ruEfTzJkz5fDhw1JdXS2VlZVy8OBBh/fRUEtLTE/0p5LYjWkZB2r70xNjT21/6tGXWqSlpQkAGTp0qBw9erTFI9Nq21lZWdlwE8TExET55ptvpKysTGpra+XixYuyceNGSU5ObrG+Ssat9UaZ4eHhsmbNGikuLpbq6mr56aefZNq0adKpUyfdjwB5Yuz17t1bFixYIOvXr5fjx4+LxWJpWK/r16+X+Ph4ASDjx4+/peyxY8caLkKeO3euFBYWSk1NjRQWFja5D9CJEyfsxlcyhvRcP9b5XLVtkGOq1/qmTZvs3lXUXoc6mrelgaDHTnb16tWKYu7du7fhEHTzl7+/v2zYsMElg3ft2rV2L9R8/vnn7cb84YcfFPeJVmpjeqI/lcRuTOs4UNOfnhp7avrT0wnQzz//bHdd2aN23B49elS6deumaRtTMm6Li4slOjra5rwBAQGycePGFuO6e7yr4Wh9Wl+9e/eWM2fO2CxvNpsd3gl65cqVDuMrGUN6rh9X7pupZZrW+vnz5yUjI0P69esnHTt2FH9/f+nWrZtMnz5ddu3adWswJwa5K78wRURWrVolgwcPbvirvKUy+fn5MnXqVImKihI/Pz+Jjo6WyZMnS05OjtMx1di3b5+kpKRIWFiYBAYGSr9+/WTFihUtxjxz5oz8+c9/lh49ekhgYKAEBQVJYmKiPPvss7J//37d66k2pqf609nlNqd1HKjpT0+NPaX96ekESERk//79kpycrGgcqN1WKioq5PXXX5dhw4ZJaGio+Pn5ye233y5Tpkyxe61Xc0rG7enTp2XGjBkSExMj/v7+EhMTI7///e8lNzdXRFzza0l3j72ff/5Zli5dKg8//LDExsZKQECA+Pv7S3R0tIwdO1bee++9Fm/iuGvXLklJSZGIiAjx8/OTyMhISUlJkaysLKfqoGQM6bV+mAB5luKnwRMRERF5O2UXQTe+UMtk4vvm743C0+uZ7+2/b+ta07rme+1jrzXV31XvjbR9ehnlR4CsnWktxvdN3xuFp9cz3zd9bySeXtd83/S9Vp6uf2tfP+QyPAVGREREhqP4PkBERERE3o4JEBERERmOn6crQGQUV99SdzFkp2d5lpqISG88AkRERESGwwSIiIiIDIcJEBERERlOm0iALl26hKeeegpxcXFo164d7rzzTjz99NMoLS1tMzFPnjyJDz/8EI8//jjCw8PhricIG6Gdnlq3pRbgLxuAfkuAqOeAhCVAxgbgsvoHjRMRkZO8/j5AFy9exJAhQ1BUVHTLtLi4OGRnZyM6OtrrY9r7QnZl9xmlne6K2fgi6OIKYMybwNmyW+eL7Qz8ewEQ1fHme14ETUSkP68/AjR79mwUFRVh0KBByMnJQVVVFXJycjBgwACcOXMGs2fPbhMx4+LiMGPGDKxevRqnTp3Sffm2GKWdnoj5zJc3k5/+scD2/wIuvn7z38Q7gF/Lbk4nIiLXUXUEaPPmzaiqqsL48ePh6+vrino5JS8vDwkJCejcuTOOHTuGyMjIhmkXL15Enz59cPXqVeTl5SE+Pt5rY9piPWrhqiMjRmmnO2NajwAdvQAMew0IDQJyXgAiOvzvPMUVwOD/A5RfB7IzgD7RPAJEROQKqo4AHT58GCkpKejevTteffVVFBcX610vp2zcuBEAkJaW1uQLGgCio6Mxbdq0JvN5a0xPMEo7PeH/PXLz3ymDmiY/wM3TXo8PbDofERHpT9MpsKKiIrz44ouIjY3F1KlTsXPnTr3q5ZQ9e/YAAMaMGWNzenJycpP5vDWmJxilnZ6Qc/rmv6N62Z4++v9pOh8REelPUwI0duxYJCcno66uDmvXrsWoUaOQkJCA5cuXo6KiQq862lVQUAAAuOuuu2xOt35unc9bY3qCUdrpCb9cuvlv7yjb062f//Kbe+pDRGREmhKggQMHYvPmzThx4gQWLlyIsLAw5OXlYf78+ejSpQvS09Nx5IjrjuOXlJQAAGJiYmxOt37+22/6fZN4IqYnGKWdnvDbf/42iA6xPd36+SWdfg6/atUq3HHHHQ5fw4YN0yeYB2MSESmhy7PAevbsiWXLluGVV17BunXrYDabsWfPHpjNZpjNZowYMQLp6emYPHkyAgIC9AgJALBYbn5DtG/fHgDw6KOP4ttvv8WECROwdu1aBAUFAQAqKyu9OqYnGKWdnnCt5ua/7fxv/jv9Y2BzPvBwAvDRdKD9fzYRS7U+8SoqKlBeXo6XXnrJ5vTt27cjPz9fn2AejNlc49sbuOsiek/EJCJ1dH0Yart27ZCWloa0tDQcOnQIZrMZmZmZyMrKQlZWFiIjI/H2229jypQpeoZtcOPGDYgI6uvrXbL81hLTE4zSTk+4UQ8IgHoXfl8GBQVh0aJFNqfV1dW5JBnxREwiIme57GnwiYmJWLFiBZ577jlMmDAB+fn5KCkpQXZ2tm4JUHBwMK5evYqqqip06NAB//rXv5pMv3btGgCgQ4cOtop7TUxPMEo7PSEo4ObP3K/XAsGBQOaTTadX/ecIUXCg++tGRGQULrsR4q5du5Camoq+ffs2/KXXtWtXjBw5UrcY1p9nX7hwweZ06+cRERFeHdMTjNJOT4j4zx2eL5bbnm79PDzYPfUhIjIiXROg8vJyLF++HAkJCRg5ciS++OIL1NbW4qGHHsKmTZtw6tQpTJo0Sbd4vXrd/B3x0aNHbU63fm6dz1tjeoJR2ukJPcJv/nvCzu2zrJ/3YG6piYg0vNpyTCJSR5cE6NChQ5g7dy66dOmC+fPnIy8vD+Hh4XjuuedQWFiI7777Do888gh8fPQ94GT9FcnWrVttTt+yZUuT+bw1picYpZ2eMPjOm//usHMHge3Hm85HRET605SRZGdn495770VSUhI++OADVFZWYujQofj0009x9uxZvPbaa+jevbtedb3FhAkTAACfffbZLT/HLi4uRmZmJgAgJSXFq2N6glHa6QnjEm7+u3Y/cKnZj+hKKoCvDtz8//gE99aLiMhINCVAO3bswI8//ojg4GDMnj0bubm52LNnD9LS0hAY6PorOBMSEjBu3DiUlZXh4YcfxoEDB3D9+nUcOHAA48aNw9WrVzF+/Hhdn1XliZieYJR2ekLfGODBvsCVa8BjHwI//Qpcr7v57+Mrb14g/VD8zeeA6aWkpATh4eE2Xy+//LJ+gTwck4jIWaoehrps2TI899xz6Nu3L+bNm4fp06cjJMTOXd1c7MKFCxgyZAh+/fXXW6Z17doVe/fuRXS0jt8kHorZ+P4ijuh57YFR2umumNaHoQI3L3Qe8yZw7sqt893RGdi64OZzwQDtD0M9dOgQdu3a5XCekJAQTJ8+XVMcT8ckIlJCVQK0Y8cOiAjuv/9+F1RJuUuXLuEf//gHNm3ahOLiYkRFRWHChAn4+9//jrCwsDYR0xOJAWCMdnoiAQKAUgvwf78Hvj1y8+7QER1vnh57/kHgtka/AOPT4ImI9KcqASIi5ZonQM5iAkREpD+X3QeIiIiIqLViAkRERESGwwSIiIiIDIcJEBERERkOEyAiIiIyHP4KjIiIiAyHR4CIiIjIcJgAERERkeEwASIiIiLD0ZQAFRcX469//SsSExPRqVMnBAYGonv37njiiSeQlZXVYnmTyeT0YwhIO65vdVrLemst9fBm1nXY/EWt148//giTyYThw4d7uiqtBsetPlRfBP3dd98hNTUVV67YeJrjf7S0aGsHuus6bHfHa21aa/tba72sWkv9Wks9vJm9Lw1vWKdG7f/Jkydjw4YNWL9+PSZNmuTp6rQKaseCUceQPaqOAOXk5GDixIm4evUqZs2ahQMHDuDatWu4du0a8vLy8MYbb+Duu+/Wu65ERJqISJMXtW6//PILNm7ciB49eiAlJcXT1aE2xk9pARHB7NmzUV1djWXLlmHhwoVNpsfHxyM+Ph7/9V//5dSyiMg53F7IaN566y3U19fj2WefhY8PL1m14r5AH4pPgW3btg1jxoxBUlISDh486FXnIY1++K+1tr+11suqtdeP1POmvvWmuuqhrKwMsbGxCAgIwK+//org4GBPV8nrGW0MtURxSr1+/XoAwIwZM1QlP2ovQGw878GDBzF16lR06dIFAQEB6NKlC/74xz/i3LlzDmOpqcOhQ4ewePFiDB8+HLfddhv8/f0RGRmJsWPHYvXq1aivr7dZ7sKFC3jhhRcwcOBAhIaGws/PD506dcKAAQOwYMEC7N+/36l2K2U9PRkZGYn27dsjISEBZrPZqbKXLl1CRkYG7rrrLrRv3x4hISEYOXIk1q1bp2sd9eiXxtPz8/MxZcoUxMTEoF27drjnnnvw9ddf2yyntj+tPvzwQyQmJqJ9+/aIiIhASkoK9u3b57CM2phaLtj98ccfMWnSJERHRyMgIADR0dGYNGkS9uzZ41R5NdSMHzXbtadp2U4sFgveeOMNjBgxomEsxMbGYtq0adi5c2eTebVuJ86MF2fLu3MbszKbzbBYLJg7d65TyY+aftGyn1bSl82pWbdq9gVaxpDW8aO2nXqNH6eIQvfcc48AkL179yotKv852nTLS0m5DRs2SEBAgM3l3HHHHXLp0iWHsey9lNS38evBBx+U69evNylz4MAB6dy5s+qYan3++efi6+trM9aiRYscxs3NzZWoqCi7dc3IyNCtnnr2y759+yQkJMTpsmr60zrtL3/5i80yvr6+8vnnn6tur62Yjsq1ZOXKlWIymWyW9fHxkY8++qjFZSildvyo2a71pHRb1LKdHD9+XHr27On0eNe6nTjTNmfKu2Mba666ulpiYmIkICBAzp8/73BeEXX9omU/rbQv7a0jJetWzb5AyxjSOn70bKfS8dN8OXbnaXEpzURERAgAKS0tVVr01uAKdj7WeUNCQiQ1NVVyc3Pl+vXrcuHCBfn0008lLCxMgJtfUnrEs+rTp48sXrxYsrKypLS0VGpqauT8+fPy5ZdfSmxsrACQJUuWNCkzYsQIASDJycmyY8cOKS0tldraWikrK5N9+/bJ66+/Lv3791dUj5acPn1agoKCBIDMmTNHCgsLpbq6Wk6cOCEzZ85s8oXYXHl5ucTFxQkASUtLk9zcXLFYLPLrr7/Ku+++Kx06dBAAsm3bNl3rbKWmX6xlBg4cKIMHD5bNmzdLeXm5VFVVSVZWlqSkpNgsp6Y/rbFMJpPMmjVLCgoKpLq6WgoLC2X27NkCQIKDg+XMmTO6xVS7no4fP96QSMyZM6ehrgUFBQ11DQwMlMLCwhbjOUvL+NFju9ZCydjT0k6LxSK9evUSAHL33XfLpk2b5PLly1JVVSUnTpyQdevWye9+9zvd6urs/M4kMu7YxppbvXq1AJAnnniixXaq7Re1+2k9+1Lpum1eXik137la5lHTTr33l7omQNada01NjdKitwZX0Rnjxo2zOf3jjz8WAJKQkKBLPGds3ry5YSNorF27dgJALl68qFuslmRkZAgAeeyxx2xOf+SRR+y2f9myZQJAZs2aZbOs2WwWADJ58mRd62ylJQGKj4+Xa9eu6VIPe/1pjTVx4kSb5SZOnCiAuqNk9mLa4sx6WrBggcNxYK3rwoULFdfVHi3jR4/tWgslY09LO998800BIP369ZPKykqX19XZ+Z1JgNyxjTWXkJAgAOTw4cMtLlNtv6jdT+vZl2rXrbclQHqNITX7yzaVAO3evdvm9HPnzgkA6dChgy7xnGGxWBr+em2sR48eAkDmz58vv/zyi27xHBkwYIAAkO3bt9uc/u9//9tu+61/CR09etRm2QsXLggA6dKli55VbqAlAcrMzNStHvb60xrL3hGwrVu3NvyVo1dMW5xZT0lJSQ7HgbWuAwYMUFxXe7SMHz22ay2UjD0t7bzvvvsEgKxbt84tdXV2fmcSIHdsY419//33AkAeeOABp5aptl/U7qf17Eu169bbEiC9xpCa/aWuCVB4eLgAnjsFVlZWZnN6fX29052hhMVikX/+859y//33S0REhPj7+zdZscDNa0AaW758eZPpUVFR8sADD8gzzzwj77//vkuSIuv5VXvrp7S01G77refBfX19xdfXV3x8fMTHx0dMJlOTU2f+/v6611tEWwJ07tw5ReXU9GdLY+/y5csCQDp16qRbTEdtdqSlcdBSXdXQMn702K61ULJsLe287bbbBICUlJS4pa7Ozu9MAuSObayx5ORkASDff/+9U/HU9ova/bSefal03TYv78pyeiZAStqp1/7SGYrX4KBBgwS4eVGT5uAe6gxnnT17tuFcb0uv5r744gsZMmSI+Pj42Jw/NTVV9eFTW6wXP9fV1dmcXltba7eu9i6cdqadetCSANlrry1q+7OlWNZ16+fnp1tMR212xNlxoNcOpHFMNW3UY7vWQsmytbTTz89PAEhtba1b6urs/M4kQO7YxqwOHTokgHOnOKy09Iua/bSefalk3doq78pyemybStup5/7SGYqXMnfuXAEgb775pvbgHuoMZ02ZMkUASJ8+feSTTz6R06dPN9kYampqWlxmeXm55OTkSGZmpmRkZDScogAgzzzzjNN1aUmnTp0EUHcEKDQ01GWnGJyhJQFSQm1/Wj9r6ahKaGiobjFtcWY+Z48E6nkESMv48aYESEs7PXkEqL6+3ub0srIypxIgJbSO9xkzZggA+fjjj52Oqcf+S8l+2hN9qVd5Nd+5asePmnrqub90huKlWM/P9u/f3+6KcTq4mxMg6+HQGzduOBUzNDRUANg9FHrkyBFVnbFmzRoB9L2mZvDgwQJAfvjhB5vTt2zZYreuQ4cOFQBy6tQp3eqjhNJ+EVG3A1Dbn9bPtm7darPctm3bBIAMGTJEt5i2ODNfYmKiAC1fA6TnrxC1jB9PJ0DWv+arqqpanFdLO63XjXz11VcqanmT0u3E+qtQez8j3717t+4JkJbxfv78eQkICJCYmBiprq52Oqar9l/29tN69KWnEiAlY0jr+FFTT1d959qj+EaIY8eORd++fZGbm4u3335baXGP6tChAwCgqKjIqfmvX78OAAgMDLQ5/eWXX1ZVD+tTjR09SFap5ORkALB708N3333Xbtlx48YBAJYuXapbfZRQ2i9qae3P9957z+bn77//PgDggQce0D2mUqNHj25Sp+asbbDOpwdPjx8toqKiAABHjhxpcV4t7bQ+xHPJkiWwWCyKywPKt5Nu3boBALZs2WJz+quvvqqqHo5oGe/vvvsuampq8NRTTyEgIMDpmK4af/b203r0pacoGUPeNn6ac+qGkWqypt27d4u/v7+YTCb505/+JLm5uVJVVSVVVVVy7NgxeeeddyQpKanF5cDNR4CsfylMnDhRCgsLWzwvOWrUKAEgI0eOlL1794rFYpGSkhLZunWrjBkzRjp27GgzZu/evWXBggWyfv16OX78uFgsFqmtrZWLFy/K+vXrJT4+XgDI+PHjnWq7M4qKiiQ4OFgASPAg3tMAACAASURBVHp6upw8eVJqamqkoKBAnnzySYf3Afrtt98a7u80c+ZMOXz4sFRXV0tlZaUcPHjQJfctakxpv4io+wtIbX9aPzOZTDJ79mwpLCyUmpoa+eWXXxpOCXfs2FHOnj2rW0y1bT527FjDRYNz585tqGvjexYFBgbKiRMnFK07R7SMHz22ay3S0tIEgAwdOlSOHj3q8Ki2lnZWVlY23DgvMTFRvvnmGykrK2vYL2zcuFGSk5Md1lXpdmK9+Wl4eLisWbNGiouLpbq6Wn766SeZNm1aw2lze+vWndtYZWWldO7cWYKDg+Xy5cuKYqrtF7X7aT36UuuYVlteyRjSOn7U1NMV+0uH9XO6Zs1s2rTJ7p0d7QV1NG9LldVjR2m9uZazMffu3dtwGLD5y9/fXzZs2ODwC9PRq3fv3nZvnKfW2rVr7V4Q+Pzzzzts6w8//KC4P/WitF9E1O0AtPan9V5LzV9+fn7y9ddf6xpTS5vNZrPDO0GvXLnSuRWmgNrxo8d2rcXPP/9st39s0bKdHD16VLp166Z6G1O6nRQXF0t0dLTN+QMCAmTjxo2a+6Y5teP9nXfeEQDy1FNPKYpnpaZftOyntfal0nXrTF2dWZ6SMaR1/Khppyv2lw7r53TNbDh//rxkZGRIv379pGPHjuLv7y/dunWT6dOny65duxxWyFM7ylWrVsngwYMbjpa0VCY/P1+mTp0qUVFR4ufnJ9HR0TJ58mTJycmxG/Pnn3+WpUuXysMPPyyxsbESEBAg/v7+Eh0dLWPHjpX33ntPtxuLNbdv3z5JSUmRsLAwCQwMlH79+smKFSvs1rWxM2fOyJ///Gfp0aOHBAYGSlBQkCQmJsqzzz4r+/fvd0l9rZT2i9ovRTX92fgzs9ks/fr1k8DAQAkLC5OJEyc2lNUzptY279q1S1JSUiQiIkL8/PwkMjJSUlJSJCsry6nyaqgZP674slBq//79kpyc7PTY07KdVFRUyOuvvy7Dhg2T0NBQ8fPzk9tvv12mTJli9/q9xpRuJ6dPn5YZM2ZITEyM+Pv7S0xMjPz+97+X3NxcEXHuV2BKKR3vN27ckO7du4uPj4+mW4Qo7Ret+2ktfempBEhE2RjSMn7UtFNE//2lo3kVPw2eiNyvqqoKQUFB8Pf3R01NjaerQ6Sb9evX49FHH8XkyZPtPmCVyBWUXQTd+GIik4nv9XxvBK1pfXvZ+/ZBQRAAMTEx+i7fKGOwFfUl3zcde2+88QYAYOHChXBaa6g/37eO9xooPwJkDWwtxvfa3xvpIFxrWN9e+H7Y0KHIzs5Gw0jRa/lG0kr6ku91Gnuerj/fe/69xrHEU2BErZCtn24GBwfj4MGD6N27twdqRETUtii+DxARuVdwcDCSk5Oxc+dOJj9ERDrx83QFiOhWPDBLRORaTICcdPUt9RdddXqWX2ZEREStCU+BERERkeEwASIiIiLDYQJEREREhuP1CdDJkyfx4Ycf4vHHH0d4eDhafPqrDk6XAh/vAZ74BOj+IhC64ObLlTzRTgC4dOkSnnrqKcTFxaFdu3a488478fTTT6O0tNTlsYmIiFzF6+8DZC8J0LtZjS+CtpfsXHnT9ud6XATtrnY2dvHiRQwZMgRFRUW3TIuLi0N2djaio6NdFp+IiMhVvP4IUFxcHGbMmIHVq1fj1KlTbokZ2xmYOhhYPhU4/N9uCemRds6ePRtFRUUYNGgQcnJyUFVVhZycHAwYMABnzpzB7Nmz3VIPIiIivak6ArR582ZUVVVh/Pjx8PX1dUW9VLMeKXHlEaDmrEeEXHkEqDlXtdMqLy8PCQkJ6Ny5M44dO4bIyMiGaRcvXkSfPn1w9epV5OXlIT4+3iV1ICIichVVR4AOHz6MlJQUdO/eHa+++iqKi4v1rhd52MaNGwEAaWlpTZIfAIiOjsa0adOazEdERORNNJ0CKyoqwosvvojY2FhMnToVO3fu1Kte5GF79uwBAIwZM8bm9OTk5CbzEREReRNNCdDYsWORnJyMuro6rF27FqNGjUJCQgKWL1+OiooKvepIHlBQUAAAuOuuu2xOt35unY+IiMibaHoUxsCBA7F06VIUFhZixYoV+Pjjj5GXl4f58+fj+eefxx/+8AfMmzcPCQkJetWX3KSkpAQAEBMTY3O69fPffvtNt5irVq3C3/72N4fzxMbG6nrUiTHbVkwiImfp8iywnj17YtmyZXjllVewbt06mM1m7NmzB2azGWazGSNGjEB6ejomT56MgIAAPUKSi1ksFgBA+/btAQCPPvoovv32W0yYMAFr165FUFAQAKCyslK3mBUVFSgvL8dLL71kc/r27duRn5+vWzzGbHsxm2t8+wh33fHDEzGJSDldH4barl07pKWlIS0tDYcOHYLZbEZmZiaysrKQlZWFyMhIvP3225gyZYqeYckNbty4ARFBfX29S+MEBQVh0aJFNqfV1dW55AuTMdtWTCIiZ7jsPkCJiYlYsWIFfvrpp4afSZeUlCA7O9tVIUlHwcHBAICqqioAwL/+9S9cv34dX331FQDg2rVrAIAOHTp4poJEREQauCwB2rVrF1JTU9G3b9+Gv/K6du2KkSNHuiok6cj60/cLFy7YnG79PCIiwm11IiIi0ouup8DKy8uxZs0amM1m5OXlAbh5Pvyhhx7CvHnzMH78ePj4eP3Npw2hV69eKCgowNGjR9GrV69bph89erRhPqLWyhPX4PC6HyLvoEs2cujQIcydOxddunTB/PnzkZeXh/DwcDz33HMoLCzEd999h0ceeYTJjxcZNmwYAGDr1q02p2/ZsqXJfERERN5EU0aSnZ2Ne++9F0lJSfjggw9QWVmJoUOH4tNPP8XZs2fx2muvoXv37nrVldxowoQJAIDPPvvslp+6FxcXIzMzEwCQkpLi9roRERFppekU2I4dOwDcvGA2NTUV6enpSEpK0qVi5FkJCQkYN24cvv32Wzz88MNYsWIF4uPjkZ+fjzlz5uDq1asYP3687s8BKykpQXh4uM1pVVVVLrnmiDHbVkwiImdoSoD69u2LefPmYfr06QgJCdGrToo0vueGo8/1PC9vffhpS5/beziqGp5o58qVKzFkyBDs378fgwYNajKta9euWLlypW6xAGD06NF45513HM6j9zhjzLYVk4jIWaqeBr9jxw6ICO6//34XVEkZe4lBc1oTg8ZPg7eXADVnTYD0eBq8u9rZ3KVLl/CPf/wDmzZtQnFxMaKiojBhwgT8/e9/R1hYmK6xiIiI3EVVAmREjRMgpfRIgIiIiEg//FkWERERGQ4TICIiIjIcJkBERERkOEyAiIiIyHCYABEREZHheOWvwPiLLCIiItKCR4CIiIjIcJgAERERkeEwASIiIiLD8foE6HQp8PEe4IlPgO4v3nxMhbOPqtDi0qVLeOqppxAXF4d27drhzjvvxNNPP43S0tI2E/PkyZP48MMP8fjjjyM8PBwmk8npR3J4U0wiIjIer78I2l6yY+9BpHpcBH3x4kUMGTIERUVFt0yLi4tDdnY2oqOjNcfxdEx7iYcrh4wnYhIRkfF4/RGg2M7A1MHA8qnA4f92T8zZs2ejqKgIgwYNQk5ODqqqqpCTk4MBAwbgzJkzmD17dpuIGRcXhxkzZmD16tU4deqU7stvLTGJiMh4VB0B2rx5M6qqqjB+/Hj4+vq6ol4OOfoZvPWIkKuOAOXl5SEhIQGdO3fGsWPHEBkZ2TDt4sWL6NOnD65evYq8vDzEx8driuXJmLZYj86482iMJ2ISEVHbp+oI0OHDh5GSkoLu3bvj1VdfRXFxsd71arU2btwIAEhLS2uSiABAdHQ0pk2b1mQ+b41JRETUlmk6BVZUVIQXX3wRsbGxmDp1Knbu3KlXvVqtPXv2AADGjBljc3pycnKT+bw1JhERUVumKQEaO3YskpOTUVdXh7Vr12LUqFFISEjA8uXLUVFRoVcdW5WCggIAwF133WVzuvVz63zeGpOIiKgt05QADRw4EJs3b8aJEyewcOFChIWFIS8vD/Pnz0eXLl2Qnp6OI0eO6FXXVqGkpAQAEBMTY3O69fPffvvNq2MawapVq3DHHXc4fA0bNowxvSQmEZESfnospGfPnli2bBleeeUVrFu3DmazGXv27IHZbIbZbMaIESOQnp6OyZMnIyAgQI+QHmOxWAAA7du3BwA8+uij+PbbbzFhwgSsXbsWQUFBAIDKykqvjmkEFRUVKC8vx0svvWRz+vbt25Gfn8+YXhKzuca3VHDXRfSeiElE6uiSAFm1a9cOaWlpSEtLw6FDh2A2m5GZmYmsrCxkZWUhMjISb7/9NqZMmaJnWI+6ceMGRAT19fVtOmZbFRQUhEWLFtmcVldX55IvacZ0XUwiIme57D5AiYmJWLFiBX766aeGn2aXlJQgOzvbVSHdIjg4GABQVVUFAPjXv/6F69ev46uvvgIAXLt2DQDQoUMHr45JRETUlrksAdq1axdSU1PRt2/fhr/0unbtipEjR7oqpFtYf4Z+4cIFm9Otn0dERHh1TCIiorZM1wSovLwcy5cvR0JCAkaOHIkvvvgCtbW1eOihh7Bp0yacOnUKkyZN0jOk2/Xq1QsAcPToUZvTrZ9b5/PWmETeTkQaXm05JhGpo0sCdOjQIcydOxddunTB/PnzkZeXh/DwcDz33HMoLCzEd999h0ceeQQ+Pl7/5I2GX65s3brV5vQtW7Y0mc9bYxIREbVlmjKS7Oxs3HvvvUhKSsIHH3yAyspKDB06FJ9++inOnj2L1157Dd27d9errq3ChAkTAACfffbZLT87Ly4uRmZmJgAgJSXFq2MSERG1ZZp+BbZjxw4ANy/STU1NRXp6OpKSknSpWGuVkJCAcePG4dtvv8XDDz+MFStWID4+Hvn5+ZgzZw6uXr2K8ePH6/pMLk/ENIqSkhKEh4fbnFZVVeWS66oY03UxiYicpSkB6tu3L+bNm4fp06cjJCRErzopYn34aUuf23s4qhorV67EkCFDsH//fgwaNKjJtK5du2LlypX6BfNgzMb3NHH0uZ7XO7gz5ujRo/HOO+84nEfvcc2YrotJRKSEqqfB79ixAyKC+++/3wVValnjp8HbS4CasyZAWp8Gb3Xp0iX84x//wKZNm1BcXIyoqChMmDABf//73xEWFqZLDE/HtJeMNOeOBMiVMYmIyHhUJUCe1jgBUkqvBIiIiIi8l/f/LIuIiIhIISZAREREZDhMgIiIiMhwmAARERGR4TABIiIiIsPxyl+BEREREWnBI0BERERkOEyAiIiIyHCYABEREZHhMAEiIiIiw2ECRERERIbDBIiIiIgMhwkQERERGQ4TICIiIjIcJkBERERkOEyAiIiIyHCYABEREZHh+OmxEJPJ1PB/PlqMiIiIWjseASIiIiLDYQJEREREhsMEiIiIiAxHl2uAeN0PEREReRMeASIiIiLDYQJEREREhsMEiIiIiAyHCRAREREZDhMgIiIiMhwmQERERGQ4TICIiIjIcJgAERERkeEwASIiIiLDYQJEREREhsMEiIiIiAyHCRAREREZDhMgIiIiMhwmQERERGQ4TICIiIjIcJgAERERkeEwASIiIiLDYQJEREREhsMEiIiIiAyHCRAREREZDhMgIiIiMhwmQERERGQ4TICIiIjIcPz0WIjJZGr4v4josUgiIiIil+ERICIiIjIcJkBERERkOEyAiIiIyHB0uQaI1/0QERGRN+ERICIiIjIcJkBERERkOEyAiIiIyHCYABEREZHhMAEiIiIiw2ECRERERIbDBIiIiIgMhwkQERERGQ4TICIiIjIcJkBERERkOEyAiIiIyHCYABEREZHhMAEiIiIiw2ECRERERIbDBIiIiIgMhwkQERERGQ4TICIiIjIcJkBERERkOEyAiIiIyHCYABEREZHhMAEiIiIiw2ECRERERIbDBIiIiIgMx0+PhZhMpob/i4geiyQiIiJyGR4BIiIiIsNhAkRERESGwwSIiIiIDEeXa4B43Q8RERF5Ex4BIiIiIsNhAkRERESGwwSIiIiIDIcJEBERERkOEyAiIiIyHCZAREREZDhMgIiIiMhwmAARERGR4TABIiIiIsNhAkRERESGwwSIiIiIDEeXZ4G529W3TKrLdnqWzy0jIiIyOh4BIiIiIsNhAkRERESGwwSIiIiIDIcJEBERERkOEyAiIiIyHCZAREREZDiqEqDNmzdj06ZNuHHjht71ISIiInI5VQnQ4cOHkZKSgu7du+PVV19FcXGx3vUiIiIichlNp8CKiorw4osvIjY2FlOnTsXOnTv1qhcRERGRy2hKgMaOHYvk5GTU1dVh7dq1GDVqFBISErB8+XJUVFToVUciIiIiXWl6FMbAgQOxdOlSFBYWYsWKFfj444+Rl5eH+fPn4/nnn8cf/vAHzJs3DwkJCXrVt4nPsoH/8/85nueOUGDLs/rFXLVqFf72t785nCc2NhZ79uzx6phERERtmS7PAuvZsyeWLVuGV155BevWrYPZbMaePXtgNpthNpsxYsQIpKenY/LkyQgICNAjJACgshqouA5kPGh7+q4C4OhF3cIBACoqKlBeXo6XXnrJ5vTt27cjPz/f62M2ZzL97/PXRNzzPDVPxCQiImPQ9WGo7dq1Q1paGtLS0nDo0CGYzWZkZmYiKysLWVlZiIyMxNtvv40pU6boFjMoAHhqtO1pdfX6J0AAEBQUhEWLFtmOWVfnkmTEEzGJiIjaKpfdBygxMRErVqzATz/9hPj4eABASUkJsrOzXRWSiIiIyCkuS4B27dqF1NRU9O3bt+HoRNeuXTFy5EhXhSQiIiJyiq6nwMrLy7FmzRqYzWbk5eUBuHkdx0MPPYR58+Zh/Pjx8PHhzae9kSeuweF1P0RE5Cq6JECNr/eprKwEAISHh2PmzJmYO3cuunfvrkcYIiIiIl1oSoCys7Nx77334scff2z4bOjQoUhPT8fjjz+OwMBAzRUkIiIi0pumBGjHjh0AgODgYKSmpiI9PR1JSUm6VMxZv1UC3V+0Pa2qFggP1j9mSUkJwsPDbcesqkJERESbiElERNRWaUqA+vbti3nz5mH69OkICQnRq05Ou68X8H8nOp4npJ2+MUePHo133nnHcUyd14UnYhIREbVlJlFxpemOHTsgIrj//vtdUKWWXX3L1PJMdnR6lhfWEhERGZ2qI0CjRo3Sux5EREREbsPfpBMREZHhMAEiIiIiw2ECRERERIbDBIiIiIgMhwkQERERGY6qn8ETEREReTMeASIiIiLDYQJEREREhsMEiIiIiAyHCRAREREZDhMgIiIiMhwmQERERGQ4TICIiIjIcJgAERERkeEwASIiIiLDYQJEREREhsMEiIiIiAyHCRAREREZDhMgIiIiMhwmQERERGQ4TICIiIjIcJgAERERkeEwASIiIiLDYQJEREREhsMEiIiIiAyHCRAREREZDhMgIiIiMhwmQERERGQ4TICIiIjIcJgAERERkeEwASIiIiLDYQJEREREhsMEiIiIiAyHCRAREREZDhMgIiIiMhwmQERERGQ4TICIiIjIcPyUFjCZTE7PKyJKF+91rOvDCG11Ja5H+2xtc55eT62xTkRESnjlESCTyaQoESPXY58QEZE3UXwEyIp/7RG5V2va5hrXhYkvEXkj1QkQkZ5a05c7ERG1fV55CoyIiIhIC7cnQBcuXMALL7yAgQMHIjQ0FH5+fujUqRMGDBiABQsWYP/+/beUsV5f0vw6k+af2zsUf+jQISxevBjDhw/HbbfdBn9/f0RGRmLs2LFYvXo16uvrHdY5JycHEydORGRkJNq3b4+EhASYzeYW2/rjjz9i0qRJiI6ORkBAAKKjozFp0iTs2bOnxbJqaG2nxWLBG2+8gREjRjSUj42NxbRp07Bz584m82rtE6XzWvXt2xcmkwnbt2+3OX3btm0wmUzo27ev3WW4u188wTpmIyIi0L59e9x999344IMPAPB6LSIiAIAoBEBUFBMRkQMHDkjnzp0blmHvZS+mMy9Hdbb3evDBB+X69es2y37++efi6+trs9yiRYvsxl25cqWYTCab5Xx8fOSjjz5StQ4d0dLO48ePS8+ePZ1et1r7xN4yWvLiiy8KAElPT7c5fd68eQJA/vu//9vmdD36RUl99aA01pdffml3zD7//PO6192d64KISC9uTYBGjBghACQ5OVl27NghpaWlUltbK2VlZbJv3z55/fXXpX///rrXoU+fPrJ48WLJysqS0tJSqampkfPnz8uXX34psbGxAkCWLFlyS7nTp09LUFCQAJA5c+ZIYWGhVFdXy4kTJ2TmzJlNvkgbO378uAQEBDSUKygokOrqaikoKJDZs2cLAAkMDJTCwkKn2+DKdlosFunVq5cAkLvvvls2bdokly9flqqqKjlx4oSsW7dOfve73zmMrfVL0Nnyubm5AkBiYmLkxo0bTabduHFDoqOjBYD89NNPt5TVq19acwJUVFQkwcHBAkDmzp3bZMzOmjXL7ph1V/2IiFoL1QmQmr/627VrJwDk4sWL2iqt4w538+bNDV/8zWVkZAgAeeyxx2yWfeSRR2zWZcGCBQ7LTZw4UQDIwoULtTfASY7a+eabbwoA6devn1RWVqpavrsSIBGRHj16CADZtWtXk8937twpAKRnz542y+nVL605AfrrX//qVBuZABGR0bn1GqAuXboAAF5++WWcPHnSnaHtuvfeewEAp0+fvmXali1bAADp6ek2yz799NM2P7den2Kv3J///Ocm87mDo3Zu2LABAPC3v/0NwcHBbquTWpMnTwYAfP31100+t763Tm+uNfaL3loas9Y2EhEZnUlE2e+Ptdyx12w2N9kxR0VFITExEXfddRd69+6Nhx56CN27d9e9DteuXcMHH3yAb775Bvn5+bhy5Qpqa2ubzOPr64u6uromn3Xq1Anl5eUoKytDaGjoLcu9fPkywsLCbqlLS+XKyspw2223oVOnTrhy5YpTbXCG2naGhYXh8uXLKCkpQUREhKrYWu/krKT8vn37MGTIEMTGxuLMmTMwmUwQEXTt2hVnz57Fvn37MHjw4FvKeapftFKybkJDQ3H16lXFY9Zd9SMiai3cmgABwNq1a/HWW28hJyfH5q+SUlNT8eGHHzo8EqGkDufOncPo0aNRUFDQ4rzNl+fn54cbN26grq4Ovr6+t8xfV1cHf3//W8o6W85WMqKWlnb6+/ujrq4OtbW18PNTd2sodyZAABAXF4eioiJkZ2djyJAhyM7OxrBhwxAXF2fzKBfgmX7Rg5J1o3bMuqt+RESthdt/Bj9lyhRkZ2fjypUryMnJQWZmJjIyMpCUlAQA+Pzzz7F48WLd4i1atAgFBQXo06cPPvnkE5w+fRqVlZWQm9c/oaamxm7ZDh06AAAqKipsTi8vL7f5uTV5a6mcdfl60NLOkJAQADePgHiLSZMmAfjf017Wf62f2+KJfnE3Z9tIRGR4Si8aggsveFyzZo0AkC5dujicz/pLlua/ArIlNDRUAMgvv/xic/qRI0fstmnw4MECQH744QebZbds2WKzbGJiogCQ7du32yy3detWAeDUL96cpaWd9913nwCQr776SnV8JX1ii9JxlZWVJQCkW7duUl9fL3feeacAkN27d9st44l+0YOSddO/f3+HY9baxubLs35m76VX/YiIWotWdSfo4cOHA0CL119Y/0IvKipqcZnXr18HAAQGBtqc/vLLL9stm5ycDAB2b3r47rvv2vx89OjRAID333/f5vT33nuvyXx60NJO61GTJUuWwGKxqIqvpE/0MHz4cMTExODUqVNYuXIlTp8+jdtvvx3Dhg2zW0avflFy40Z3a2nMWtvYnPznSGHz17Zt2/DAAw+4rL5ERB6jNGOChr/2evfuLQsWLJD169fL8ePHxWKxSG1trVy8eFHWr18v8fHxAkDGjx/vcDlDhw4VADJx4kQpLCyUuro6u/OOGjVKAMjIkSNl7969YrFYpKSkRLZu3SpjxoyRjh072m1T43uqpKeny8mTJ6WmpkYKCgrkySeftHtPlWPHjom/v3+Te7HU1NRIYWFhk/vNnDhxQtV61LudlZWVDTdBTExMlG+++UbKysoa+mbjxo2SnJzsML6SPrFFzbhKT08XABISEiIAZP78+Q7n16tf4OSREb0oidX43lXz589vGLOFhYUya9Ys8fHxcXp5a9eulYkTJ4rFYtGtfkRErYXL7gNka4foTJnevXvLmTNnHNZh9erVTsfcu3dvwxdC85e/v79s2LDB4Q587dq1qu6qazabHd5xeOXKlU6ucedobefRo0elW7duqk+DKOkTEW33k7Latm1bk3ntndpqTI9+ac0JkIhIZmam3TFrvZN2S8t76623ZObMmVJbW6t7/YiIWgO3JkA///yzLF26VB5++GGJjY2VgIAA8ff3l+joaBk7dqy89957cu3aNafqsWrVKhk8eHDDERpHO+H8/HyZOnWqREVFiZ+fn0RHR8vkyZMlJyenSZvs2bdvn6SkpEhYWJgEBgZKv379ZMWKFS2W3bVrl6SkpEhERIT4+flJZGSkpKSkSFZWllNtVEprOysqKuT111+XYcOGSWhoqPj5+cntt98uU6ZMsXtNSWNK+kSPBKiurk4iIiIEgERERDh91Elrv7T2BEhEJDs7WyZMmNAwZhMSEuR//ud/WlxefX29ZGRkSEZGhkvrR0TkaYp/Bk9E7qX3z8ztLa+2thazZ89G//798cwzz3isfkRE7qAsATKZAOvs1gtA+V6f92qxT1pfn+jM1sXWt2y2GseBpbISqamp2PTNN47nVVInIqJWTPkRIE9/KbXF93okQZ5uQ1t734q+zJ1ONpxsp3Vp4sS89tYDEyAi8nY8BUZkMLZOWbX0k37uJoiorVH33AMialOY4BCR0TABIjIYJjtERB54FhgRERGRpzEBIiIiFwHUrgAAADNJREFUIsNhAkRERESGwwSIiIiIDIcJEBERERkOEyAiIiIyHCZAREREZDhMgIiIiMhw/n/QS8vHmDQ36QAAAABJRU5ErkJggg==" />
+</section>
+<section class="slide level1" id="mt-un-paso">
+<h1>MT: un paso</h1>
+<p>En función de su estado interno activo y de los símbolos leidos por los cabezales en todas las cintas, y según la función de transición, un paso de una MT consiste en:</p>
+<ul>
+<li>escribir en las cintas</li>
+<li>mover cada una de sus cabezales de 0 o 1 paso (=, ←, →)</li>
+<li>cambiar su estado activo</li>
+</ul>
+</section>
+<section class="slide level1" id="section-1">
+<h1></h1>
+<div class="thm">
+<p>Una MT es un tuple <span class="math">(Γ , <em>Q</em>, <em>δ</em>)</span> con:</p>
+<ul>
+<li>un alfabeto finito <span class="math">Γ  ⊇ {▫,  ⊳ , 0, 1}</span> <br />(<span class="math">▫</span> &quot;blank&quot;, <span class="math"> ⊳ </span> &quot;start&quot;)</li>
+<li>un conjunto finito de estados <span class="math"><em>Q</em> ⊇ {<em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub>, <em>q</em><sub><em>h</em><em>a</em><em>l</em><em>t</em></sub>}</span></li>
+<li>una función de transición <br /><span class="math"><em>δ</em>: <em>Q</em> × Γ <sup><em>k</em> − 1</sup> ↦ <em>Q</em> × Γ <sup><em>k</em> − 1</sup> × {←,  = , →}<sup><em>k</em></sup></span> <br /><span class="math"><em>δ</em>(<em>q</em><sub><em>h</em><em>a</em><em>l</em><em>t</em></sub>, _)</span> no está definido</li>
+<li>Configuración inicial:
+<ul>
+<li>primera cinta:<span class="math"> ⊳ <em>I</em><em>N</em><em>P</em><em>U</em><em>T</em> ▫ ▫ ▫ ⋅ ⋅</span></li>
+<li>las demas:<span class="math"> ⊳ ▫ ▫ ▫ ⋅ ⋅</span></li>
+<li>estado activo: <span class="math"><em>q</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub></span>
+</div>
+</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="mt-que-computan">
+<h1>MT que computan</h1>
+<div class="thm">
+<p>Una MT <em>computa</em> una función <span class="math"><em>f</em>: {0, 1}<sup> * </sup> ↦ {0, 1}</span> si, dada una configuración inicial con entrada <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>, se detiene después de un número finito de pasos con <span class="math"><em>f</em>(<em>x</em>)</span> escrito en la última cinta.</p>
+Una MT computa <span class="math"><em>f</em></span> en tiempo <span class="math"><em>T</em>(<em>n</em>)</span> si su computación en cada entrada <span class="math"><em>x</em></span> necesita <em>cómo máximo</em> <span class="math"><em>T</em>(∣<em>x</em>∣)</span> pasos.
+</div>
+
+</section>
+<section class="slide level1" id="observación">
+<h1>Observación</h1>
+<p>Nos interesa la cantidad de pasos hechos por una MT, pero el número de estados internos no importa.</p>
+<p>Resultado: una MT puede simular <span class="math"><em>n</em></span> &quot;registros&quot; (estados activos) tomando valores en los conjuntos <span class="math"><em>R</em><sub>1</sub>, <em>R</em><sub>2</sub>, . . . , <em>R</em><sub><em>n</em></sub></span> con un registro tomando valores en <span class="math"><em>R</em><sub>1</sub> × <em>R</em><sub>2</sub> × . . .  × <em>R</em><sub><em>n</em></sub></span>.</p>
+</section>
+<section class="slide level1" id="mt-indiferente">
+<h1>MT indiferente</h1>
+<div class="thm">
+Una MT es <em>indiferente</em> (eng. <em>oblivious</em>) si los movimientos de sus cabezales sólo dependen de la longitud de sus inputs y no de los bits.
+</div>
+
+<p>Es decir, para todos los inputs de longitud <span class="math"><em>n</em></span>, existe une función <span class="math"><em>p</em><em>o</em><em>s</em>: ℕ  ↦ ℕ <sup><em>k</em></sup></span> tal que <span class="math"><em>p</em><em>o</em><em>s</em>(<em>x</em>)</span> es la posición de los <span class="math"><em>k</em></span> cabezales en el paso <span class="math"><em>x</em></span>.</p>
+</section>
+<section class="slide level1" id="substitución-de-mt">
+<h1>Substitución de MT</h1>
+<div class="thm">
+<p>Para toda <span class="math"><em>f</em>: {0, 1}<sup> * </sup> ↦ {0, 1}</span> y <span class="math"><em>T</em>: ℕ  ↦ ℕ </span> constructible en tiempo, si <span class="math"><em>f</em></span> es computable por una MT con <span class="math"><em>k</em></span> cintas y un alfabeto <span class="math">Γ </span> en tiempo <span class="math"><em>T</em>(<em>n</em>)</span>, entonces es computable por:</p>
+<ol type="1">
+<li>una MT con alfabeto <span class="math">{0, 1, ▫,  ⊳ }</span> en tiempo <span class="math">4<em>l</em><em>o</em><em>g</em>∣Γ ∣(<em>T</em>(<em>n</em>))</span></li>
+<li>una MT con 2 cintas en tiempo <span class="math"><em>O</em>(<em>T</em>(<em>n</em>)<sup>2</sup>)</span></li>
+<li>una MT indiferente en tiempo <span class="math"><em>O</em>(<em>T</em>(<em>n</em>)<sup>2</sup>)</span>
+</div>
+</li>
+</ol>
+<ul>
+<li><ol start="3" type="1">
+<li>se puede mejorar en <span class="math"><em>O</em>(<em>T</em>(<em>n</em>). <em>l</em><em>o</em><em>g</em>(<em>T</em>(<em>n</em>)))</span> (Pippenger y Fischer, 1979).</li>
+</ol></li>
+</ul>
+</section>
+<section class="slide level1" id="más-resultados-similares">
+<h1>Más resultados similares</h1>
+<p>Más resultados de cambio de tipo de MT con deceleración polinomial:</p>
+<ul>
+<li>pasar de cintas con <span class="math"><em>k</em></span> dimensiones a cintas con <span class="math">1</span> dimensión</li>
+<li>pasar de memoria en acceso random a memoria en acceso secuencial</li>
+<li>pasar de <span class="math"><em>n</em></span> estadios activos (= registros) a <span class="math">1</span> (constante, sólo aumenta el número de estados)</li>
+</ul>
+</section>
+<section class="slide level1" id="linear-speed-up-theorem-hartmanis-y-stearns-1965">
+<h1>Linear speed-up theorem (Hartmanis y Stearns, 1965)</h1>
+<div class="thm">
+Si <span class="math"><em>f</em></span> es computable por una MT <span class="math"><em>M</em></span> en tiempo <span class="math"><em>T</em>(<em>n</em>)</span>, entonces para cualquiera constante <span class="math"><em>c</em> ≥ 1</span>, <span class="math"><em>f</em></span> es computable por una MT <span class="math"><em>M</em>ʹ</span> en tiempo <span class="math"><em>T</em>(<em>n</em>) / <em>c</em></span>.
+</div>
+
+<ul>
+<li>Demo:
+<ul>
+<li><span class="math"><em>M</em>ʹ</span> maneja &quot;word length&quot; más grande que <span class="math"><em>M</em></span></li>
+<li><span class="math"><em>M</em>ʹ</span> tiene cómo alfabeto <span class="math">Γ  ∪ Γ <sup><em>m</em></sup></span></li>
+<li>paso 1: comprimir cinta input en cinta nueva</li>
+<li>paso 2: simular <span class="math"><em>m</em></span> pasos de <span class="math"><em>M</em></span> en <span class="math">6</span> pasos de <span class="math"><em>M</em>ʹ</span> (4 para leer, 2 para escribir)</li>
+<li>eligir <span class="math"><em>m</em> = 6<em>c</em></span></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="clase-de-complejidad-time">
+<h1>Clase de complejidad <strong>TIME</strong></h1>
+<div class="thm">
+Sea <span class="math"><em>T</em>: ℕ  ↦ ℕ </span>. Un lenguaje <span class="math"><em>L</em></span> es en <strong>TIME</strong>(T(n)) si existe una MT que corre en tiempo <span class="math"><em>c</em>⋅<em>T</em>(<em>n</em>)</span> (para un <span class="math"><em>c</em> &gt; 0</span>) y decide <span class="math"><em>L</em></span>.
+</div>
+
+<!--
+
+* El factor multiplicativo está por abstraerse de diferencias de
+  alfabetos y por el speed-up theorem.
+* Ejemplo de caso problemático si no precisamos que tipo de MT usamos:
+  $L = \{0^k 1^k \mid k \geq 0 \}$:
+    * con 2 cintas, decidible en O(n)
+    * con 1 cinta, decidible en O(n.log(n)))
+-->
+
+
+</section>
+<section class="slide level1" id="p">
+<h1><strong>P</strong></h1>
+<p>Una manera formal de definir los calculos rápidos:</p>
+<div class="thm">
+<strong>P</strong> = <span class="math">⋃ <sub><em>p</em> <em>p</em><em>o</em><em>l</em><em>i</em><em>n</em><em>o</em><em>m</em><em>i</em><em>o</em></sub></span> <strong>TIME</strong><span class="math">(<em>p</em>(<em>n</em>))</span> = <span class="math">⋃ <sub><em>c</em> ≥ 1</sub></span> <strong>TIME</strong><span class="math">(<em>n</em><sup><em>c</em></sup>)</span>
+</div>
+
+<p>La clase es robusta si cambiamos el tipo de MT que usamos.</p>
+<p>Doblar el tamaño del input sólo necesita <span class="math"><em>k</em></span> veces más tiempo (con <span class="math"><em>k</em></span> constante):</p>
+<ul>
+<li>inputs de longitud <span class="math"><em>n</em></span> necesitan tiempo <span class="math"><em>n</em><sup><em>c</em></sup></span></li>
+<li>inputs de longitud <span class="math">2<em>n</em></span> necesitan <span class="math">(2<em>n</em>)<sup><em>c</em></sup> = (2<sup><em>c</em></sup>)<em>n</em><sup><em>c</em></sup></span></li>
+</ul>
+</section>
+<section class="slide level1" id="con-p-y-arriba-no-importa-tanto-el-modelo">
+<h1>Con <strong>P</strong> (y arriba), no importa (tanto) el modelo</h1>
+<p>Cuando vamos a describir algoritmos para <strong>P</strong>, no vamos a describir MMTT hasta los últimos detalles.</p>
+<p>Cuando tenemos un algoritmo en pseudocódigo cuya complejidad podemos caracterizar, podemos decir que tenemos una MT que implementa ese mismo algoritmo, con una deceleración polinomial.</p>
+</section>
+<section class="slide level1" id="codificación">
+<h1>Codificación</h1>
+<ul>
+<li>Tenemos que medir el tamaño de los datos manejados por las MMTT (y/o nuestros algorítmos) en <em>bits</em>.</li>
+<li>Tiene un impacto como representamos los símbolos, números, grafos, conjuntos, mátrices, etc.</li>
+<li>En particular, escribir un número en base binaria es exponencialmente más sucinto que en base unaria. Puede ser que un algorítmo para <span class="math"><em>L</em><sub><em>u</em><em>n</em><em>a</em><em>r</em><em>i</em><em>o</em></sub></span> corra en tiempo polinomial pero su equivalente para <span class="math"><em>L</em><sub><em>b</em><em>i</em><em>n</em><em>a</em><em>r</em><em>i</em><em>o</em></sub></span> en tiempo exponencial!</li>
+<li>Buena noticia, operaciones usuales (eg <span class="math"> + </span>, <span class="math"> − </span>, <span class="math">. </span>, <span class="math"> / </span>) se pueden hacer en tiempo polinomial con representación binaria</li>
+</ul>
+</section>
+<section class="slide level1" id="críticas-de-p-problemas-fáciles">
+<h1>Críticas de &quot;<strong>P</strong> = problemas fáciles&quot;</h1>
+<ul>
+<li>es demasiado permisiva</li>
+<li>es demasiado estricta</li>
+</ul>
+</section>
+<section class="slide level1" id="dónde-está-p">
+<h1>¿Dónde está <strong>P</strong>?</h1>
+<ul>
+<li>¿todos los lenguajes están en <strong>P</strong>?</li>
+<li>¿todos los lenguajes decidibles están en <strong>P</strong>?</li>
+</ul>
+<!--
+# Funciones constructibles en tiempo
+-->
+
+
+</section>
+<section class="slide level1" id="problemas-arbitrariamente-difíciles">
+<h1>Problemas arbitrariamente difíciles</h1>
+<div class="thm">
+Para toda función <span class="math"><em>T</em>: ℕ  ↦ ℕ </span> constructible en tiempo, existe un lenguaje <span class="math"><em>L</em><sub><em>T</em></sub></span> decidible que <em>no</em> puede ser decidido por una MT corriendo en tiempo <span class="math"><em>T</em>(<em>n</em>)</span>.
+</div>
+
+</section>
+<section class="slide level1" id="demostración">
+<h1>Demostración</h1>
+<p><span class="math"><em>L</em><sub><em>T</em></sub> = {⌊<em>M</em>⌋ ∣ <em>M</em></span> es una MT y <span class="math"><em>M</em>(⌊<em>M</em>⌋) = 1</span> en <span class="math"><em>T</em>(∣⌊<em>M</em>⌋∣)</span> pasos <span class="math">}</span></p>
+<ul>
+<li><span class="math"><em>L</em><sub><em>T</em></sub></span> es decidible (usar MT universal)</li>
+<li><span class="math"><em>L</em><sub><em>T</em></sub></span> <em>no</em> se puede decidir en menos de <span class="math"><em>T</em>(<em>n</em>)</span> pasos
+<ul>
+<li>supongamos <span class="math">∃ </span> N que decide <span class="math"><em>L</em><sub><em>T</em></sub></span> en <span class="math"> ≤ <em>T</em>(<em>n</em>)</span> pasos.</li>
+<li>entonces <span class="math">∃ </span> N' (definida gracias a N) tal que:
+<ul>
+<li>si input <span class="math"> ∈ <em>L</em><sub><em>T</em></sub></span>, corre siempre</li>
+<li>si input <span class="math"> ∉ <em>L</em><sub><em>T</em></sub></span>, se detiene y imprime <span class="math">1</span> (en <span class="math"> ≤ <em>T</em>(<em>n</em>)</span> pasos)</li>
+<li>¿Qué pasa con <span class="math"><em>N</em>ʹ(⌊<em>N</em>ʹ⌋)</span>?</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="time-hierarchy-theorem-hartmanis-y-stearns-1965">
+<h1>Time hierarchy theorem (Hartmanis y Stearns, 1965)</h1>
+<p>Generalización del resultado previo:</p>
+<div class="thm">
+<p>Si f,g son funciones constructibles en tiempo tales que <span class="math"><em>f</em>(<em>n</em>). <em>l</em><em>o</em><em>g</em>(<em>f</em>(<em>n</em>)) = <em>o</em>(<em>g</em>(<em>n</em>))</span>, entonces</p>
+<strong>TIME</strong><span class="math">(<em>f</em>(<em>n</em>))</span> <span class="math"> ⊂  ≠ </span> <strong>TIME</strong><span class="math">(<em>g</em>(<em>n</em>))</span>
+</div>
+
+<p>En particular: <strong>TIME</strong>(<span class="math"><em>n</em><sup><em>c</em></sup></span>) <span class="math"> ⊂  ≠ </span> <strong>TIME</strong>(<span class="math"><em>n</em><sup><em>d</em></sup></span>) con <span class="math"><em>c</em> &lt; <em>d</em></span>.</p>
+</section>
+<section class="slide level1" id="aplicación">
+<h1>Aplicación</h1>
+<div class="thm">
+<strong>EXPTIME</strong> = <span class="math">⋃ <sub><em>c</em> ≥ 0</sub></span><strong>TIME</strong><span class="math">(2<sup><em>n</em><sup><em>c</em></sup></sup>)</span>.
+</div>
+
+Consecuencia del time hierarchy theorem:
+<div class="thm">
+<strong>P</strong> <span class="math"> ⊂ </span> <strong>EXPTIME</strong>
+</div>
+
+</section>
+<section class="slide level1" id="conclusiones">
+<h1>Conclusiones</h1>
+<ul>
+<li>Noción de complejidad intrinseca de un lenguaje</li>
+<li>Definir una clase de complejidad en tiempo de corrida de una MT, necesita no ser demasiado preciso ni demasiado impreciso</li>
+<li>La clase <strong>P</strong> es robusta: nos podemos olvidar del alfabeto usado, del número de cintas, de si tenemos acceso indexado a la memoria, etc.</li>
+<li>Lo que se viene:
+<ul>
+<li>clase <strong>NP</strong></li>
+<li>reducciones polinomiales</li>
+<li>completitud</li>
+<li>teorema de Cook-Levin</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1" id="referencias">
+<h1>Referencias</h1>
+<ul>
+<li>Hartmanis y Stearns, &quot;On the computational complexity of algorithms&quot;, 1965</li>
+<li>Pippenger y Fischer, &quot;Relations among complexity measures&quot;, 1979</li>
+<li>Scott Aaronson, <a href="https://stellar.mit.edu/S/course/6/sp12/6.045/materials.html">Automata, Computability and Complexity</a></li>
+<li>Dick Lipton <a href="http://rjlipton.wordpress.com/2010/01/27/programming-turing-machines-is-hard/">Programming Turing Machines is Hard</a></li>
+</ul>
+</section>
+<!-- {{{{ dzslides core
+#
+#
+#     __  __  __       .  __   ___  __
+#    |  \  / /__` |    | |  \ |__  /__`
+#    |__/ /_ .__/ |___ | |__/ |___ .__/ core :€
+#
+#
+# The following block of code is not supposed to be edited.
+# But if you want to change the behavior of these slides,
+# feel free to hack it!
+#
+-->
+
+<div id="progress-bar"></div>
+
+<!-- Default Style -->
+<style>
+  * { margin: 0; padding: 0; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+  details { display: none; }
+  html, .view body { background-color: black; counter-reset: slideidx; }
+  body, .view section { background-color: white; border-radius: 12px }
+  body {
+    width: 800px; height: 600px;
+    margin-left: -400px; margin-top: -300px;
+    position: absolute; top: 50%; left: 50%;
+    overflow: hidden;
+    display: none;
+  }
+  .view body {
+    position: static;
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    display: inline-block;
+    overflow: visible; overflow-x: hidden;
+    /* undo Dz.onresize */
+    transform: none !important;
+    -moz-transform: none !important;
+    -webkit-transform: none !important;
+    -o-transform: none !important;
+    -ms-transform: none !important;
+  }
+  .view head, .view head > title { display: block }
+  section {
+    position: absolute;
+    pointer-events: none;
+    width: 100%; height: 100%;
+  }
+  .view section {
+    pointer-events: auto;
+    position: static;
+    width: 800px; height: 600px;
+    margin: -150px -200px;
+    float: left;
+
+    transform: scale(.4);
+    -moz-transform: scale(.4);
+    -webkit-transform: scale(.4);
+    -o-transform: scale(.4);
+    -ms-transform: scale(.4);
+  }
+  .view section > * { pointer-events: none; }
+  section[aria-selected] { pointer-events: auto; }
+  html { overflow: hidden; }
+  html.view { overflow: visible; }
+  body.loaded { display: block; }
+  .incremental {visibility: hidden; }
+  .incremental[active] {visibility: visible; }
+  #progress-bar{
+    bottom: 0;
+    position: absolute;
+    -moz-transition: width 400ms linear 0s;
+    -webkit-transition: width 400ms linear 0s;
+    -ms-transition: width 400ms linear 0s;
+    transition: width 400ms linear 0s;
+  }
+  .view #progress-bar {
+    display: none;
+  }
+
+div.thm {
+    max-width: 27em;
+    margin: 1em;
+    padding: .5em;
+    border: thin solid;
+    border-bottom: .15em solid;
+    border-radius: 1em;
+    box-shadow: 0px 5px 10px 1px hsl(0, 0%, 60%);
+}
+</style>
+
+<script>
+  var Dz = {
+    remoteWindows: [],
+    idx: -1,
+    step: 0,
+    html: null,
+    slides: null,
+    progressBar : null,
+    params: {
+      autoplay: "1"
+    }
+  };
+
+  Dz.init = function() {
+    document.body.className = "loaded";
+    this.slides = Array.prototype.slice.call($$("body > section"));
+    this.progressBar = $("#progress-bar");
+    this.html = document.body.parentNode;
+    this.setupParams();
+    this.onhashchange();
+    this.setupTouchEvents();
+    this.onresize();
+    this.setupView();
+  }
+
+  Dz.setupParams = function() {
+    var p = window.location.search.substr(1).split('&');
+    p.forEach(function(e, i, a) {
+      var keyVal = e.split('=');
+      Dz.params[keyVal[0]] = decodeURIComponent(keyVal[1]);
+    });
+  // Specific params handling
+    if (!+this.params.autoplay)
+      $$.forEach($$("video"), function(v){ v.controls = true });
+  }
+
+  Dz.onkeydown = function(aEvent) {
+    // Don't intercept keyboard shortcuts
+    if (aEvent.altKey
+      || aEvent.ctrlKey
+      || aEvent.metaKey
+      || aEvent.shiftKey) {
+      return;
+    }
+    if ( aEvent.keyCode == 37 // left arrow
+      || aEvent.keyCode == 38 // up arrow
+      || aEvent.keyCode == 33 // page up
+    ) {
+      aEvent.preventDefault();
+      this.back();
+    }
+    if ( aEvent.keyCode == 39 // right arrow
+      || aEvent.keyCode == 40 // down arrow
+      || aEvent.keyCode == 34 // page down
+    ) {
+      aEvent.preventDefault();
+      this.forward();
+    }
+    if (aEvent.keyCode == 35) { // end
+      aEvent.preventDefault();
+      this.goEnd();
+    }
+    if (aEvent.keyCode == 36) { // home
+      aEvent.preventDefault();
+      this.goStart();
+    }
+    if (aEvent.keyCode == 32) { // space
+      aEvent.preventDefault();
+      this.toggleContent();
+    }
+    if (aEvent.keyCode == 70) { // f
+      aEvent.preventDefault();
+      this.goFullscreen();
+    }
+    if (aEvent.keyCode == 79) { // o
+      aEvent.preventDefault();
+      this.toggleView();
+    }
+  }
+
+  /* Touch Events */
+
+  Dz.setupTouchEvents = function() {
+    var orgX, newX;
+    var tracking = false;
+
+    var db = document.body;
+    db.addEventListener("touchstart", start.bind(this), false);
+    db.addEventListener("touchmove", move.bind(this), false);
+
+    function start(aEvent) {
+      aEvent.preventDefault();
+      tracking = true;
+      orgX = aEvent.changedTouches[0].pageX;
+    }
+
+    function move(aEvent) {
+      if (!tracking) return;
+      newX = aEvent.changedTouches[0].pageX;
+      if (orgX - newX > 100) {
+        tracking = false;
+        this.forward();
+      } else {
+        if (orgX - newX < -100) {
+          tracking = false;
+          this.back();
+        }
+      }
+    }
+  }
+
+  Dz.setupView = function() {
+    document.body.addEventListener("click", function ( e ) {
+      if (!Dz.html.classList.contains("view")) return;
+      if (!e.target || e.target.nodeName != "SECTION") return;
+
+      Dz.html.classList.remove("view");
+      Dz.setCursor(Dz.slides.indexOf(e.target) + 1);
+    }, false);
+  }
+
+  /* Adapt the size of the slides to the window */
+
+  Dz.onresize = function() {
+    var db = document.body;
+    var sx = db.clientWidth / window.innerWidth;
+    var sy = db.clientHeight / window.innerHeight;
+    var transform = "scale(" + (1/Math.max(sx, sy)) + ")";
+
+    db.style.MozTransform = transform;
+    db.style.WebkitTransform = transform;
+    db.style.OTransform = transform;
+    db.style.msTransform = transform;
+    db.style.transform = transform;
+  }
+
+
+  Dz.getDetails = function(aIdx) {
+    var s = $("section:nth-of-type(" + aIdx + ")");
+    var d = s.$("details");
+    return d ? d.innerHTML : "";
+  }
+
+  Dz.onmessage = function(aEvent) {
+    var argv = aEvent.data.split(" "), argc = argv.length;
+    argv.forEach(function(e, i, a) { a[i] = decodeURIComponent(e) });
+    var win = aEvent.source;
+    if (argv[0] === "REGISTER" && argc === 1) {
+      this.remoteWindows.push(win);
+      this.postMsg(win, "REGISTERED", document.title, this.slides.length);
+      this.postMsg(win, "CURSOR", this.idx + "." + this.step);
+      return;
+    }
+    if (argv[0] === "BACK" && argc === 1)
+      this.back();
+    if (argv[0] === "FORWARD" && argc === 1)
+      this.forward();
+    if (argv[0] === "START" && argc === 1)
+      this.goStart();
+    if (argv[0] === "END" && argc === 1)
+      this.goEnd();
+    if (argv[0] === "TOGGLE_CONTENT" && argc === 1)
+      this.toggleContent();
+    if (argv[0] === "SET_CURSOR" && argc === 2)
+      window.location.hash = "#" + argv[1];
+    if (argv[0] === "GET_CURSOR" && argc === 1)
+      this.postMsg(win, "CURSOR", this.idx + "." + this.step);
+    if (argv[0] === "GET_NOTES" && argc === 1)
+      this.postMsg(win, "NOTES", this.getDetails(this.idx));
+  }
+
+  Dz.toggleContent = function() {
+    // If a Video is present in this new slide, play it.
+    // If a Video is present in the previous slide, stop it.
+    var s = $("section[aria-selected]");
+    if (s) {
+      var video = s.$("video");
+      if (video) {
+        if (video.ended || video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
+    }
+  }
+
+  Dz.setCursor = function(aIdx, aStep) {
+    // If the user change the slide number in the URL bar, jump
+    // to this slide.
+    aStep = (aStep != 0 && typeof aStep !== "undefined") ? "." + aStep : ".0";
+    window.location.hash = "#" + aIdx + aStep;
+  }
+
+  Dz.onhashchange = function() {
+    var cursor = window.location.hash.split("#"),
+        newidx = 1,
+        newstep = 0;
+    if (cursor.length == 2) {
+      newidx = ~~cursor[1].split(".")[0];
+      newstep = ~~cursor[1].split(".")[1];
+      if (newstep > Dz.slides[newidx - 1].$$('.incremental > *').length) {
+        newstep = 0;
+        newidx++;
+      }
+    }
+    this.setProgress(newidx, newstep);
+    if (newidx != this.idx) {
+      this.setSlide(newidx);
+    }
+    if (newstep != this.step) {
+      this.setIncremental(newstep);
+    }
+    for (var i = 0; i < this.remoteWindows.length; i++) {
+      this.postMsg(this.remoteWindows[i], "CURSOR", this.idx + "." + this.step);
+    }
+  }
+
+  Dz.back = function() {
+    if (this.idx == 1 && this.step == 0) {
+      return;
+    }
+    if (this.step == 0) {
+      this.setCursor(this.idx - 1,
+                     this.slides[this.idx - 2].$$('.incremental > *').length);
+    } else {
+      this.setCursor(this.idx, this.step - 1);
+    }
+  }
+
+  Dz.forward = function() {
+    if (this.idx >= this.slides.length &&
+        this.step >= this.slides[this.idx - 1].$$('.incremental > *').length) {
+        return;
+    }
+    if (this.step >= this.slides[this.idx - 1].$$('.incremental > *').length) {
+      this.setCursor(this.idx + 1, 0);
+    } else {
+      this.setCursor(this.idx, this.step + 1);
+    }
+  }
+
+  Dz.goStart = function() {
+    this.setCursor(1, 0);
+  }
+
+  Dz.goEnd = function() {
+    var lastIdx = this.slides.length;
+    var lastStep = this.slides[lastIdx - 1].$$('.incremental > *').length;
+    this.setCursor(lastIdx, lastStep);
+  }
+
+  Dz.toggleView = function() {
+    this.html.classList.toggle("view");
+
+    if (this.html.classList.contains("view")) {
+      $("section[aria-selected]").scrollIntoView(true);
+    }
+  }
+
+  Dz.setSlide = function(aIdx) {
+    this.idx = aIdx;
+    var old = $("section[aria-selected]");
+    var next = $("section:nth-of-type("+ this.idx +")");
+    if (old) {
+      old.removeAttribute("aria-selected");
+      var video = old.$("video");
+      if (video) {
+        video.pause();
+      }
+    }
+    if (next) {
+      next.setAttribute("aria-selected", "true");
+      if (this.html.classList.contains("view")) {
+        next.scrollIntoView();
+      }
+      var video = next.$("video");
+      if (video && !!+this.params.autoplay) {
+        video.play();
+      }
+    } else {
+      // That should not happen
+      this.idx = -1;
+      // console.warn("Slide doesn't exist.");
+    }
+  }
+
+  Dz.setIncremental = function(aStep) {
+    this.step = aStep;
+    var old = this.slides[this.idx - 1].$('.incremental > *[aria-selected]');
+    if (old) {
+      old.removeAttribute('aria-selected');
+    }
+    var incrementals = $$('.incremental');
+    if (this.step <= 0) {
+      $$.forEach(incrementals, function(aNode) {
+        aNode.removeAttribute('active');
+      });
+      return;
+    }
+    var next = this.slides[this.idx - 1].$$('.incremental > *')[this.step - 1];
+    if (next) {
+      next.setAttribute('aria-selected', true);
+      next.parentNode.setAttribute('active', true);
+      var found = false;
+      $$.forEach(incrementals, function(aNode) {
+        if (aNode != next.parentNode)
+          if (found)
+            aNode.removeAttribute('active');
+          else
+            aNode.setAttribute('active', true);
+        else
+          found = true;
+      });
+    } else {
+      setCursor(this.idx, 0);
+    }
+    return next;
+  }
+
+  Dz.goFullscreen = function() {
+    var html = $('html'),
+        requestFullscreen = html.requestFullscreen || html.requestFullScreen || html.mozRequestFullScreen || html.webkitRequestFullScreen;
+    if (requestFullscreen) {
+      requestFullscreen.apply(html);
+    }
+  }
+  
+  Dz.setProgress = function(aIdx, aStep) {
+    var slide = $("section:nth-of-type("+ aIdx +")");
+    if (!slide)
+      return;
+    var steps = slide.$$('.incremental > *').length + 1,
+        slideSize = 100 / (this.slides.length - 1),
+        stepSize = slideSize / steps;
+    this.progressBar.style.width = ((aIdx - 1) * slideSize + aStep * stepSize) + '%';
+  }
+  
+  Dz.postMsg = function(aWin, aMsg) { // [arg0, [arg1...]]
+    aMsg = [aMsg];
+    for (var i = 2; i < arguments.length; i++)
+      aMsg.push(encodeURIComponent(arguments[i]));
+    aWin.postMessage(aMsg.join(" "), "*");
+  }
+  
+  function init() {
+    Dz.init();
+    window.onkeydown = Dz.onkeydown.bind(Dz);
+    window.onresize = Dz.onresize.bind(Dz);
+    window.onhashchange = Dz.onhashchange.bind(Dz);
+    window.onmessage = Dz.onmessage.bind(Dz);
+  }
+
+  window.onload = init;
+</script>
+
+
+<script> // Helpers
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function (oThis) {
+
+      // closest thing possible to the ECMAScript 5 internal IsCallable
+      // function 
+      if (typeof this !== "function")
+      throw new TypeError(
+        "Function.prototype.bind - what is trying to be fBound is not callable"
+      );
+
+      var aArgs = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP = function () {},
+          fBound = function () {
+            return fToBind.apply( this instanceof fNOP ? this : oThis || window,
+                   aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
+  }
+
+  var $ = (HTMLElement.prototype.$ = function(aQuery) {
+    return this.querySelector(aQuery);
+  }).bind(document);
+
+  var $$ = (HTMLElement.prototype.$$ = function(aQuery) {
+    return this.querySelectorAll(aQuery);
+  }).bind(document);
+
+  $$.forEach = function(nodeList, fun) {
+    Array.prototype.forEach.call(nodeList, fun);
+  }
+
+</script>
+<!-- vim: set fdm=marker: }}} -->
+</body>
+</html>

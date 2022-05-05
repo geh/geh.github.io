@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Complejidad Computacional Semana 5: NL, L</title>
+  <link href="data:text/css,div%2Ethm%20%7B%0A%20%20%20%20max%2Dwidth%3A%2027em%3B%0A%20%20%20%20margin%2Dleft%3A%202em%3B%20%0A%20%20%20%20padding%3A%20%2E5em%3B%0A%20%20%20%20border%3A%20thin%20solid%3B%0A%20%20%20%20border%2Dbottom%3A%20%2E15em%20solid%3B%0A%20%20%20%20border%2Dradius%3A%201em%3B%0A%20%20%20%20box%2Dshadow%3A%200px%205px%2010px%201px%20hsl%280%2C%200%25%2C%2060%25%29%3B%0A%7D%0A%0A" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">Complejidad Computacional Semana 5: <strong>NL</strong>, <strong>L</strong></h1>
+</div>
+<h1 id="nl-l"><strong>NL</strong>, <strong>L</strong></h1>
+<div class="thm">
+<p><strong>L</strong> = <strong>SPACE</strong><span class="math">(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span></p>
+<p><strong>NL</strong> = <strong>NSPACE</strong><span class="math">(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span></p>
+</div>
+
+
+<p>¿Que se puede alojar en espacio log?</p>
+<ul>
+<li>Número constante de contadores hasta la longitud del input</li>
+<li>Número constante de puntadores hacia la cinta de input</li>
+</ul>
+<h1 id="ejemplos">Ejemplos</h1>
+<p>Ya vimos que <span class="math"><em>P</em><em>A</em><em>T</em><em>H</em> ∈ </span> <strong>NL</strong>.</p>
+<p><span class="math"><em>u</em><em>P</em><em>A</em><em>T</em><em>H</em> ∈ </span><strong>L</strong> (Reingold 2004)</p>
+<p><span class="math">{0<sup><em>k</em></sup>1<sup><em>k</em></sup> ∣ <em>k</em> ≥ 0} ∈ </span> <strong>L</strong>:</p>
+<ul>
+<li>contar el número de 0 y el número de 1 que están en la cinta de input. Cada contador ocupa espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span></li>
+<li>comparar los dos contadores</li>
+</ul>
+<h1 id="transductor-logspace">Transductor logspace</h1>
+<div class="thm">
+
+<p>Un <em>transductor logspace</em> es una MT con:</p>
+<ul>
+<li>una cinta de input en lectura sola</li>
+<li>una cinta de trabajo de tamaño <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span></li>
+<li>una cinta de output en <em>escritura sola</em><br /> (su cabezal puede sólo quedarse inactivo o escribir un símbolo y moverse a la derecha)</li>
+</ul>
+<p>Un transductor logspace <span class="math"><em>M</em></span> computa una función <span class="math"><em>f</em>: {0, 1}<sup> * </sup> ↦ {0, 1}<sup> * </sup></span> si para todo input <span class="math"><em>x</em></span>, <span class="math"><em>M</em></span> se detiene con <span class="math"><em>f</em>(<em>x</em>)</span> escrito en la cinta de output.</p>
+<p>Decimos que <span class="math"><em>f</em></span> es calculable en espacio logarítmico.</p>
+</div>
+
+<h1 id="reducciónes-logarítmicas">Reducciónes logarítmicas</h1>
+<div class="thm">
+<p>Para dos lenguajes <span class="math"><em>B</em>, <em>C</em></span>, si existe una función <span class="math"><em>f</em></span> calculable en espacio logarítmico tal que para todo <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>, <span class="math"><em>x</em> ∈ <em>B</em></span> ssi <span class="math"><em>f</em>(<em>x</em>) ∈ <em>C</em></span>, entonces decimos que <span class="math"><em>B</em></span> es <em>reducible en espacio logarímico</em> a <span class="math"><em>C</em></span> (escrito <span class="math"><em>B</em> ≤ <sub><em>L</em></sub><em>C</em></span>).</p>
+<p><span class="math"><em>C</em> ∈ </span><strong>NL</strong> es <strong>NL</strong> completo si para todo <span class="math"><em>B</em> ∈ </span> <strong>NL</strong>, <span class="math"><em>B</em> ≤ <sub><em>L</em></sub><em>C</em></span>.</p>
+</div>
+
+<h1 id="composición-en-espacio-log">Composición en espacio log</h1>
+Propiedades
+<div class="thm">
+<p>Si <span class="math"><em>B</em> ≤ <sub><em>L</em></sub><em>C</em></span> y <span class="math"><em>C</em> ∈ </span> <strong>L</strong> entonces <span class="math"><em>B</em> ∈ </span> <strong>L</strong>.</p>
+</div>
+
+<blockquote>
+<ul>
+<li>Mostramos que existe <span class="math"><em>M</em><sub><em>B</em></sub></span> que decide <span class="math"><em>B</em></span> en espacio log.</li>
+<li>Primer intento: pegar el transductor <span class="math"><em>T</em></span> de <span class="math"><em>B</em> ≤ <sub><em>L</em></sub><em>C</em></span> con la máquina <span class="math"><em>M</em><sub><em>C</em></sub></span> que decide <span class="math"><em>C</em></span>.</li>
+<li>Pero eso necesita <span class="math"><em>f</em>(<em>x</em>)</span>, que puede tener un tamaño más grande que logarítmico en función de <span class="math"><em>B</em></span>.</li>
+</ul>
+</blockquote>
+<hr />
+Lemma:
+<div class="thm">
+<p>Si <span class="math"><em>T</em></span> es un transductor logspace que computa <span class="math"><em>x</em> ↦ <em>f</em>(<em>x</em>)</span>, entonces se puede modificar en <span class="math"><em>T</em>ʹ</span> que computa <span class="math">⌊<em>x</em>, <em>i</em>⌋ ↦ <em>f</em>(<em>x</em>)<sub><em>i</em></sub></span> en espacio log.</p>
+</div>
+
+<blockquote>
+<ul>
+<li>Idea:<br /> <span class="math"><em>T</em>ʹ</span> tiene un contador inicializado a <span class="math"><em>i</em></span>.<br /> Cuando <span class="math"><em>T</em></span> va para escribir un bit de <span class="math"><em>f</em>(<em>x</em>)</span>, <span class="math"><em>T</em>ʹ</span> no escribe nada pero decementa el contador.<br /> Cuando el contador llega a <span class="math">0</span>, <span class="math"><em>T</em>ʹ</span> escribe el bit <span class="math"><em>f</em>(<em>x</em>)<sub><em>i</em></sub></span> y se detiene.</li>
+<li>Ese contador ocupa un espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>∣<em>f</em>(<em>x</em>)∣) = <em>O</em>(<em>l</em><em>o</em><em>g</em>∣<em>x</em>∣)</span></li>
+</ul>
+</blockquote>
+<hr />
+<blockquote>
+<ul>
+<li>Modificar <span class="math"><em>T</em></span> para que compute sólo el bit de <span class="math"><em>f</em>(<em>x</em>)</span> que <span class="math"><em>M</em><sub><em>C</em></sub></span> necesita (entonces su input tiene forma <span class="math">⌊<em>x</em>, <em>i</em>⌋</span>)</li>
+<li><span class="math"><em>M</em><sub><em>B</em></sub></span> controla donde está el cabezal de lectura de <span class="math"><em>M</em><sub><em>C</em></sub></span> en <span class="math"><em>f</em>(<em>x</em>)</span>, y corre el cálculo de <span class="math"><em>f</em>(<em>x</em>)<sub><em>i</em></sub></span> por <span class="math"><em>T</em></span></li>
+<li>Hacer eso necesita calcular de vuelta varias partes de <span class="math"><em>f</em>(<em>x</em>)</span>, entonces es ineficiente en tiempo, pero es eficiente en espacio.</li>
+<li><span class="math"><em>M</em><sub><em>B</em></sub></span> corre en espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>∣<em>f</em>(<em>x</em>)∣)</span> + <span class="math"><em>O</em>(<em>s</em>(∣<em>x</em>∣))</span> + <span class="math"><em>O</em>(<em>s</em>ʹ(∣<em>f</em>(<em>x</em>)∣))</span>, con <span class="math"><em>s</em></span> y <span class="math"><em>s</em>ʹ</span> el espacio de <span class="math"><em>T</em></span> y <span class="math"><em>M</em><sub><em>C</em></sub></span></li>
+<li>entonces <span class="math"><em>M</em><sub><em>B</em></sub></span> corre en espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>∣<em>x</em>∣)</span></li>
+</ul>
+</blockquote>
+<h1 id="path-es-nl-completo">PATH es <strong>NL</strong> completo</h1>
+<blockquote>
+<ul>
+<li>sea <span class="math"><em>B</em> ∈ </span><strong>NL</strong>, mostramos <span class="math"><em>B</em> ≤ <sub><em>L</em></sub><em>P</em><em>A</em><em>T</em><em>H</em></span></li>
+<li><span class="math"><em>M</em></span> es nondeterminística y decide <span class="math"><em>B</em></span> en espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span></li>
+<li>usamos <span class="math"><em>x</em> ↦ <em>f</em>(<em>x</em>) = ⌊<em>G</em><sub><em>M</em>, <em>x</em></sub>, <em>C</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub>, <em>C</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub>⌋</span></li>
+<li><span class="math"><em>M</em>(<em>x</em>) = 1</span> ssi existe camino de <span class="math"><em>C</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub></span> a <span class="math"><em>C</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span></li>
+<li><span class="math"><em>x</em> ↦ <em>f</em>(<em>x</em>)</span> es calculable en espacio log:
+<ul>
+<li>representar <span class="math"><em>G</em><sub><em>M</em>, <em>x</em></sub></span> como matriz de adjacencia</li>
+<li>para escribir un bit de esa matriz, computar si las configuraciones <span class="math"><em>C</em></span> y <span class="math"><em>C</em>ʹ</span> se siguen según las funciones de transición de <span class="math"><em>M</em></span></li>
+<li>se hace en espacio <span class="math"><em>O</em>(∣<em>C</em>∣ + ∣<em>C</em>ʹ∣) = <em>O</em>(<em>l</em><em>o</em><em>g</em>∣<em>x</em>∣)</span> deterministicamente</li>
+</ul></li>
+</ul>
+</blockquote>
+<h1 id="observaciones">Observaciones</h1>
+<blockquote>
+<ul>
+<li>un transductor logspace tiene un tiempo de corrida polinomial</li>
+<li>entonces si <span class="math"><em>B</em></span> es reducible en espacio log a <span class="math"><em>C</em></span>, también <span class="math"><em>B</em></span> es reducible en tiempo polinomial a <span class="math"><em>C</em></span></li>
+<li>se puede definir <strong>NP</strong> completitud con reducciones logspace (el libro de Papadimitriou lo hace), y ¡nada se rompe!</li>
+<li>es decir, no conocemos ningun ejemplo de problema en <strong>NP</strong> que sea completo para reducciones en tiempo polinomial, y no para reducciones en espacio log</li>
+<li>Se puede modificar la prueba del teorema de Cook-Levin que vimos de manera que sea en espacio log</li>
+</ul>
+</blockquote>
+<h1 id="certificados-para-nl">Certificados para <strong>NL</strong></h1>
+<blockquote>
+<ul>
+<li>podríamos pensar que <strong>NL</strong> es la clase de problemas que tienen soluciones chequeables en espacio log</li>
+<li>problema: SAT tiene soluciones chequeables en espacio log (no obvio pero lo asumimos)</li>
+<li>tendríamos <strong>NP</strong> <span class="math"> ⊆ </span> <strong>NL</strong>, poco probable dado que <strong>NL</strong> <span class="math"> ⊆ </span> <strong>P</strong></li>
+<li>¿qué es lo que hay que arreglar en esa definición?</li>
+</ul>
+</blockquote>
+<h1 id="definición-alternativa-de-nl">Definición alternativa de <strong>NL</strong></h1>
+<div class="thm">
+<p><span class="math"><em>B</em> ∈ </span><strong>NL</strong> si existe una MT <span class="math"><em>M</em></span> determinística con una cinta adicional en <em>lectura única</em>, y un polinomio <span class="math"><em>p</em>: ℕ  ↦ ℕ </span> tal que para todo <span class="math"><em>x</em> ∈ {0, 1}<sup> * </sup></span>:</p>
+<p><span class="math"><em>x</em> ∈ <em>B</em> ↔ ∃ <em>u</em> ∈ {0, 1}<sup><em>p</em>(∣<em>x</em>∣)</sup><em>s</em>. <em>t</em>. <em>M</em>(<em>x</em>, <em>u</em>) = 1</span></p>
+<p>Con:</p>
+<ul>
+<li><span class="math"><em>M</em>(<em>x</em>, <em>u</em>)</span> el output de <span class="math"><em>M</em></span> con <span class="math"><em>x</em></span> puesto en su cinta de input y <span class="math"><em>u</em></span> puesto en su cinta en lectura única</li>
+<li><span class="math"><em>M</em></span> corre en espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>(∣<em>x</em>∣))</span></li>
+</ul>
+</div>
+
+<h1 id="equivalencia-de-definiciones">Equivalencia de definiciones</h1>
+<p>Mostramos que <span class="math"><em>B</em> ∈ <em>N</em><em>L</em><sub><em>n</em><em>d</em></sub> ⇔ <em>B</em> ∈ <em>N</em><em>L</em><sub><em>c</em><em>e</em><em>r</em><em>t</em></sub></span></p>
+<p><span class="math">∃ </span> MTND <span class="math"><em>N</em></span> logspace <span class="math"> ⇔ </span> <span class="math">∃ </span> MTD M logspace con certificado</p>
+<blockquote>
+<ul>
+<li><span class="math"><em>N</em></span> corre en tiempo polinomial</li>
+<li>las elecciónes de <span class="math"><em>N</em></span> forman el certificado <span class="math"><em>u</em></span> de <span class="math"><em>M</em></span></li>
+<li>La definición de <span class="math"><em>δ</em></span> de <span class="math"><em>M</em></span> sigue las <span class="math"><em>δ</em><sub>0</sub></span> y <span class="math"><em>δ</em><sub>1</sub></span> de <span class="math"><em>N</em></span>, en particular:<br /> <span class="math"><em>δ</em>(0, . . . ) = <em>δ</em><sub>0</sub>(. . . )</span><br /> <span class="math"><em>δ</em>(1, . . . ) = <em>δ</em><sub>1</sub>(. . . )</span><br /> <span class="math">0</span> o <span class="math">1</span> siendo el bit leido por <span class="math"><em>M</em></span> en la cinta del certificado</li>
+<li>dado que <span class="math"><em>N</em></span> usa espacio log, <span class="math"><em>M</em></span> también</li>
+</ul>
+</blockquote>
+<h1 id="teorema-de-immerman-szelepcsényi">Teorema de Immerman-Szelepcsényi</h1>
+<div class="thm">
+<p>El complemento de <span class="math"><em>P</em><em>A</em><em>T</em><em>H</em></span> está en <strong>NL</strong></p>
+</div>
+
+<ul>
+<li>Immerman. <em>Nondeterministic space is closed under complementation</em>, 1988</li>
+<li>Szelepcsényi. <em>The method of forcing for nondeterministic automata</em>, 1987</li>
+</ul>
+<h1 id="demostración">Demostración</h1>
+<p>Mostramos que hay un algoritmo A corriendo en espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span> tal que:</p>
+<p><span class="math"><em>A</em>(<em>G</em>, <em>s</em>, <em>t</em>, <em>u</em>) = 1</span> ssi <span class="math"><em>t</em></span> no es alcanzable desde <span class="math"><em>s</em></span> en <span class="math"><em>G</em></span>, con certificado <span class="math"><em>u</em></span> en lectura única.</p>
+<p>Llamamos:</p>
+<ul>
+<li><span class="math"><em>n</em></span> el número de nodos de <span class="math"><em>G</em></span></li>
+<li><span class="math"><em>C</em><sub><em>i</em></sub></span> el conjunto de nodos alcanzables desde <span class="math"><em>s</em></span> en <span class="math"> ≤ <em>i</em></span> pasos</li>
+<li><span class="math"><em>c</em><sub><em>i</em></sub></span> el tamaño de <span class="math"><em>C</em><sub><em>i</em></sub></span></li>
+</ul>
+<hr />
+<p>Para cualquier input, A ya sabe:</p>
+<p><span class="math"><em>C</em><sub>0</sub> = {<em>s</em>}</span></p>
+<p><span class="math"><em>c</em><sub>0</sub> = 1</span></p>
+<p><span class="math"><em>v</em> ∈ <em>C</em><sub><em>i</em></sub></span> puede ser chequeado facilmente: un certificado <span class="math"><em>p</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em>)</span> en lectura única es la secuencia de nodos <span class="math"><em>v</em><sub>0</sub>, <em>v</em><sub>1</sub>, …, <em>v</em><sub><em>k</em></sub></span> del camino de <span class="math"><em>s</em></span> a <span class="math"><em>v</em></span> (<span class="math"><em>k</em> ≤ <em>i</em></span>).</p>
+<hr />
+<p>Además de <span class="math"><em>p</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em>)</span> necesitamos dos tipos de certificados:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math"><em>n</em><em>o</em><em>P</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em>)</span>:<br /> certificado para <span class="math"><em>v</em> ∉ <em>C</em><sub><em>i</em></sub></span>, asumiendo que el verificador ya conoce el valor <span class="math"><em>c</em><sub><em>i</em></sub></span>.</li>
+<li><span class="math"><em>s</em><em>i</em><em>z</em><em>e</em><sub><em>i</em></sub>(<em>k</em>)</span>:<br /> certificado para <span class="math"><em>c</em><sub><em>i</em></sub> = <em>k</em></span>, asumiendo que el verificador ya conoce el valor <span class="math"><em>c</em><sub><em>i</em> − 1</sub></span>.</li>
+</ol>
+<p>Con certificados de tipo 2 nos podemos enterar de los valores <span class="math"><em>c</em><sub>1</sub>, …, <em>c</em><sub><em>n</em></sub></span>, y al final con un certificado de tipo 1, convencernos que <span class="math"><em>t</em> ∉ <em>C</em><sub><em>n</em></sub></span>.</p>
+<hr />
+<p>Certificado <span class="math"><em>n</em><em>o</em><em>P</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em>)</span>, asumiendo <span class="math"><em>c</em><sub><em>i</em> − 1</sub></span> está conocido:</p>
+<blockquote>
+<p><span class="math"><em>v</em><sub>1</sub>, <em>p</em><em>a</em><em>t</em><em>h</em><sub><em>i</em> − 1</sub>(<em>s</em>, <em>v</em><sub>1</sub>), …, <em>v</em><sub><em>c</em><sub><em>i</em> − 1</sub></sub>, <em>p</em><em>a</em><em>t</em><em>h</em><sub><em>i</em> − 1</sub>(<em>s</em>, <em>v</em><sub><em>c</em><sub><em>i</em> − 1</sub></sub>)</span></p>
+</blockquote>
+<p>con <span class="math"><em>v</em><sub>1</sub>, …<em>v</em><sub><em>c</em><sub><em>i</em> − 1</sub></sub> ∈ <em>C</em><sub><em>i</em> − 1</sub></span>.</p>
+<p>Se puede chequear que</p>
+<ol style="list-style-type: decimal">
+<li>el número de nodos del certif. es exactamente <span class="math"><em>c</em><sub><em>i</em> − 1</sub></span></li>
+<li>los nodos están listados en órden creciente</li>
+<li>ningun de los nodos listados es <span class="math"><em>v</em></span> ni un vecino de <span class="math"><em>v</em></span></li>
+<li>cada certificado <span class="math"><em>p</em><em>a</em><em>t</em><em>h</em><sub><em>i</em> − 1</sub>(<em>s</em>, <em>v</em><sub><em>j</em></sub>)</span> es correcto</li>
+</ol>
+<p>en espacio <span class="math"><em>O</em>(<em>l</em><em>o</em><em>g</em>(<em>n</em>))</span> con certificado en lectura única.</p>
+<hr />
+<p>Certificado <span class="math"><em>s</em><em>i</em><em>z</em><em>e</em><sub><em>i</em></sub>(<em>k</em>)</span>, asumiendo <span class="math"><em>c</em><sub><em>i</em> − 1</sub></span> está conocido:</p>
+<blockquote>
+<p><span class="math"><em>v</em><sub>1</sub>, (<em>n</em><em>o</em>)<em>P</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em><sub>1</sub>), <em>v</em><sub>2</sub>, (<em>n</em><em>o</em>)<em>P</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em><sub>2</sub>), …, <em>v</em><sub><em>n</em></sub>, (<em>n</em><em>o</em>)<em>P</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em><sub><em>n</em></sub>)</span></p>
+</blockquote>
+<p>dependiendo de si <span class="math"><em>v</em> ∈ <em>C</em><sub><em>i</em></sub></span> o no.</p>
+<p>Se puede chequear que</p>
+<ol style="list-style-type: decimal">
+<li>los nodos están listados en órden creciente</li>
+<li>cada certificado <span class="math"><em>p</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em>)</span> o <span class="math"><em>n</em><em>o</em><em>P</em><em>a</em><em>t</em><em>h</em><sub><em>i</em></sub>(<em>s</em>, <em>v</em>)</span> es correcto</li>
+<li>el número de nodos en <span class="math"><em>C</em><sub><em>i</em></sub></span> es exactamente <span class="math"><em>k</em></span></li>
+</ol>
+<p>en espacio log. con certificado en lectura única.</p>
+<hr />
+<p>Un certificado de <span class="math">(<em>G</em>, <em>s</em>, <em>t</em>) ∉ <em>P</em><em>A</em><em>T</em><em>H</em></span> es:</p>
+<p><span class="math"><em>s</em><em>i</em><em>z</em><em>e</em><sub>1</sub>(<em>c</em><sub>1</sub>), <em>s</em><em>i</em><em>z</em><em>e</em><sub>2</sub>(<em>c</em><sub>2</sub>), …, <em>s</em><em>i</em><em>z</em><em>e</em><sub><em>n</em> − 1</sub>(<em>c</em><sub><em>n</em> − 1</sub>), <em>n</em><em>o</em><em>P</em><em>a</em><em>t</em><em>h</em><sub><em>n</em></sub>(<em>s</em>, <em>t</em>)</span></p>
+<p>Cada certificado <span class="math"><em>s</em><em>i</em><em>z</em><em>e</em><sub><em>i</em></sub>(<em>c</em><sub><em>i</em></sub>)</span> puede ser chequeado en espacio log. y después de cada chequeo el verificador sólo necesita alojar <span class="math"><em>c</em><sub><em>i</em></sub></span>.</p>
+<p>Entonces todo el chequeo se hace en espacio log.</p>
+<h1 id="corolario">Corolario</h1>
+<div class="thm">
+<p>Si <span class="math"><em>s</em>: ℕ  ↦ ℕ </span> constructible en tiempo (<span class="math"> ≥ <em>l</em><em>o</em><em>g</em>(<em>n</em>)</span>), entonces <strong>NSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span> = <strong>coNSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span>.</p>
+</div>
+
+<hr />
+<p>Demo: Sea <span class="math"><em>B</em> ∈ </span><strong>coNSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span>.</p>
+<p>Entonces existe MTND <span class="math"><em>M</em></span> que usa espacio <span class="math"><em>s</em>(<em>n</em>)</span> tal que <span class="math"><em>x</em> ∈ <em>B</em></span> ssi ninguna secuencia de elecciones de <span class="math"><em>M</em></span> con input <span class="math"><em>x</em></span> llega a <span class="math"><em>q</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub></span>.</p>
+<p>Existe un transductor <span class="math"><em>T</em><sub><em>B</em></sub></span> que computa <span class="math"><em>x</em> ↦ ⌊<em>G</em><sub><em>M</em>, <em>x</em></sub>, <em>C</em><sub><em>s</em><em>t</em><em>a</em><em>r</em><em>t</em></sub>, <em>C</em><sub><em>a</em><em>c</em><em>c</em><em>e</em><em>p</em><em>t</em></sub>⌋</span> en espacio <span class="math"><em>O</em>(<em>s</em>(<em>n</em>))</span>.</p>
+<p><span class="math"><em>n</em><em>o</em><em>P</em><em>A</em><em>T</em><em>H</em> ∈ </span> <strong>NL</strong> ie existe MTND <span class="math"><em>N</em></span> que decide <span class="math"><em>n</em><em>o</em><em>P</em><em>A</em><em>T</em><em>H</em></span> en espacio log.</p>
+<p>Componiendo <span class="math"><em>T</em><sub><em>B</em></sub></span> y <span class="math"><em>N</em></span> de manera perezosa, obtenemos <span class="math"><em>M</em>ʹ</span> que decide <span class="math"><em>B</em></span> en espacio <span class="math"><em>O</em>(<em>s</em>(<em>n</em>))</span>, ie, <span class="math"><em>B</em> ∈ </span><strong>NSPACE</strong><span class="math">(<em>s</em>(<em>n</em>))</span>.</p>
+<h1 id="referencias">Referencias</h1>
+<ul>
+<li>Arora y Barak. Capítulo 4</li>
+<li><a href="http://www.dur.ac.uk/matthew.johnson2/teaching/acc/lectures/lecture12handout.pdf">Matthew Johnson, Lectures Notes 2009</a></li>
+<li><a href="http://russell.lums.edu.pk/~cs514s07/slides/lecture12.pdf">Nabil Mustafa, Lecture Notes, 2008</a></li>
+<li>Savitch. <em>Relationships between nondeterministic and deterministic tape complexities</em>. J. Comput. Syst. Sci., 4:177–192, 1970.</li>
+<li>Immerman. <em>Nondeterministic space is closed under complementation</em>. SIAM J. Comput., 17(5):935–938, 1988.</li>
+<li>Szelepcsényi. <em>The method of forcing for nondeterministic automata</em>. Bulletin of the European Association for Theoretical Computer Science, 33:96–100, Oct. 1987. Technical Contributions.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,297 @@
+\newcommand{\Vars}{\mathit{Vars}}
+
+\newcommand\dswap{\diam{\mathit{sw}}}
+\newcommand\bswap{[\mathit{sw}]}
+
+\newcommand\sab{\diam{\mathit{gsb}}}
+\newcommand\sabbox{[\mathit{gsb}]}
+
+\newcommand{\lsab}{\diam{\mathit{sb}}}
+\newcommand{\lsabbox}{[\mathit{sb}]}
+
+\newcommand{\bridge}{\diam{\mathit{br}}}
+\newcommand{\bridgebox}{[\mathit{br}]}
+
+\newcommand\dgswap{\diam{\mathit{gsw}}}
+\newcommand\bgswap{[\mathit{gsw}]}
+
+\newcommand{\gbridge}{\diam{\mathit{gbr}}}
+\newcommand{\gbridgebox}{[\mathit{gbr}]}
+
+
+\newcommand{\kn}{\textcircled{\small{k}}}
+\newcommand{\re}{\textcircled{r}}
+
+\newcommand{\qbfmodels}{\models_{\mathrm{qbf}}}
+
+\newcommand{\bml}{\ensuremath{\mathcal{ML}}\xspace}
+\newcommand{\lsl}{{\bml(\lsab)}}
+\newcommand{\gsl}{{\bml(\sab)}}
+\newcommand{\brl}{{\bml(\bridge)}}
+\newcommand{\gbrl}{{\bml(\gbridge)}}
+\newcommand{\swl}{{\bml(\dswap)}}
+\newcommand{\gswl}{{\bml(\dgswap)}}
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\fol}{{\mathcal{FOL}}}
+%\newcommand{\model}{{\mathcal{M}}}
+\newcommand{\pow}{{\mathcal{P}}}
+
+\newcommand{\Hl}{\mathcal{H}}
+\newcommand{\hlsd}{\Hl({:},\down)}
+\newcommand{\hlsde}{\Hl({:},\down,\E)}
+
+\newcommand{\A}{\textsf{A}}
+\newcommand{\E}{\textsf{E}}
+\newcommand{\PREF}{\mathsf{PREF}}
+\newcommand{\DYN}{{\rm \sf DYN}\xspace}
+\newcommand{\PROP}{{\rm \sf PROP}\xspace}
+\newcommand{\VAR}{{\rm \sf VAR}\xspace}
+\newcommand{\NOM}{{\rm \sf NOM}\xspace}
+\newcommand{\FORM}{{\rm \sf FORM}\xspace}
+\newcommand{\REL}{{\rm \sf REL}\xspace}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\lra}{\leftrightarrow}
+\newcommand{\Tr}{{\sf Tr}}
+%\newcommand{\bisim}{\leftrightarroweq}
+\renewcommand{\iff}{\mbox{iff}}
+
+\newcommand{\sbt}{\,\begin{picture}(-1,1)(-1,-3)\circle*{3}\end{picture}\ }
+
+%%%% Aca empiezan las macros viejas
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\gCE}{\mathcal{C}_\emptyset}
+\newcommand{\+}[1]{\mathcal{#1}}
+\newcommand{\pspace}{\textsc{pspace}}
+\newcommand{\prop}{\textsc{prop}}
+\newcommand{\rel}{\textsc{rel}}
+\newcommand{\nom}{\textsc{nom}}
+\newcommand{\noms}{\mbox{\begin{scriptsize}\nom\end{scriptsiMze}}}
+\newcommand{\fun}{\textsc{fun}}
+\newcommand{\funs}{\mbox{\begin{scriptsize}\fun\end{scriptsize}}}
+\newcommand{\var}{\textsc{var}}
+\newcommand{\ssym}{\textsc{ssym}}
+\newcommand{\forms}{\textsc{forms}}
+\newcommand{\terms}{\textsc{terms}}
+\newcommand{\mcs}{\mbox{\rm\textsf{MCS}}\xspace}
+\newcommand{\down}{{\downarrow}}
+%\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\tiff}{\mbox{\xspace iff \xspace}}
+\newcommand{\hlogic}{\mathcal{HL}(\down)}
+\newcommand{\hlogicone}{\mathcal{HL}_1(\down)}
+\newcommand{\hlogick}{\mathcal{HL}_k(\down)}
+\newcommand{\tr}{{\sf Tr}}
+\newcommand{\props}{\textsf{props}}
+\newcommand{\cons}{\textsf{cons}}
+\newcommand{\tup}[1]{\langle #1 \rangle}
+\newcommand{\replace}{[\known / (\known \lor i)]}
+\renewcommand{\frame}{\mathcal{F}}
+\newcommand{\nnf}{\mbox{nnf}}
+\newcommand{\Set}{\mathit{Set}}
+\newcommand{\Label}{\mathit{Label}}
+\newcommand{\ttup}[1]{\langle\!\langle #1 \rangle\!\rangle}
+\newcommand{\bbox}[1]{[\![ #1 ]\!]}
+\newcommand{\model}{\ensuremath{\mathcal{M}}\xspace}
+\newcommand{\nodel}{\ensuremath{\mathcal{N}}\xspace}
+\newcommand{\img}{\textrm{im\ }}
+\newcommand{\bisim}{\mathrel{\,\raisebox{.3ex}{$\underline{\makebox[.7em]{$\leftrightarrow$}}$}\,}}
+\newcommand{\tbisim}{\bisim^T}
+\newcommand{\modelse}{\models_{\emptyset}}
+\newcommand{\game}{EF(\model_1, \model_2, w_1, w_2)}
+\newcommand{\fo}{\mathcal{FOL}}
+\newcommand{\cset}[1]{\{#1\}}
+\newcommand{\csetsc}[2]{\{ #1 \ \mid #2\}}
+\newcommand{\dd}{{:}}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\Eq}{\mathrm{Eq}}
+\newcommand{\EF}{\mathit{EF}}
+\newcommand{\gCa}{\+C_{\rm all}}
+\newcommand{\gCe}{\+C_\emptyset}
+\newcommand{\pref}[3]{\langle#1,#3\rangle^{#2}}
+\newcommand{\preff}[4]{\langle#1,#3,#4\rangle^{#2}}
+\newcommand{\sig}{\mathcal{S}}
+\newcommand{\rels}{(R_r)_{r \in \rel}}
+\newcommand{\relsp}{(R'_r)_{r \in \rel}}
+\newcommand{\relsu}{(R^1_r)_{r \in \rel}}
+\newcommand{\relsd}{(R^2_r)_{r \in \rel}}
+\newcommand{\relsg}{(R_r^\Gamma)_{r \in \rel}}
+\newcommand{\relsc}{(R_r^c)_{r \in \rel}}
+\newcommand{\gM}{\mathcal{M}}
+\newcommand{\gC}{\mathcal{C}}
+\newcommand{\gL}{\mathcal{L}}
+\newcommand{\atom}{\textsc{atom}}
+\newcommand{\push}{{\tt (push)}}
+\newcommand{\pop}{{\tt (pop)}}
+\newcommand{\tope}{{\tt (top)}}
+\newcommand{\len}[1]{|#1|}
+\newcommand{\st}{{\sf ST}}
+\newcommand{\mequiv}{\leftrightsquigarrow}
+\newcommand{\MLPrefix}{\ensuremath{\mathcal{ML}^m}}
+\newcommand{\ML}{\ensuremath{\mathcal{ML}^m(\tup{r})}}
+\newcommand{\MLO}{\ensuremath{\mathcal{ML}^{m}_{\emptyset}(\tup{r})}}
+\newcommand{\MLM}{\ensuremath{\mathcal{ML}^m(\ttup{r})}}
+\newcommand{\MLOM}{\ensuremath{\mathcal{ML}^{m}_{\emptyset}(\ttup{r})}}
+\newcommand{\MLS}{\ensuremath{\mathcal{ML}^{st}_{\emptyset}(\tup{r})}}
+\newcommand{\MLOE}{\ensuremath{\mathcal{ML}^{m}_{\emptyset}(\tup{r},\erase)}}
+\newcommand{\MLOF}{\mathcal{ML}^{m}_{\emptyset}(\tup{r}, \forget)}
+\newcommand{\MLOEF}{\ensuremath{\mathcal{ML}^{m}_{\emptyset}(\tup{r}, \erase, \forget)}}
+\newcommand{\MLF}{\ensuremath{\mathcal{ML}^m(\tup{r}, \forget)}}
+\newcommand{\MLMF}{\ensuremath{\mathcal{ML}^m(\ttup{r},  \forget)}}
+\newcommand{\MLE}{\ensuremath{\mathcal{ML}^m(\tup{r},  \erase)}}
+\newcommand{\MLEF}{\ensuremath{\mathcal{ML}^m(\tup{r},  \erase, \forget)}}
+\newcommand{\MLME}{\ensuremath{\mathcal{ML}^m(\ttup{r},  \erase)}}
+\newcommand{\HMLEF}{\ensuremath{\mathcal{HL}^m(@, \tup{r}, \erase,\forget)}}
+\newcommand{\HMLF}{\ensuremath{\mathcal{HL}^m(@, \tup{r}, \forget)}}
+\newcommand{\HMLE}{\ensuremath{\mathcal{HL}^m(@, \tup{r}, \erase)}}
+\newcommand{\HML}{\ensuremath{\mathcal{HL}^m(@, \tup{r})}}
+\newcommand{\HMLO}{\ensuremath{\mathcal{HL}^{m}_{\emptyset}(@, \tup{r})}}
+\newcommand{\HMLM}{\ensuremath{\mathcal{HL}^m(\ttup{r})}}
+\newcommand{\HMLMone}{\ensuremath{\mathcal{HL}^m_1(\ttup{r})}}
+\newcommand{\HL}{\mathcal{HL}}
+\newlength{\size}
+\newcommand{\tknown}{\settowidth{\size}{\texttt{k}}\text{$\bigcirc
+    \hspace*{-1.4\size} \textnormal{\tt k}\,$}}
+\newcommand{\dknown}{\settowidth{\size}{$\displaystyle\texttt{k}$}\text{$\displaystyle\bigcirc
+    \hspace*{-1.4\size} \textnormal{\tt k}\,$}}
+\newcommand{\sknown}{\settowidth{\size}{$\scriptstyle\texttt{k}$}\text{$\scriptstyle\bigcirc
+    \hspace*{-1.3\size} \textnormal{\tt k}\,$}}
+\newcommand{\ssknown}{\settowidth{\size}{$\scriptscriptstyle\texttt{k}$}\text{$\scriptscriptstyle\bigcirc
+    \hspace*{-1.5\size} \textnormal{\tt k}\,$}}
+\newcommand{\known}{\mathchoice{\dknown}{\tknown}{\sknown}{\ssknown}}
+\newcommand{\tremember}{\settowidth{\size}{\texttt{r}}\text{$\bigcirc
+    \hspace*{-1.4\size} \textnormal{\tt r}\,$}}
+\newcommand{\dremember}{\settowidth{\size}{$\displaystyle\texttt{r}$}\text{$\displaystyle\bigcirc
+    \hspace*{-1.4\size} \textnormal{\tt r}\,$}}
+\newcommand{\sremember}{\settowidth{\size}{$\scriptstyle\texttt{r}$}\text{$\scriptstyle\bigcirc
+    \hspace*{-1.3\size} \textnormal{\tt r}\,$}}
+\newcommand{\ssremember}{\settowidth{\size}{$\scriptscriptstyle\texttt{r}$}\text{$\scriptscriptstyle\bigcirc
+    \hspace*{-1.5\size} \textnormal{\tt r}\,$}}
+\newcommand{\remember}{\mathchoice{\dremember}{\tremember}{\sremember}{\ssremember}}
+\newcommand{\terase}{\settowidth{\size}{\texttt{e}}\text{$\bigcirc
+    \hspace*{-1.5\size} \textnormal{\tt e}\,$}}
+\newcommand{\derase}{\settowidth{\size}{$\displaystyle\texttt{e}$}\text{$\displaystyle\bigcirc
+    \hspace*{-1.5\size} \textnormal{\tt e}\,$}}
+\newcommand{\serase}{\settowidth{\size}{$\scriptstyle\texttt{e}$}\text{$\scriptstyle\bigcirc
+    \hspace*{-1.3\size} \textnormal{\tt e}\,$}}
+\newcommand{\sserase}{\settowidth{\size}{$\scriptscriptstyle\texttt{e}$}\text{$\scriptscriptstyle\bigcirc
+    \hspace*{-1.35\size} \textnormal{\tt e}\,$}}
+\newcommand{\erase}{\mathchoice{\derase}{\terase}{\serase}{\sserase}}
+\newcommand{\tforget}{\settowidth{\size}{\texttt{f}}\text{$\bigcirc
+    \hspace*{-1.5\size} \textnormal{\tt f}\,$}}
+\newcommand{\dforget}{\settowidth{\size}{$\displaystyle\texttt{f}$}\text{$\displaystyle\bigcirc
+    \hspace*{-1.5\size} \textnormal{\tt f}\,$}}
+\newcommand{\sforget}{\settowidth{\size}{$\scriptstyle\texttt{f}$}\text{$\scriptstyle\bigcirc
+    \hspace*{-1.3\size} \textnormal{\tt f}\,$}}
+\newcommand{\ssforget}{\settowidth{\size}{$\scriptscriptstyle\texttt{f}$}\text{$\scriptscriptstyle\bigcirc
+    \hspace*{-1.35\size} \textnormal{\tt f}\,$}}
+\newcommand{\forget}{\mathchoice{\dforget}{\tforget}{\sforget}{\ssforget}}
+\newcommand{\unirule}[4]{%
+  {(#4)} & %
+  \begin{array}{c}%
+  #1\\[2mm]   %
+  \hline\\[-3.5mm] %
+  #2               %
+  \end{array} & #3%
+}
+\newcommand{\birule}[5]{%
+  {(#5)} & %
+  \begin{array}{c}%
+  \begin{array}{c}
+  #1\\[.5mm]
+  #2
+  \end{array}\\[2mm]        %
+  \hline\\[-3.5mm]                     %
+  #3        %
+  \end{array} & #4                       %
+}
+
+\newenvironment{mycite}
+{\vspace{-3.5cm}%
+\begin{small}%
+\begin{flushright}%
+\it}
+{\end{flushright}%
+\end{small}%
+\vspace{.5cm}
+}
+
+\def\modelfont{\mathcal}
+\def\langfont{\mathfrak}
+\def\signaturefont{\mathcal}
+
+\newcommand{\cA}{\ensuremath{\langfont{A}}\xspace}
+\newcommand{\cP}{\ensuremath{\langfont{P}}\xspace}
+\newcommand{\cL}{\ensuremath{\langfont{L}}\xspace}
+\newcommand{\cFO}{\ensuremath{\langfont{F}}\xspace}
+\newcommand{\cFOe}{\ensuremath{\cFO^{=}}\xspace}
+\newcommand{\cFOu}{\ensuremath{\cFO^{1}}\xspace}
+
+\newcommand{\lsim}{\mathrel{\,\raisebox{.3ex}{$\underline{\makebox[.8em]{\hspace{-0.05em}$\leftarrow$}}$}}}
+\newcommand{\rsim}{\mathrel{\,\raisebox{.3ex}{$\underline{\makebox[.8em]{\hspace{0.05em}$\rightarrow$}}$}}}
+\newcommand{\pisom}{\cong}
+
+\newcommand{\Th}{\ensuremath{\mathsf{Th}}\xspace}
+\newcommand{\NTh}{\ensuremath{\mathsf{NTh}}\xspace}
+\newcommand{\Trf}{\ensuremath{\st_{x}}\xspace}
+\newcommand{\Trm}{\ensuremath{\mathsf{T}}\xspace}
+\newcommand{\Tlm}{\ensuremath{\mathsf{T}^{\text{\raisebox{0.35em}{\tiny -1}}}}\xspace}
+\newcommand{\Tlmk}[1]{\ensuremath{\mathsf{T}^{\text{\text{\raisebox{0.35em}{\tiny -1}}}}_{\!#1}}\xspace}
+\newcommand{\Trmk}[1]{\ensuremath{\mathsf{T}_{\!#1}}\xspace}
+
+\newcommand{\adel}{\ensuremath{\modelfont{A}}\xspace}
+\newcommand{\tmodel}{\ensuremath{\modelfont{M}^{t}}\xspace}
+\newcommand{\fmodel}{\ensuremath{\modelfont{M}^{f}}\xspace}
+\newcommand{\fnodel}{\ensuremath{\modelfont{N}^{f}}\xspace}
+\newcommand{\fadel}{\ensuremath{\modelfont{A}^{f}}\xspace}
+
+\newcommand{\classK}{\ensuremath{\mathsf{K}}\xspace}
+\newcommand{\classM}{\ensuremath{\mathsf{M}}\xspace}
+\newcommand{\classC}{\ensuremath{\mathsf{C}}\xspace}
+\newcommand{\CclassK}{\ensuremath{\overline{\mathsf{K}}}\xspace}
+\newcommand{\CclassM}{\ensuremath{\overline{\mathsf{M}}}\xspace}
+
+\newcommand{\form}[1]{\textrm{FORM}(#1)}
+\newcommand{\mods}[1]{\textrm{MODS}(#1)}
+\newcommand{\pmods}[1]{\textrm{PMODS}(#1)}
+\newcommand{\modsk}[2]{\textrm{MODS}_{#1}(#2)}
+\newcommand{\slc}[1]{\textrm{SLC}(#1)}
+\newcommand{\ep}[1]{\ensuremath{\mathsf{ep}(#1)}}
+\newcommand{\theq}[1]{\equiv_{#1}}
+\newcommand{\thsub}[1]{\sqsubseteq_{#1}}
+\newcommand{\thsup}[1]{\sqsupseteq_{#1}}
+
+\newcommand{\liff}{\leftrightarrow}
+\newcommand{\efeq}{\risingdotseq}
+\newcommand{\noitemsep}{\setlength{\itemsep}{0pt}}
+
+\newcommand{\wsat}{\ensuremath{\omega}-saturated\xspace}
+\newcommand{\elementary}{\ensuremath{EC_{\Delta}}\xspace}
+\newcommand{\belementary}{\ensuremath{EC}\xspace}
+\newcommand{\setcomp}[2]{\{{#1} : {#2}\}}
+
+\newcommand{\diam}[1]{\langle #1 \rangle}
+\newcommand{\ddiam}[1]{\ttup{#1}}
+
+\newcommand{\cMLRK}{\ensuremath{\mathcal{ML}(\diam{r})}\xspace}
+\newcommand{\cMLRKM}{\ensuremath{\mathcal{ML}(\ddiam{r})}\xspace}
+\newcommand{\cMLRKF}{\ensuremath{\mathcal{ML}(\diam{r}, \forget)}}
+\newcommand{\cMLRKMF}{\ensuremath{\mathcal{ML}(\ddiam{r},  \forget)}}
+\newcommand{\cMLRKE}{\ensuremath{\mathcal{ML}(\diam{r},  \erase)}}
+\newcommand{\cMLRKME}{\ensuremath{\mathcal{ML}(\ddiam{r},  \erase)}}
+\newcommand{\cMLRKA}{\ensuremath{\mathcal{ML}(\diam{r}, \forget, \erase)}}
+
+
+
+\newcommand{\hlsda}{\Hl({:},\down,\A)}
+\newcommand{\hld}{\Hl(\down)}
+\newcommand{\mlo}{{\cal ML}(\re,\kn)}
+\newcommand{\mloa}{{\cal ML}(\ttup{r},\kn)}
+
+% Theorems 
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
