@@ -25,17 +25,3 @@ Contacto: <guillaume.hoffmann@conicet.gov.ar>
 # Otras cosas
 
 * [Darcs, un sistema de control de versiones](http://darcs.net)
-
-# Artículos varios
-
-<div class="posts">
-
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ site.baseurl }}{{ post.url }}">{{post.date | date: "%Y-%m-%d" }}: {{ post.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
-</div>
-
