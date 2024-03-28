@@ -1,6 +1,6 @@
-Soy investigador asistente del CONICET con lugar de trabajo en la
-Universidad Nacional de Córdoba (grupo [LIIS](https://liisgroup.github.io/));
-ingeniero en informática de TELECOM Nancy (Francia), doctor en computación en Université Henri Poincaré, Nancy (Francia).
+Soy investigador asistente del [CONICET](https://www.conicet.gov.ar/) con lugar de trabajo en la
+[Universidad Nacional de Córdoba](https://www.unc.edu.ar/) (grupo [LIIS](https://liisgroup.github.io/));
+ingeniero en informática de [ESIAL Nancy](https://telecomnancy.univ-lorraine.fr/), doctor en computación de [Université Henri Poincaré, Nancy](https://www.univ-lorraine.fr/).
 
 Contacto: <guillaume.hoffmann@conicet.gov.ar>
 
@@ -25,16 +25,3 @@ Contacto: <guillaume.hoffmann@conicet.gov.ar>
 # Otras cosas
 
 * [Darcs, un sistema de control de versiones](http://darcs.net)
-
-# Artículos varios
-
-<div class="posts">
-
-<ul>
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ site.baseurl }}{{ post.url }}">{{post.date | date: "%Y-%m-%d" }}: {{ post.title }}</a>
-    </li>
-  {% endfor %}
-</ul>
-</div>
